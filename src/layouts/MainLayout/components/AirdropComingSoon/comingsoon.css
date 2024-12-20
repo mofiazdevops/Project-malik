@@ -1,0 +1,95 @@
+.airdrop_home_card {
+    box-shadow: 0px 16px 50px 0px rgba(0, 0, 0, 0.2);
+    border: none !important;
+    border-radius: 18px !important;
+    padding-top: 38px;
+    padding-left: 40px;
+    padding-right: 35px;
+    padding-bottom: 38px;
+  }
+  .offer_created_text {
+    color: #262829;
+    font-size: 0.9em;
+    font-style: normal;
+    font-weight: 600;
+  }
+  .offer_created_date {
+    color: #5f6264;
+    font-size: 0.9em;
+    font-style: normal;
+    font-weight: 400;
+  }
+  .offer_created_remaining_days {
+    color: #2ca43f;
+    font-size: 0.9em;
+    font-style: normal;
+    font-weight: 400;
+  }
+  .claim_now_btn {
+    background-color: #0c71bc;
+    display: flex;
+    width: 150px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    border-radius: 30px;
+    color: white;
+    font-size: 1em;
+    position: relative;
+  animation: zoom-in-zoom-out 1.2s ease-out infinite;
+  }
+  .claim_now_btn:hover {
+    background: linear-gradient(to right, #0d7dd2 25%, #406aa8 75%);
+  }
+  .airdrops_home_card_text_h {
+    color: #262829;
+    font-size: 1.5em;
+    font-style: normal;
+    font-weight: 600;
+  }
+  .airdrops_home_card_text_p {
+    color: #5f6264;
+    font-size: 0.95em;
+    font-style: normal;
+    font-weight: 400;
+    padding-right: 20px;
+  }
+  .see_more_text_btn {
+    color: #0c71bc;
+    font-size: 0.95em;
+    font-style: normal;
+    font-weight: 400;
+    cursor: pointer;
+  }
+  .airdrop_coming_soon{
+    color: #262829;
+    font-size: 1.4em;
+    font-style: normal;
+    font-weight: 600;
+    padding-bottom: 20px;
+  }
+  @media only screen and (min-width:768px){
+    .airdrop_home_card {
+      box-shadow: 0px 16px 50px 0px rgba(0, 0, 0, 0.2);
+      border: none !important;
+      border-radius: 18px !important;
+      padding-top: 38px;
+      padding-left: 40px;
+      padding-right: 35px;
+      padding-bottom: 38px;
+      min-width: 740px !important;
+    }
+  }
+  @keyframes zoom-in-zoom-out {
+    0% {
+      transform: scale(1, 1);
+    }
+    50% {
+      transform: scale(1.1, 1.1);
+    }
+    100% {
+      transform: scale(1, 1);
+    }
+  }

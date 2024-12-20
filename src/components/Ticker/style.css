@@ -1,0 +1,15 @@
+.ticker.error {
+    color: #FE87A4;
+}
+
+.ticker.info {
+    color: #59B5FF;
+}
+
+.ticker.success {
+    color: #59D5AF;
+}
+
+.ticker.warning {
+    color: #FEC21B;
+}

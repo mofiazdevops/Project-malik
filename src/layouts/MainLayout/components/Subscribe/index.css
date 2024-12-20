@@ -1,0 +1,14 @@
+.termsModal {
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ margin: 1.5rem;
+}
+
+.termsModal__body {
+ margin-top: 1rem;
+}
+
+.userCameFrom {
+ margin: 1rem;
+}

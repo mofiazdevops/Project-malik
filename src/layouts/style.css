@@ -1,0 +1,10 @@
+.pinText::after {
+    content: "";
+    width: 32px;
+    height: 4px;
+    background: #0C71BC;
+
+    position: absolute;
+    bottom: -4px;
+    left: 0px;
+}

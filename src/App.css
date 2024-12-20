@@ -1,0 +1,91 @@
+@import url("https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url("https://fonts.cdnfonts.com/css/sf-pro-display");
+
+body {
+  padding: 0;
+  margin: 0;
+  font-family: "SF Pro Display", sans-serif;
+}
+/* Rubik, Source Sans Pro, Poppins, Arial,Helvetica */
+body * {
+  box-sizing: border-box;
+}
+
+.margin-0 {
+  margin: 0;
+}
+.mt-46 {
+  margin-top: 46px;
+}
+.mt-30 {
+  margin-top: 30px;
+}
+.pl-10 {
+  padding-left: 10px;
+}
+
+.krmNah {
+  background-color: #0c71bc !important;
+  box-shadow: 0 0 1px 3px rgb(12 113 188) !important;
+}
+
+.flex-clm {
+  display: flex;
+  flex-direction: column;
+}
+.day {
+  background-color: rgb(167, 166, 166);
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  font-size: 1em;
+  font-weight: 600;
+  border-radius: 5px;
+  color: white;
+  text-align: center;
+}
+.hour {
+  background-color: rgb(167, 166, 166);
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  font-size: 1em;
+  font-weight: 600;
+  border-radius: 5px;
+  color: white;
+  text-align: center;
+}
+.minute {
+  background-color: rgb(167, 166, 166);
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  font-size: 1em;
+  font-weight: 600;
+  border-radius: 5px;
+  color: white;
+  text-align: center;
+}
+.second {
+  background-color: rgb(167, 166, 166);
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  font-size: 1em;
+  font-weight: 600;
+  border-radius: 5px;
+  color: white;
+  text-align: center;
+}
+.span_class {
+  font-size: 0.85em;
+  font-weight: 400;
+  color: white;
+  text-align: center;
+}

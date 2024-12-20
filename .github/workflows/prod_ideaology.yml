@@ -1,0 +1,36 @@
+name: ideaology.io Deployment
+
+on:
+  push:
+    branches:
+      - prod_ideaology.io
+  workflow_dispatch:    
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        
+      - name: Setup Nodejs
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.17.0
+      - name: Install npm dependencies
+        run: npm install --legacy-peer-deps
+        
+      - name: Build application
+        run: |
+          echo "${{ secrets.IDEAOLOGY_ENV_FILE }}" > .env
+          CI="" npm run build
+
+      - name: Deploy
+        uses: easingthemes/ssh-deploy@main
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          REMOTE_HOST: ${{ secrets.SSH_HOST }}
+          REMOTE_USER: ${{ secrets.USERNAME }}
+          SOURCE: "build/"
+          TARGET: "/var/www/html/ideaology_frontend"
+          SCRIPT_BEFORE: |
+            rm -rf /var/www/html/ideaology_frontend
