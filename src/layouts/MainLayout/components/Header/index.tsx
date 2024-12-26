@@ -91,6 +91,10 @@ const useStyles = makeStyles((theme: any) => ({
     // maxHeight: "75px",
     fontSize: theme.typography.button.fontSize,
     borderRadius: "3px",
+    display: "flex", // Ensures content inside aligns properly
+    justifyContent: "flex-start !important", // Aligns text and endIcon to the left
+    alignItems: "center", // Centers content vertically
+    textAlign: "left",
     // padding: "11px 24px 10px 20px",
     [theme.breakpoints.down("md")]: {
       height: "auto",
@@ -166,7 +170,7 @@ const useStyles = makeStyles((theme: any) => ({
   },
   space: {
     // marginLeft: "100%",
-    width: "120px",
+    width: "60px",
     // marginLeft: "auto",
     // marginRight: "auto",
   },
@@ -281,13 +285,25 @@ export const Header = (props: IProps) => {
           name: "IDEA Wallet",
           link: "https://play.google.com/store/apps/details?id=com.IdeaologyStudio.RealPoolBallBilliardGames",
         },
+        {
+          link: "/newstaking",
+          name: "Staking",
+        },
+        {
+          link: "/voting",
+          name: "Voting",
+        },
+        {
+          link: "/swap",
+          name: "Swap IDEA",
+        },
       ], // Adding gameItems inside Products > Games
     },
-    {
-      external: true,
-      link: "https://ideaology-1.gitbook.io/ideaology-1/",
-      name: "Docs",
-    },
+    // {
+    //   external: true,
+    //   link: "https://ideaology-1.gitbook.io/ideaology-1/",
+    //   name: "Docs",
+    // },
     // {
     //   external: true,
     //   link: "https://ideaologyio.medium.com/",
@@ -306,22 +322,12 @@ export const Header = (props: IProps) => {
     //   link: "/blog",
     //   name: "Blogs",
     // },
-    {
-      link: "/newstaking",
-      name: "Staking",
-    },
-    {
-      link: "/voting",
-      name: "Voting",
-    },
-    {
-      link: "/get-idea",
-      name: "Get IDEA",
-    },
-    {
-      link: "/swap",
-      name: "Swap IDEA",
-    },
+
+    // {
+    //   link: "/get-idea",
+    //   name: "Get IDEA",
+    // },
+
     {
       name: "AirDrop",
       type: "gotoapp",
@@ -609,7 +615,9 @@ export const Header = (props: IProps) => {
                               className={classes.menuButtonText}
                               color="secondary"
                               size="large"
-                              endIcon={<ArrowDropDownIcon />}
+                              // endIcon={
+                              //   <ArrowDropDownIcon  />
+                              // }
                             >
                               {subItem.name}
                             </Button>
@@ -673,45 +681,43 @@ export const Header = (props: IProps) => {
 
             // Handle other menu items like Staking, Voting, etc.
             else if (element.link) {
-              if (element.external) {
-                return (
-                  <a
-                    className={classes.noDecoration}
-                    href={element.link}
-                    key={element.name}
-                    rel="noreferrer"
-                    target={element.external ? "_blank" : "_self"}
+              return (
+                <a
+                  className={classes.noDecoration}
+                  href={element.link}
+                  key={element.name}
+                  rel="noreferrer"
+                  // target={element.external ? "_blank" : "_self"}
+                >
+                  <Button
+                    classes={{
+                      text: classes.menuButtonText,
+                    }}
+                    color="secondary"
+                    size="large"
                   >
-                    <Button
-                      classes={{
-                        text: classes.menuButtonText,
-                      }}
-                      color="secondary"
-                      size="large"
-                    >
-                      {element.name}
-                    </Button>
-                  </a>
-                );
-              } else {
-                return (
-                  <Link
-                    className={classes.noDecoration}
-                    key={element.name}
-                    to={element.link}
+                    {element.name}
+                  </Button>
+                </a>
+              );
+            } else {
+              return (
+                <Link
+                  className={classes.noDecoration}
+                  key={element.name}
+                  to={element.link}
+                >
+                  <Button
+                    classes={{
+                      text: classes.menuButtonText,
+                    }}
+                    color="secondary"
+                    size="large"
                   >
-                    <Button
-                      classes={{
-                        text: classes.menuButtonText,
-                      }}
-                      color="secondary"
-                      size="large"
-                    >
-                      {element.name}
-                    </Button>
-                  </Link>
-                );
-              }
+                    {element.name}
+                  </Button>
+                </Link>
+              );
             }
           })}
         </div>

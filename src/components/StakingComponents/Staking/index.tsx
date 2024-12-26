@@ -6,7 +6,7 @@ import { StakeService } from "../../../services/staking/stake";
 import { Web3Provider } from "@ethersproject/providers";
 import { useAppContext } from "contexts";
 import { useEagerConnect, useInactiveListener } from "hooks/injectedHook";
-import Tooltip from '@mui/material/Tooltip';
+import Tooltip from "@mui/material/Tooltip";
 
 import {
   InjectedConnector,
@@ -61,9 +61,9 @@ const useStyles = makeStyles((theme: any) => {
       backgroundColor: "#0C71BC",
       color: "#fff",
     },
-    Tooltip:{
-      textAlign: 'center',
-      margin: 'auto'
+    Tooltip: {
+      textAlign: "center",
+      margin: "auto",
     },
     nonActiveButton: {
       backgroundColor: "#F6F6F6",
@@ -135,7 +135,7 @@ const useStyles = makeStyles((theme: any) => {
     },
     searchField: {
       width: "90%",
-      borderRadius: '12px',
+      borderRadius: "12px",
       backgroundColor: "#F6F6F6",
       padding: "12px 12px",
       border: "",
@@ -144,8 +144,8 @@ const useStyles = makeStyles((theme: any) => {
       fontWeight: "bolder",
       textDecoration: "none",
       marginTop: "2rem",
-      marginBottom: '2rem',
-      outline: 'none'
+      marginBottom: "2rem",
+      outline: "none",
     },
     buttonStyling: {
       width: "100%",
@@ -159,16 +159,16 @@ const useStyles = makeStyles((theme: any) => {
         color: "#fff",
       },
     },
-    disabled:{
+    disabled: {
       "&$disabled": {
         width: "100%",
         color: "#fff",
         marginTop: "15px",
         padding: "8px 8px",
         fontSize: "15px",
-        backgroundColor: '#084F83',
-        cursor: 'no-drop'
-      }
+        backgroundColor: "#084F83",
+        cursor: "no-drop",
+      },
     },
     lineHei: {
       lineHeight: "1.6",
@@ -281,94 +281,102 @@ export const Staking = () => {
   const [openClaimPopup, setOpenClaimPopup] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
   const [buttonText, setButtonText] = useState("Start Staking");
-  const [hashNumber,setHashnumber]= useState();
-  const [hashNumberClaim, setHashNumberClaim]= useState();
-  const [userDataInfo, setUserDataInfo]= useState([]);
-  const [errorMessage, setErrorMessage]= useState<string>();
-  const [errorMsgModal, setErrorMsgModal]= useState(false);
-  const [tokenStaked, setTokenStaked]= useState<any>();
+  const [hashNumber, setHashnumber] = useState();
+  const [hashNumberClaim, setHashNumberClaim] = useState();
+  const [userDataInfo, setUserDataInfo] = useState([]);
+  const [errorMessage, setErrorMessage] = useState<string>();
+  const [errorMsgModal, setErrorMsgModal] = useState(false);
+  const [tokenStaked, setTokenStaked] = useState<any>();
 
   const toggleTab = (index: any) => {
     setToggleState(index);
   };
   const classes: any = useStyles();
 
-  const newStaking= async ()=>{
-    if(account) {
-        const register = new StakeService(
-          provider,
-          account,
-          process.env.REACT_APP_STAKING_CONTRACT_ADDRESS || "");
-          const registerPool : any= await register.register(addressVal, inputVal);
-          console.log("register pool", registerPool);
-          // 
-          const erc20 = new StakeService(
-            provider,
-            account,
-            process.env.REACT_APP_STAKING_CONTRACT_ADDRESS || ""
-          );
+  const newStaking = async () => {
+    if (account) {
+      const register = new StakeService(
+        provider,
+        account,
+        process.env.REACT_APP_STAKING_CONTRACT_ADDRESS || ""
+      );
+      const registerPool: any = await register.register(addressVal, inputVal);
+      console.log("register pool", registerPool);
+      //
+      const erc20 = new StakeService(
+        provider,
+        account,
+        process.env.REACT_APP_STAKING_CONTRACT_ADDRESS || ""
+      );
 
-          const approved= new StakeService(
-            provider,
-            account,
-            process.env.REACT_APP_STAKING_CONTRACT_ADDRESS || "");
-            const erc20Service = new ERC20Service(
-              provider,
-              account,
-              process.env.REACT_APP_IDEA_CONTRACT_ADDRESS || ""
-            );
-            const approvePool: any= await erc20Service.approve(process.env.REACT_APP_STAKING_CONTRACT_ADDRESS || "", ethToWei(inputVal));
-            
-            console.log('this is approve pool', approvePool);
+      const approved = new StakeService(
+        provider,
+        account,
+        process.env.REACT_APP_STAKING_CONTRACT_ADDRESS || ""
+      );
+      const erc20Service = new ERC20Service(
+        provider,
+        account,
+        process.env.REACT_APP_IDEA_CONTRACT_ADDRESS || ""
+      );
+      const approvePool: any = await erc20Service.approve(
+        process.env.REACT_APP_STAKING_CONTRACT_ADDRESS || "",
+        ethToWei(inputVal)
+      );
 
-          const createStakingPool: any = await erc20.applyforstaking(registerPool.poolId);
-          console.log("create staking pool", createStakingPool);
-          setHashnumber(await createStakingPool.hash);
-          console.log('this is hash value',hashNumber);
+      console.log("this is approve pool", approvePool);
 
-          const getData= new StakeService(
-            provider,
-            account,
-            process.env.REACT_APP_STAKING_CONTRACT_ADDRESS || "");
-            const userData= await getData.getAllUsersInfo();
-            console.log('this is userData', userData);
-            setUserDataInfo(await getData.getAllUsersInfo());
-          setInputVal("");
-          setOpenPopup(!openPopup);
-      };   
-    };
+      const createStakingPool: any = await erc20.applyforstaking(
+        registerPool.poolId
+      );
+      console.log("create staking pool", createStakingPool);
+      setHashnumber(await createStakingPool.hash);
+      console.log("this is hash value", hashNumber);
 
-  const handleClaim= async ()=>{
-    if(account) {
+      const getData = new StakeService(
+        provider,
+        account,
+        process.env.REACT_APP_STAKING_CONTRACT_ADDRESS || ""
+      );
+      const userData = await getData.getAllUsersInfo();
+      console.log("this is userData", userData);
+      setUserDataInfo(await getData.getAllUsersInfo());
+      setInputVal("");
+      setOpenPopup(!openPopup);
+    }
+  };
+
+  const handleClaim = async () => {
+    if (account) {
       const claim = new StakeService(
         provider,
         account,
-        process.env.REACT_APP_STAKING_CONTRACT_ADDRESS || "");
-        try {
-          const claimData:any= await claim.stakingClaim(account);
-          
-          const awaitedTokenStake= await claimData.TokensStaked;
+        process.env.REACT_APP_STAKING_CONTRACT_ADDRESS || ""
+      );
+      try {
+        const claimData: any = await claim.stakingClaim(account);
 
-          // if(awaitedTokenStake== undefined || 'undefined'){
-          if(awaitedTokenStake== undefined){
-            setErrorMessage('Staking Time Remaining');
-            setErrorMsgModal(!errorMsgModal);
-          }
-          else{
-            setHashNumberClaim(await claimData.transactionObject.hash);
-            setOpenClaimPopup(!openClaimPopup);
-          }
-        } catch (error:any) {
-          setErrorMessage('Nothing to Claim!');
+        const awaitedTokenStake = await claimData.TokensStaked;
+
+        // if(awaitedTokenStake== undefined || 'undefined'){
+        if (awaitedTokenStake == undefined) {
+          setErrorMessage("Staking Time Remaining");
           setErrorMsgModal(!errorMsgModal);
+        } else {
+          setHashNumberClaim(await claimData.transactionObject.hash);
+          setOpenClaimPopup(!openClaimPopup);
         }
+      } catch (error: any) {
+        setErrorMessage("Nothing to Claim!");
+        setErrorMsgModal(!errorMsgModal);
+      }
     }
   };
 
   const handleVal = (e: any) => {
     setInputVal(e.target.value);
   };
-  
+
   const disableButton = () => {
     setIsDisabled(true);
     setTimeout(() => {
@@ -399,7 +407,11 @@ export const Staking = () => {
                       setPercentVal(15);
                     }}
                   >
-                     <Tooltip title="Percentage for Staking 1 Months: 15%" placement="top" className={classes.Tooltip}>
+                    <Tooltip
+                      title="Percentage for Staking 1 Months: 15%"
+                      placement="top"
+                      className={classes.Tooltip}
+                    >
                       <p>1 Month</p>
                     </Tooltip>
                   </button>
@@ -415,7 +427,11 @@ export const Staking = () => {
                       setPercentVal(10);
                     }}
                   >
-                    <Tooltip title="Percentage for Staking 3 Months: 10%" placement="top" className={classes.Tooltip}>
+                    <Tooltip
+                      title="Percentage for Staking 3 Months: 10%"
+                      placement="top"
+                      className={classes.Tooltip}
+                    >
                       <p>3 Months</p>
                     </Tooltip>
                   </button>
@@ -431,7 +447,11 @@ export const Staking = () => {
                       setPercentVal(5);
                     }}
                   >
-                    <Tooltip title="Percentage for Staking 12 Months: 5%" placement="top" className={classes.Tooltip}>
+                    <Tooltip
+                      title="Percentage for Staking 12 Months: 5%"
+                      placement="top"
+                      className={classes.Tooltip}
+                    >
                       <p>12 Months</p>
                     </Tooltip>
                   </button>
@@ -454,26 +474,48 @@ export const Staking = () => {
               </div>
             </div>
             <div>
-              <Button 
-              className={isDisabled ? classes.disabled : classes.buttonStyling} 
-              onClick={()=>{disableButton(); newStaking();}}
-              disabled={isDisabled || !inputVal}
-              > 
-                {isDisabled ? <span>Loading...</span> : <span>{buttonText}</span>}
+              <Button
+                className={
+                  isDisabled ? classes.disabled : classes.buttonStyling
+                }
+                onClick={() => {
+                  disableButton();
+                  newStaking();
+                }}
+                disabled={isDisabled || !inputVal}
+              >
+                {isDisabled ? (
+                  <span>Loading...</span>
+                ) : (
+                  <span>{buttonText}</span>
+                )}
               </Button>
               <div>
-                <Button 
-                    className={classes.buttonStyling}
-                    onClick={handleClaim}
-                    // disabled={timeLeft}
-                    >
-                    Claim
+                <Button
+                  className={classes.buttonStyling}
+                  onClick={handleClaim}
+                  // disabled={timeLeft}
+                >
+                  Claim
                 </Button>
               </div>
             </div>
-            <StakeModal openPopup={openPopup} addressVal={addressVal} setOpenPopup={setOpenPopup} hashNumber={hashNumber}/>
-            <ClaimModal openClaimPopup={openClaimPopup} setOpenClaimPopup={setOpenClaimPopup} hashNumberClaim={hashNumberClaim}/>
-            <ErrorModal errorMsgModal={errorMsgModal} setErrorMsgModal={setErrorMsgModal} errorMessage={errorMessage}/>
+            <StakeModal
+              openPopup={openPopup}
+              addressVal={addressVal}
+              setOpenPopup={setOpenPopup}
+              hashNumber={hashNumber}
+            />
+            <ClaimModal
+              openClaimPopup={openClaimPopup}
+              setOpenClaimPopup={setOpenClaimPopup}
+              hashNumberClaim={hashNumberClaim}
+            />
+            <ErrorModal
+              errorMsgModal={errorMsgModal}
+              setErrorMsgModal={setErrorMsgModal}
+              errorMessage={errorMessage}
+            />
           </Paper>
         </Grid>
       </Grid>
@@ -483,12 +525,12 @@ export const Staking = () => {
         type="text"
         className={classes.searchField}
       /> */}
-      
-      {userDataInfo?.map((user:any)=>(
-          <div key={user.id}>
-            <UserModal user={user}/>
-          </div>
-        ))}
+
+      {userDataInfo?.map((user: any) => (
+        <div key={user.id}>
+          <UserModal user={user} />
+        </div>
+      ))}
     </div>
   );
 };

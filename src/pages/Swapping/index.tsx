@@ -20,6 +20,26 @@ import { PrivatePosClient } from "utils/PrivatePOSClient";
 import { ETHTokenContract } from "services/swap/eth/contract";
 import { POLTokenContract } from "services/swap/polygon/contract";
 import { ethers } from "ethers";
+import { Bridge } from "./bridge";
+import { Grid } from "@material-ui/core";
+
+const ResponsiveDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 3rem;
+  width: 100%;
+  max-width: 650px;
+  margin: 0 auto;
+  padding: 1rem;
+
+  @media (max-width: 1020px) {
+    flex-direction: column;
+    justify-content: center
+    margin: auto;
+  }
+`;
 
 const Wrapper = styled.div`
   margin: 2.5rem;
@@ -135,11 +155,81 @@ const PrimaryButton = styled.button`
   padding-right: 14px;
   display: block;
   width: 100%;
-  color: #fff;
+  maxWidth: "349px",
+  height: "52px",
+  color: #fffFFF;
   background-color: #0c71bc;
   cursor: pointer;
   outline: none;
   border: none;
+`;
+
+const ResponsiveDiv2 = styled.div`
+  display: flex;
+  flex-direction: row; // Default for larger screens
+
+  @media (max-width: 600px) {
+    flex-direction: column; // Change to column for small screens
+  }
+`;
+
+const StakingCard = styled.div`
+  maxWidth: "38rem",
+  width: "auto",
+  color: "#FFFFFF",
+  padding: "0px 30px 80px 30px",
+  float: "right",
+  [theme.breakpoints.down("md")]: {
+    maxWidth: "100%",
+    padding: "55px 40px 40px 44px",
+    float: "none",
+  },
+  [theme.breakpoints.down("sm")]: {
+    padding: "55px 25px 40px 25px",
+    margin: "auto",
+    width: "80%",
+    borderRadius: "50px",
+    float: "none",
+  },
+
+  "& h1": {
+    fontStyle: "normal",
+    margin: 0,
+    fontFamily: "SF Pro Display",
+    fontWeight: 700,
+    fontSize: "60px",
+    lineHeight: "90px",
+    color: theme.colors.white,
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "30px",
+      lineHeight: "30px",
+    },
+    [theme.breakpoints.down("md")]: {
+      fontSize: "40px",
+      lineHeight: "40px",
+    },
+  },
+  "& p": {
+    color: "#D3D3D6",
+    fontWeight: 400,
+    fontSize: "20px",
+    lineHeight: "35px",
+    fontFamily: "SF Pro Display",
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "0.6rem",
+      lineHeight: "15px",
+    },
+    [theme.breakpoints.down("md")]: {
+      fontSize: "0.9rem",
+      lineHeight: "19px",
+    },
+  },
+  "& p:nth-child(2)": {
+    marginTop: "4.06rem",
+  },
+  "& p:nth-child(3)": {
+    marginTop: "2.81rem",
+  },
 `;
 
 const Input = styled.input`
@@ -512,18 +602,79 @@ export default function GetSTAKE() {
   };
 
   return (
-    <section style={{ marginTop: "8rem" }}>
-      <Container>
+    <div
+      style={{
+        paddingTop: "8rem",
+        paddingBottom: "6rem",
+        backgroundColor: "black",
+        color: "white",
+        background: "#081015",
+      }}
+    >
+      <div>
         <Wrapper>
-          <Row>
-            <Col xs={12} lg={6}>
-              <Padding padding={true}>
-                <Title>Swap IDEA</Title>
-                <Subtitle>
-                  {" "}
-                  Token address on polygon.{" "}
+          <ResponsiveDiv2>
+            {/* <Grid container spacing={1}></Grid> */}
+            <div
+              style={{
+                width: "100%", // Full width by default
+                maxWidth: "350px", // Maximum width for larger screens
+                padding: "1rem", // Add some padding for spacing
+                margin: "0 auto", // Center the div
+                boxSizing: "border-box", // Include padding in width calculation
+              }}
+            >
+              {/* <Grid item lg={4} md={5} xs={12}> */}
+              <StakingCard>
+                <h1>Swap & Bridge</h1>
+                <p>
+                  Swap allows you to effortlessly exchange your tokens,
+                  unlocking new investment opportunities and greater
+                  flexibility. Whether you are looking to diversify or take
+                  advantage of market movements, swapping gives you the power to
+                  move quickly and maximize your potential.
+                </p>
+                <p>
+                  Bridges enable seamless transfers between blockchains,
+                  ensuring you can access liquidity across different networks
+                  without hassle. With the ability to move assets freely, you
+                  can explore more opportunities and stay agile in an
+                  ever-changing crypto landscape.
+                </p>
+              </StakingCard>
+              {/* </Grid> */}
+            </div>
+            <ResponsiveDiv>
+              <div
+                style={{
+                  flex: "1 1 100%", // Default to full width for small screens
+                  width: "280px", // 50% width for medium screens
+                  backgroundColor: "#001727",
+                  height: "460px", // Background color
+                  padding: "1rem",
+                  boxSizing: "border-box",
+                  border: "2px solid white", // Add white border
+                  borderRadius: "12px",
+                }}
+              >
+                <Title
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    fontFamily: "SF Pro Display",
+                    fontWeight: 600,
+                    background: "linear-gradient(90deg, #FFFFFF, #3CADFF)",
+                    backgroundClip: "text",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                  }}
+                >
+                  Swap IDEA
+                </Title>
+                {/* <Subtitle style={{ color: "white" }}>
+                  Token address on polygon:{" "}
                   {process.env.REACT_APP_POLYGON_IDEA_SWAP}
-                </Subtitle>
+                </Subtitle> */}
                 <Swap
                   swapAmount={swapAmount}
                   onChange={onChange}
@@ -532,40 +683,26 @@ export default function GetSTAKE() {
                   account={account}
                   ideaBalance={userIDEABalance | 0}
                 />
-              </Padding>
-            </Col>
-            <Col xs={12} lg={6}>
-              <Padding padding={true}>
-                {/* <TableData /> */}
-                <Content>
-                  <Title>Check Transaction</Title>
-                  <Subtitle>
-                    {" "}
-                    Verify if a recent transaction was successful by confirming
-                    proper processing and accurate fund crediting to the
-                    designated account.{" "}
-                  </Subtitle>
-                  <Heading>Transaction Hash</Heading>
-                  <GroupButton>
-                    <InputBox>
-                      <Input
-                        value={trx}
-                        onChange={(e) => setTrx(e.target.value)}
-                        type="text"
-                        placeholder="Please enter transaction hash"
-                      />
-                      {/* <InputBoxPaste  >Paste</InputBoxPaste> */}
-                    </InputBox>
-                  </GroupButton>
-                </Content>
-                <PrimaryButton onClick={onCheckTransactionStatus}>
-                  {isTrxloading ? "...Confirming" : "Submit"}
-                </PrimaryButton>
-              </Padding>
-            </Col>
-          </Row>
+              </div>
+
+              <div
+                style={{
+                  flex: "1 1 100%", // Default to full width for small screens
+                  width: "280px", // 50% width for medium screens
+                  backgroundColor: "#001727",
+                  height: "380px", // Background color
+                  padding: "0.2rem",
+                  boxSizing: "border-box",
+                  border: "2px solid white", // Add white border
+                  borderRadius: "12px",
+                }}
+              >
+                <Bridge />
+              </div>
+            </ResponsiveDiv>
+          </ResponsiveDiv2>
         </Wrapper>
-      </Container>
-    </section>
+      </div>
+    </div>
   );
 }

@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { Grid, Paper, makeStyles } from "@material-ui/core";
-import { Rewards, Staking, Wrap } from "components/StakingComponents";
+import { Rewards, Wrap } from "components/StakingComponents";
 import { faqs } from "utils/stake-questions";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { Link } from "react-router-dom";
+import { StakingCard } from "layouts/MainLayout/components/StakingList/StakingCard";
+import { StakingList } from "layouts/MainLayout/components/StakingList";
+import Staking from "../../pages/Staking";
 
 const useStyles = makeStyles((theme: any) => {
   return {
@@ -77,7 +80,7 @@ const useStyles = makeStyles((theme: any) => {
       color: "white",
       margin: "auto",
       boxShadow: "0 0 10px gray",
-      marginBottom: '1rem',
+      marginBottom: "1rem",
       [theme.breakpoints.down("sm")]: {
         marginRight: "0px",
         marginTop: "0",
@@ -167,18 +170,21 @@ const NewStaking = () => {
 
   const classes: any = useStyles();
   return isTrue ? (
-    <div className={classes.stakingPage}>
-      <div className={classes.topNav}>
-        {/* float left */}
-        <button
+    // <div className={classes.stakingPage}>
+    <div>
+      <Staking />
+      {/* this is the button for stake and Idea */}
+      {/* <div className={classes.topNav}> */}
+      {/* float left */}
+      {/* <button
           className={
             toggleState === 1 ? classes.activeButton : classes.nonActiveButton
           }
           onClick={() => toggleTab(1)}
         >
           Stake
-        </button>
-        {/* <button
+        </button> */}
+      {/* <button
           className={
             toggleState === 2 ? classes.activeButton : classes.nonActiveButton
           }
@@ -194,11 +200,11 @@ const NewStaking = () => {
         >
           Rewards
         </button> */}
-        {/* float right */}
-        <button>IDEA</button>
-      </div>
+      {/* float right */}
+      {/* <button>IDEA</button>
+      </div> */}
 
-      <div className={classes.contents}>
+      {/* <div className={classes.contents}>
         <div
           className={
             toggleState === 1 ? classes.showContent : classes.hiddenContent
@@ -213,9 +219,6 @@ const NewStaking = () => {
                 <div>
                   {faqs.map((faq: any) => (
                     <div key={faq.id} className={classes.faqs}>
-                      {/* <a target='_blank' rel="noreferrer" href={`https://www.google.com/search?q=${faq.Question}`}>
-                        {faq.Question}
-                      </a> */}
                       {faq.Question}
                       <ArrowDropDownIcon />
                     </div>
@@ -257,7 +260,7 @@ const NewStaking = () => {
         >
           <Rewards />
         </div>
-      </div>
+      </div> */}
     </div>
   ) : (
     <div className={classes.flexOne}>

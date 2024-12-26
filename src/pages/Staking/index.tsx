@@ -21,8 +21,19 @@ const useStyles = makeStyles((theme: any) => {
     stakingWrapper: {
       display: "flex",
       position: "relative",
-      marginTop: "160px",
+      paddingTop: "160px",
       paddingBottom: "160px",
+      // width: "100%",
+      // maxWidth: "1200px",
+      marginLeft: "auto",
+      marginRight: "auto",
+      background: "#081015",
+    },
+    stakingWrapper2: {
+      width: "100%",
+      maxWidth: "1200px",
+      marginLeft: "auto",
+      marginRight: "auto",
     },
     stakingImageWrapper: {
       display: "flex",
@@ -39,9 +50,10 @@ const useStyles = makeStyles((theme: any) => {
     stakingCard: {
       maxWidth: "38rem",
       width: "auto",
-      background: theme.colors.primary,
-      borderRadius: "100px 0px 0px 100px",
-      padding: "110px 80px 80px 89px",
+      // background: theme.colors.primary,
+      color: "#FFFFFF",
+      // borderRadius: "100px 0px 0px 100px",
+      padding: "0px 30px 80px 30px",
       float: "right",
       [theme.breakpoints.down("md")]: {
         maxWidth: "100%",
@@ -59,6 +71,7 @@ const useStyles = makeStyles((theme: any) => {
       "& h1": {
         fontStyle: "normal",
         margin: 0,
+        fontFamily: "SF Pro Display",
         fontWeight: 700,
         fontSize: "60px",
         lineHeight: "90px",
@@ -73,10 +86,11 @@ const useStyles = makeStyles((theme: any) => {
         },
       },
       "& p": {
-        color: theme.colors.white,
+        color: "#D3D3D6",
         fontWeight: 400,
-        fontSize: "1.25rem",
-        lineHeight: "23px",
+        fontSize: "20px",
+        lineHeight: "35px",
+        fontFamily: "SF Pro Display",
         [theme.breakpoints.down("sm")]: {
           fontSize: "0.6rem",
           lineHeight: "15px",
@@ -472,293 +486,298 @@ export default function Staking() {
 
   return (
     <>
+      {/* <Staking /> */}
       <div className={classes.stakingWrapper}>
-        <Grid container spacing={1}>
-          <Grid item lg={7} md={7} xs={12}>
-            <div className="container">
-              <div className="row pt-lg-5 pt-md-4 pt-3">
-                <div className="col-lg-6 col-md-6 col-12 g-0">
-                  <div className="d-flex justify-content-end">
-                    {stakingLoader ? (
-                      <div className="staking_box_loader mt-lg-5 mt-md-4 mt-3 mb-3">
-                        <div className="d-flex justify-content-center align-items-center h-100">
-                          <div
-                            className="spinner-grow"
-                            style={{
-                              width: "3rem",
-                              height: "3rem",
-                              color: "#A7CAED",
-                            }}
-                            role="status"
-                          >
-                            <span className="visually-hidden">Loading...</span>
+        <div className={classes.stakingWrapper2}>
+          <Grid container spacing={1}>
+            <Grid item lg={5} md={5} xs={12}>
+              <div className={classes.stakingCard}>
+                <h1>Staking</h1>
+                <p>
+                  Staking is the process of delegating or locking up crypto
+                  holdings to earn rewards. By staking their IDEA tokens, users
+                  not only contribute to the ecosystems growth but also benefit
+                  from attractive APY rewards based on the duration of their
+                  stake.
+                </p>
+                <p>
+                  The primary benefit of staking is that you earn more crypto,
+                  and interest rates can be very generous. Its potentially a
+                  very profitable way to invest your money.
+                </p>
+                {/* <div className={classes.note}>
+                  <Button
+                    className={classes.noteItem}
+                    onClick={() =>
+                      history.push({
+                        pathname: "/staking-vesting",
+                        state: { from: "staking" },
+                      })
+                    }
+                  >
+                    Read More on Benefits & Rules{" "}
+                    <img
+                      alt="icon"
+                      src={"imgs/landing/moredetails.svg"}
+                      style={{ marginLeft: "10px" }}
+                    />
+                  </Button>
+                </div> */}
+              </div>
+            </Grid>
+            <Grid item lg={7} md={7} xs={12}>
+              <div className="container">
+                <div className="row pt-lg-5 pt-md-4 pt-3">
+                  <div className="col-lg-6 col-md-6 col-12 g-0">
+                    <div className="d-flex justify-content-end">
+                      {stakingLoader ? (
+                        <div className="staking_box_loader mt-lg-5 mt-md-4 mt-3 mb-3">
+                          <div className="d-flex justify-content-center align-items-center h-100">
+                            <div
+                              className="spinner-grow"
+                              style={{
+                                width: "3rem",
+                                height: "3rem",
+                                color: "#A7CAED",
+                              }}
+                              role="status"
+                            >
+                              <span className="visually-hidden">
+                                Loading...
+                              </span>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    ) : (
-                      <div className="staking_box mt-lg-5 mt-md-4 mt-3 mb-3">
-                        <div className="text-center">
-                          <h5 className="stake_with_ideaology_title mb-3">
-                            Stake With Ideaology
-                          </h5>
-                        </div>
-                        <div className="mb-3">
-                          <label
-                            htmlFor="stakeInput"
-                            className="staking_input_fields_label pb-1"
-                          >
-                            How much you want to stake with us?
-                          </label>
-                          <br />
-                          <input
-                            type="text"
-                            id="stakeInput"
-                            name="stakeInput"
-                            placeholder="Enter amount of $IDEA to stake"
-                            className="w-100 staking_input_fields"
-                            value={stakeAmount}
-                            onChange={handleStakeInputChange}
-                            typeof="number"
-                          />
-                        </div>
-                        <div>
-                          <p className="prefferable_time_p mb-1">
-                            Select prefferable time period for staking?
-                          </p>
-                          <Tabs
-                            id="controlled-tab-example"
-                            activeKey={key}
-                            onSelect={handleSelect}
-                            className="mb-3"
-                          >
-                            <Tab eventKey="30days" title="30 Days"></Tab>
-                            <Tab eventKey="90days" title="90 Days"></Tab>
-                            <Tab eventKey="180days" title="180 Days"></Tab>
-                            <Tab eventKey="365days" title="365 Days"></Tab>
-                          </Tabs>
-                        </div>
-                        <div>
-                          <label
-                            htmlFor="rewardInput"
-                            className="staking_input_fields_label pb-1"
-                          >
-                            Your Reward ({rewardPercentage}%)
-                          </label>
-                          <br />
-                          <input
-                            type="text"
-                            id="rewardInput"
-                            name="rewardInput"
-                            className="w-100 staking_input_fields"
-                            value={reward}
-                            disabled
-                          />
-                        </div>
-                        <div className="pt-3">
-                          <button
-                            className="w-100 start_staking_btn"
-                            disabled={stakeAmount == 0}
-                            onClick={createStake}
-                          >
-                            Start Staking 
-                            {/*move to staking page */}
-                          </button>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                </div>
-                <div className="col-lg-6 col-md-6 col-12">
-                  <div className="d-flex justify-content-start">
-                    <div className="staking_progress_box ms-2">
-                      {/* {rewardLoader ? <LoadingScreen /> : <></>} */}
-                      <div className="text-center">
-                        <h5 className="stake_with_ideaology_title mb-lg-3 mb-md-3 mb-3">
-                          Upcoming Stake
-                        </h5>
-                      </div>
-                      <div className="d-flex align-items-center justify-content-between">
-                        <p className="mb-0 locking_amount">Locked Amount</p>
-                        <p className="mb-0 loading_amount_token">
-                          {displayValue(lockedToken)} $IDEA
-                        </p>
-                      </div>
-                      <div className="d-flex align-items-center justify-content-between">
-                        <p className="mb-0 locking_amount">Unlock Days</p>
-                        <p className="mb-0 loading_amount_token">
-                          {displayValue(lockedDuration)} Days
-                        </p>
-                      </div>
-                      <div className="d-flex align-items-center justify-content-between mb-3">
-                        <p className="mb-0 locking_amount">
-                          Total Tokens to Claim
-                        </p>
-                        <p className="mb-0 loading_amount_token">
-                          {displayValue(totalReward)} $IDEA
-                        </p>
-                      </div>
-                      <div>
-                        <div className="border_top_bottom_stake py-3">
-                          <div className="d-flex align-items-center justify-content-between">
-                            <p className="mb-0 progress_amount_token">
-                              Progress
-                            </p>
-                            <p className="mb-0 progress_amount_token">
-                              {progress}%
-                            </p>
+                      ) : (
+                        <div className="staking_box mt-lg-5 mt-md-4 mt-3 mb-3">
+                          <div className="text-center">
+                            <h5 className="stake_with_ideaology_title mb-3">
+                              Stake With Ideaology
+                            </h5>
                           </div>
-                          <div className="py-2">
-                            <Box sx={{ width: "100%" }}>
-                              <LinearProgressWithLabel value={progress} />
-                            </Box>
+                          <div className="mb-3">
+                            <label
+                              htmlFor="stakeInput"
+                              className="staking_input_fields_label pb-1"
+                            >
+                              How much you want to stake with us?
+                            </label>
+                            <br />
+                            <input
+                              type="text"
+                              id="stakeInput"
+                              name="stakeInput"
+                              placeholder="Enter amount of $IDEA to stake"
+                              className="w-100 staking_input_fields"
+                              value={stakeAmount}
+                              onChange={handleStakeInputChange}
+                              typeof="number"
+                            />
                           </div>
                           <div>
-                            <p className="mb-0 locking_amount">
-                              Claimable in {displayValue(daysLeft)} Days
+                            <p className="prefferable_time_p mb-1">
+                              Select prefferable time period for staking?
                             </p>
+                            <Tabs
+                              id="controlled-tab-example"
+                              activeKey={key}
+                              onSelect={handleSelect}
+                              className="mb-3"
+                            >
+                              <Tab eventKey="30days" title="30 Days"></Tab>
+                              <Tab eventKey="90days" title="90 Days"></Tab>
+                              <Tab eventKey="180days" title="180 Days"></Tab>
+                              <Tab eventKey="365days" title="365 Days"></Tab>
+                            </Tabs>
+                          </div>
+                          <div>
+                            <label
+                              htmlFor="rewardInput"
+                              className="staking_input_fields_label pb-1"
+                            >
+                              Your Reward ({rewardPercentage}%)
+                            </label>
+                            <br />
+                            <input
+                              type="text"
+                              id="rewardInput"
+                              name="rewardInput"
+                              className="w-100 staking_input_fields"
+                              value={reward}
+                              disabled
+                            />
+                          </div>
+                          <div className="pt-3">
+                            <button
+                              className="w-100 start_staking_btn"
+                              disabled={stakeAmount == 0}
+                              onClick={createStake}
+                            >
+                              Start Staking move to staking page
+                            </button>
                           </div>
                         </div>
-                      </div>
-                      <div className="pt-3">
+                      )}
+                    </div>
+                  </div>
+                  <div className="col-lg-6 col-md-6 col-12">
+                    <div className="d-flex justify-content-start">
+                      <div className="staking_progress_box ms-2">
+                        {rewardLoader ? <LoadingScreen /> : <></>}
+                        <div className="text-center">
+                          <h5 className="stake_with_ideaology_title mb-lg-3 mb-md-3 mb-3">
+                            Upcoming Stake
+                          </h5>
+                        </div>
                         <div className="d-flex align-items-center justify-content-between">
-                          {isWalletConnected ? (
-                            <></>
-                          ) : (
-                            <button
-                              className="w-100 claim_staking_btn"
-                              onClick={connectWallet}
-                            >
-                              Connect
-                            </button>
-                          )}
-                          {rewardLoader ? (
-                            <button
-                              className="w-100 start_staking_btn"
-                              disabled={true}
-                              onClick={createStake}
-                            >
-                              ...
-                            </button>
-                          ) : (
-                            <button
-                              className="w-100 claim_staking_btn d-none"
-                              disabled={!isWalletConnected || progress < 100}
-                              onClick={claimReward}
-                            >
-                              Claim Staking
-                            </button>
-                          )}
-                          {unStakeLoader ? (
-                            <button
-                              className="w-100 start_staking_btn"
-                              disabled={true}
-                              onClick={createStake}
-                            >
-                              ...
-                            </button>
-                          ) : (
-                            <button
-                              className="w-100 claim_staking_btn ms-3"
-                              disabled={!isWalletConnected}
-                              onClick={unStake}
-                            >
-                              Unstake
-                            </button>
-                          )}
+                          <p className="mb-0 locking_amount">Locked Amount</p>
+                          <p className="mb-0 loading_amount_token">
+                            {displayValue(lockedToken)} $IDEA
+                          </p>
+                        </div>
+                        <div className="d-flex align-items-center justify-content-between">
+                          <p className="mb-0 locking_amount">Unlock Days</p>
+                          <p className="mb-0 loading_amount_token">
+                            {displayValue(lockedDuration)} Days
+                          </p>
+                        </div>
+                        <div className="d-flex align-items-center justify-content-between mb-3">
+                          <p className="mb-0 locking_amount">
+                            Total Tokens to Claim
+                          </p>
+                          <p className="mb-0 loading_amount_token">
+                            {displayValue(totalReward)} $IDEA
+                          </p>
+                        </div>
+                        <div>
+                          <div className="border_top_bottom_stake py-3">
+                            <div className="d-flex align-items-center justify-content-between">
+                              <p className="mb-0 progress_amount_token">
+                                Progress
+                              </p>
+                              <p className="mb-0 progress_amount_token">
+                                {progress}%
+                              </p>
+                            </div>
+                            <div className="py-2">
+                              <Box sx={{ width: "100%" }}>
+                                <LinearProgressWithLabel value={progress} />
+                              </Box>
+                            </div>
+                            <div>
+                              <p className="mb-0 locking_amount">
+                                Claimable in {displayValue(daysLeft)} Days
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="pt-3">
+                          <div className="d-flex align-items-center justify-content-between">
+                            {isWalletConnected ? (
+                              <></>
+                            ) : (
+                              <button
+                                className="w-100 claim_staking_btn"
+                                onClick={connectWallet}
+                              >
+                                Connect
+                              </button>
+                            )}
+                            {rewardLoader ? (
+                              <button
+                                className="w-100 start_staking_btn"
+                                disabled={true}
+                                onClick={createStake}
+                              >
+                                ...
+                              </button>
+                            ) : (
+                              <button
+                                className="w-100 claim_staking_btn d-none"
+                                disabled={!isWalletConnected || progress < 100}
+                                onClick={claimReward}
+                              >
+                                Claim Staking
+                              </button>
+                            )}
+                            {unStakeLoader ? (
+                              <button
+                                className="w-100 start_staking_btn"
+                                disabled={true}
+                                onClick={createStake}
+                              >
+                                ...
+                              </button>
+                            ) : (
+                              <button
+                                className="w-100 claim_staking_btn ms-3"
+                                disabled={!isWalletConnected}
+                                onClick={unStake}
+                              >
+                                Unstake
+                              </button>
+                            )}
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div className="d-flex justify-content-start mt-lg-4 mt-md-3 mt-3">
-                    {activeStakes.length > 0 && isWalletConnected ? (
-                      <div className="staking_progress_box ms-2">
-                        <div className="text-center">
-                          <h5 className="stake_with_ideaology_title mb-lg-3 mb-md-3 mb-3">
-                            My Stakes
-                          </h5>
-                        </div>
-                        <div className="table_overflow">
-                          <table className="table">
-                            <thead>
-                              <tr>
-                                <th scope="col" className="table_heading_th">
-                                  Amount
-                                </th>
-                                <th scope="col" className="table_heading_th">
-                                  Days
-                                </th>
-                                <th scope="col" className="table_heading_th">
-                                  Reward
-                                </th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {activeStakes.map((stake, index) => (
-                                <tr key={index}>
-                                  <td className="table_data_td">
-                                    {stake.totalAmount}
-                                  </td>
-                                  <td className="table_data_td">
-                                    {stake.days}
-                                  </td>
-                                  <td className="table_data_td">
-                                    {stake.totalRewards} IDEA
-                                  </td>
+                    <div className="d-flex justify-content-start mt-lg-4 mt-md-3 mt-3">
+                      {activeStakes.length > 0 && isWalletConnected ? (
+                        <div className="staking_progress_box ms-2">
+                          <div className="text-center">
+                            <h5 className="stake_with_ideaology_title mb-lg-3 mb-md-3 mb-3">
+                              My Stakes
+                            </h5>
+                          </div>
+                          <div className="table_overflow">
+                            <table className="table">
+                              <thead>
+                                <tr>
+                                  <th scope="col" className="table_heading_th">
+                                    Amount
+                                  </th>
+                                  <th scope="col" className="table_heading_th">
+                                    Days
+                                  </th>
+                                  <th scope="col" className="table_heading_th">
+                                    Reward
+                                  </th>
                                 </tr>
-                              ))}
-                            </tbody>
-                          </table>
+                              </thead>
+                              <tbody>
+                                {activeStakes.map((stake, index) => (
+                                  <tr key={index}>
+                                    <td className="table_data_td">
+                                      {stake.totalAmount}
+                                    </td>
+                                    <td className="table_data_td">
+                                      {stake.days}
+                                    </td>
+                                    <td className="table_data_td">
+                                      {stake.totalRewards} IDEA
+                                    </td>
+                                  </tr>
+                                ))}
+                              </tbody>
+                            </table>
+                          </div>
                         </div>
-                      </div>
-                    ) : (
-                      <div className="staking_progress_box ms-2">
-                        <div className="text-center">
-                          <h5 className="stake_with_ideaology_title mb-lg-3 mb-md-3 mb-3">
-                            No Active Stakes
-                          </h5>
+                      ) : (
+                        <div className="staking_progress_box ms-2">
+                          <div className="text-center">
+                            <h5 className="stake_with_ideaology_title mb-lg-3 mb-md-3 mb-3">
+                              No Active Stakes
+                            </h5>
+                          </div>
                         </div>
-                      </div>
-                    )}
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            </Grid>
           </Grid>
-          <Grid item lg={5} md={5} xs={12}>
-            <div className={classes.stakingCard}>
-              <h1>Staking</h1>
-              <p>
-                Staking is the process of delegating or locking up crypto
-                holdings to earn rewards. Some of the rewards you can earn from
-                staking are earning additional tokens and getting some voting
-                rights.
-              </p>
-              <p>
-                The primary benefit of staking is that you earn more crypto, and
-                interest rates can be very generous. It&#39;s potentially a very
-                profitable way to invest your money.
-              </p>
-              <div className={classes.note}>
-                <Button
-                  className={classes.noteItem}
-                  onClick={() =>
-                    history.push({
-                      pathname: "/staking-vesting",
-                      state: { from: "staking" },
-                    })
-                  }
-                >
-                  Read More on Benefits & Rules{" "}
-                  <img
-                    alt="icon"
-                    src={"imgs/landing/moredetails.svg"}
-                    style={{ marginLeft: "10px" }}
-                  />
-                </Button>
-              </div>
-            </div>
-          </Grid>
-        </Grid>
+        </div>
       </div>
     </>
   );

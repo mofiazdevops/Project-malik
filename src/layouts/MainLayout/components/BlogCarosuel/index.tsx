@@ -142,7 +142,7 @@ export const BlogCarosuel = () => {
           responsive={responsive}
           swipeable
           draggable
-          showDots
+          // showDots
           infinite
           autoPlay
           autoPlaySpeed={3000}
@@ -151,7 +151,7 @@ export const BlogCarosuel = () => {
           transitionDuration={500}
           containerClass="carousel-container"
           itemClass="carousel-item-padding-40-px"
-          dotListClass="custom-dot-list-style"
+          // dotListClass="custom-dot-list-style"
         >
           {blogs.map((blog) => (
             <Card
@@ -180,7 +180,8 @@ export const BlogCarosuel = () => {
               <CardContent
                 sx={{
                   flex: "1 0 auto",
-                  p: 3,
+                  alignItems: "center",
+                  px: 3,
                   width: { xs: "100%", sm: "509px" },
                   height: { xs: "auto", sm: "211px" },
                 }}
@@ -196,6 +197,10 @@ export const BlogCarosuel = () => {
                     backgroundClip: "text", // For modern browsers
                     color: "transparent",
                     fontSize: { xs: "16px", md: "24px", lg: "32px" },
+                    display: "-webkit-box", // Enables multi-line truncation
+                    WebkitBoxOrient: "vertical", // Makes the box orientation vertical
+                    WebkitLineClamp: 2, // Limits the text to 2 lines
+                    overflow: "hidden", // Hides the overflow
                   }}
                 >
                   {blog.title}

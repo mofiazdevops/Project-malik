@@ -155,6 +155,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "14px",
   },
   imageWrapper: {
+    background: "#081015",
     display: "flex",
     justifyContent: "center",
     position: "relative",

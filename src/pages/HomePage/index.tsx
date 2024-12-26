@@ -64,8 +64,8 @@ const HomePage = () => {
         {/* <Airdropcomingsoon /> */}
         <BlogCarosuel />
         {/* <StakingList /> */}
-        {/* <Staking />
-        <Vesting /> */}
+        {/* <Staking /> */}
+        {/* <Vesting /> */}
         <InnovationSection />
         <Features />
         <IdeaWalletSection2 />
@@ -78,7 +78,7 @@ const HomePage = () => {
         {/* <Featured loading={featuredLoading} pools={featuredPools} /> */}
         <Subscribe />
         <Community />
-        <Ambassador />
+        {/* <Ambassador /> */}
       </div>
     </div>
   );
