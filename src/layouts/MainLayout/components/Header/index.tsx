@@ -344,11 +344,11 @@ export const Header = (props: IProps) => {
     //   name: "Games",
     // },
     { link: "/", name: "Home" },
-    {
-      external: true,
-      link: "https://ideaology-1.gitbook.io/ideaology-1/",
-      name: "Docs",
-    },
+    // {
+    //   external: true,
+    //   link: "https://ideaology-1.gitbook.io/ideaology-1/",
+    //   name: "Docs",
+    // },
     // {
     //   external: true,
     //   link: "https://ideaologyio.medium.com/",
@@ -375,13 +375,21 @@ export const Header = (props: IProps) => {
       link: "/voting",
       name: "Voting",
     },
-    {
-      link: "/get-idea",
-      name: "Get IDEA",
-    },
+    // {
+    //   link: "/get-idea",
+    //   name: "Get IDEA",
+    // },
     {
       link: "/swap",
       name: "Swap IDEA",
+    },
+    {
+      name: "IDEASCAN 3.0",
+      link: "https://www.ideascan.io/",
+    },
+    {
+      name: "IDEA Wallet",
+      link: "https://play.google.com/store/apps/details?id=com.IdeaologyStudio.RealPoolBallBilliardGames",
     },
     {
       name: "AirDrop",
