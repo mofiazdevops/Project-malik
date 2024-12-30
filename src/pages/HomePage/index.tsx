@@ -78,7 +78,7 @@ const HomePage = () => {
         {/* <Featured loading={featuredLoading} pools={featuredPools} /> */}
         <Subscribe />
         <Community />
-        {/* <Ambassador /> */}
+        <Ambassador />
       </div>
     </div>
   );

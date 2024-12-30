@@ -299,11 +299,11 @@ export const Header = (props: IProps) => {
         },
       ], // Adding gameItems inside Products > Games
     },
-    // {
-    //   external: true,
-    //   link: "https://ideaology-1.gitbook.io/ideaology-1/",
-    //   name: "Docs",
-    // },
+    {
+      external: true,
+      link: "https://ideaology-1.gitbook.io/ideaology-1/",
+      name: "Documents",
+    },
     // {
     //   external: true,
     //   link: "https://ideaologyio.medium.com/",
@@ -328,10 +328,10 @@ export const Header = (props: IProps) => {
     //   name: "Get IDEA",
     // },
 
-    {
-      name: "AirDrop",
-      type: "gotoapp",
-    },
+    // {
+    //   name: "AirDrop",
+    //   type: "gotoapp",
+    // },
   ];
   const menuItems12 = [
     // {
@@ -344,11 +344,11 @@ export const Header = (props: IProps) => {
     //   name: "Games",
     // },
     { link: "/", name: "Home" },
-    // {
-    //   external: true,
-    //   link: "https://ideaology-1.gitbook.io/ideaology-1/",
-    //   name: "Docs",
-    // },
+    {
+      external: true,
+      link: "https://ideaology-1.gitbook.io/ideaology-1/",
+      name: "Docs",
+    },
     // {
     //   external: true,
     //   link: "https://ideaologyio.medium.com/",
@@ -391,10 +391,10 @@ export const Header = (props: IProps) => {
       name: "IDEA Wallet",
       link: "https://play.google.com/store/apps/details?id=com.IdeaologyStudio.RealPoolBallBilliardGames",
     },
-    {
-      name: "AirDrop",
-      type: "gotoapp",
-    },
+    // {
+    //   name: "AirDrop",
+    //   type: "gotoapp",
+    // },
   ];
 
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
