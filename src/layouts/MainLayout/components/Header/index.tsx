@@ -88,7 +88,6 @@ const useStyles = makeStyles((theme: any) => ({
     marginLeft: "5px",
     // width: "135px",
     height: "35px",
-    // maxHeight: "75px",
     fontSize: theme.typography.button.fontSize,
     borderRadius: "3px",
     display: "flex", // Ensures content inside aligns properly
