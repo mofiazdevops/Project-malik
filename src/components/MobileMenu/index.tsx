@@ -219,10 +219,10 @@ export const MobileMenu = (props: IProps) => {
 
             {/* <SimpleMenu /> */}
           </div>
-          <div>
+          {/* <div>
             <p style={{ color: "white" }}>Games</p>
-          </div>
-          {gameItems &&
+          </div> */}
+          {/* {gameItems &&
             [...gameItems].map((item: IMenuItem, i: any) => (
               <a href={item.link} key={i}>
                 <Button
@@ -233,10 +233,10 @@ export const MobileMenu = (props: IProps) => {
                   {item.name}
                 </Button>
               </a>
-            ))}
-          <div>
+            ))} */}
+          {/* <div>
             <p style={{ color: "white" }}>MetaVerse</p>
-          </div>
+          </div> */}
           <a href="https://www.manialands.com">
             <Button
               classes={{ text: classes1.menuButtonText }}

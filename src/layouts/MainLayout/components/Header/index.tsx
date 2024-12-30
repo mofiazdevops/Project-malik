@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme: any) => ({
     boxShadow: `0px 1px 2px ${transparentize(0.9, theme.colors.black)}`,
     zIndex: 999,
 
-    backgroundColor: "green",
+    backgroundColor: "#081015",
   },
   container: {
     height: theme.custom.appHeaderHeight,
@@ -254,22 +254,22 @@ export const Header = (props: IProps) => {
           link: "https://manialands.com",
           name: "Manialands",
         },
-        {
-          name: "Games", // Games section within Products
-          type: "dropdown", // Nested dropdown for games
-          items: [
-            {
-              name: "Save the Doge",
-              img: "games/dog.png",
-              link: "https://play.google.com/store/apps/details?id=com.mms.savethepuppies.rescuedog.puppygames",
-            },
-            {
-              name: "Pool Master Billiard",
-              img: "games/pool.png",
-              link: "https://play.google.com/store/apps/details?id=com.IdeaologyStudio.RealPoolBallBilliardGames",
-            },
-          ], // Adding gameItems inside Products > Games
-        },
+        // {
+        //   name: "Games", // Games section within Products
+        //   type: "dropdown", // Nested dropdown for games
+        //   items: [
+        //     {
+        //       name: "Save the Doge",
+        //       img: "games/dog.png",
+        //       link: "https://play.google.com/store/apps/details?id=com.mms.savethepuppies.rescuedog.puppygames",
+        //     },
+        //     {
+        //       name: "Pool Master Billiard",
+        //       img: "games/pool.png",
+        //       link: "https://play.google.com/store/apps/details?id=com.IdeaologyStudio.RealPoolBallBilliardGames",
+        //     },
+        //   ], // Adding gameItems inside Products > Games
+        // },
       ],
     },
     {
@@ -302,6 +302,11 @@ export const Header = (props: IProps) => {
       external: true,
       link: "https://ideaology-1.gitbook.io/ideaology-1/",
       name: "Documents",
+    },
+    {
+      external: true,
+      link: "https://docs.google.com/forms/d/e/1FAIpQLSda5q18vhNvPX3dbcUXnXXaDTwbrjJjDCtJxcuGgNSSpAfI3g/viewform",
+      name: "Ambassadors",
     },
     // {
     //   external: true,
@@ -346,7 +351,7 @@ export const Header = (props: IProps) => {
     {
       external: true,
       link: "https://ideaology-1.gitbook.io/ideaology-1/",
-      name: "Docs",
+      name: "Documents",
     },
     // {
     //   external: true,
@@ -362,10 +367,11 @@ export const Header = (props: IProps) => {
     //   link: "/privacy-policy",
     //   name: "Privacy Policy",
     // },
-    // {
-    //   link: "/blog",
-    //   name: "Blogs",
-    // },
+    {
+      external: true,
+      link: "https://docs.google.com/forms/d/e/1FAIpQLSda5q18vhNvPX3dbcUXnXXaDTwbrjJjDCtJxcuGgNSSpAfI3g/viewform",
+      name: "Ambassadors",
+    },
     {
       link: "/newstaking",
       name: "Staking",
@@ -509,7 +515,6 @@ export const Header = (props: IProps) => {
                     style={{
                       width: "120px",
                       height: "auto",
-                      minHeight: "120px",
                     }}
                   >
                     {element.items.map((subItem, subKey) => {
@@ -530,7 +535,7 @@ export const Header = (props: IProps) => {
                             >
                               {subItem.name}
                             </Button>
-                            <div className="dropdownContent2">
+                            {/* <div className="dropdownContent2">
                               {subItem.items.map((game, gameKey) => (
                                 <a
                                   key={gameKey}
@@ -558,7 +563,7 @@ export const Header = (props: IProps) => {
                                   </Button>
                                 </a>
                               ))}
-                            </div>
+                            </div> */}
                           </div>
                         );
                       } else {
@@ -694,7 +699,7 @@ export const Header = (props: IProps) => {
                   href={element.link}
                   key={element.name}
                   rel="noreferrer"
-                  // target={element.external ? "_blank" : "_self"}
+                  target={element.external ? "_blank" : "_self"}
                 >
                   <Button
                     classes={{
