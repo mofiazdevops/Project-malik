@@ -6,7 +6,7 @@ import twitter from "../../../../assets/pngs/SocialTwitter.png";
 import instagram from "../../../../assets/pngs/SocialInstagram.png";
 import facebook from "../../../../assets/pngs/SocialFacebook.png";
 import color from "theme/colors";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import { FaLinkedinIn } from "react-icons/fa";
 
 const useStyles = makeStyles((theme) => ({
   rootContainer: {
@@ -72,6 +72,10 @@ const useStyles = makeStyles((theme) => ({
     //   color: "#1e88e5",
     // },
   },
+  icon1: {
+    borderRadius: "120%",
+    background: "white",
+  },
 }));
 
 export const Community: React.FC = () => {
@@ -89,21 +93,14 @@ export const Community: React.FC = () => {
         </div>
         <div className={classes.socialIcons}>
           <a
-            className={classes.icon}
+            className={classes.icon1}
             href="https://www.linkedin.com/company/ideaology-io/"
             target="_blank"
             rel="noreferrer"
           >
             {/* <img src={telegram} alt="telegram" width={30} height={30} /> */}
-            <LinkedInIcon
-              sx={{
-                width: 35,
-                height: 35,
-                color: "#ffffff", // Set the color to your preferred color
-                "&:hover": {
-                  color: "#ffffff", // Disable hover color change
-                },
-              }}
+            <FaLinkedinIn
+              style={{ width: 33, height: 33, color: "black", padding: 6 }}
             />
           </a>
           <a
