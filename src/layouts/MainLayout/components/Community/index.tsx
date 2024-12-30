@@ -5,6 +5,7 @@ import telegram from "../../../../assets/pngs/SocialTelegram.png";
 import twitter from "../../../../assets/pngs/SocialTwitter.png";
 import instagram from "../../../../assets/pngs/SocialInstagram.png";
 import facebook from "../../../../assets/pngs/SocialFacebook.png";
+import color from "theme/colors";
 
 const useStyles = makeStyles((theme) => ({
   rootContainer: {
@@ -96,7 +97,7 @@ export const Community: React.FC = () => {
           </a>
           <a
             className={classes.icon}
-            href="https://x.com/Ideascanio"
+            href="https://twitter.com/ideaologyio"
             target="_blank"
             rel="noreferrer"
           >
@@ -104,7 +105,7 @@ export const Community: React.FC = () => {
           </a>
           <a
             className={classes.icon}
-            href="https://x.com/Ideascanio"
+            href="https://www.instagram.com/ideaologyio/"
             target="_blank"
             rel="noreferrer"
           >
@@ -112,7 +113,7 @@ export const Community: React.FC = () => {
           </a>
           <a
             className={classes.icon}
-            href="https://x.com/Ideascanio"
+            href="https://www.facebook.com/ideaologytech/"
             target="_blank"
             rel="noreferrer"
           >
