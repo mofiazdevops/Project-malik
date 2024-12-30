@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme: any) => ({
     boxShadow: `0px 1px 2px ${transparentize(0.9, theme.colors.black)}`,
     zIndex: 999,
 
-    backgroundColor: "#081015",
+    backgroundColor: "green",
   },
   container: {
     height: theme.custom.appHeaderHeight,
