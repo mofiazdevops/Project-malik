@@ -68,9 +68,12 @@ const HomePage = () => {
         {/* <Vesting /> */}
         <InnovationSection />
         <Features />
-        <IdeaWalletSection2 />
-        <IdeaWalletSection />
-
+        <div id="section-1">
+          <IdeaWalletSection2 />
+        </div>
+        <div id="section-2">
+          <IdeaWalletSection />
+        </div>
         {/* 
       <Link to={`${process.env.REACT_APP_IDO_URL}pools/details/${pool._id}`}>
       </Link> */}

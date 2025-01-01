@@ -8,8 +8,6 @@ import gline from "../../../../assets/pngs/gline.png";
 import kuCoin from "../../../../assets/pngs/KuCoin Green 1.png";
 import coinGecko from "../../../../assets/pngs/CoinGecko.png";
 import gif from "../../../../assets/svgs/ideagif.gif";
-import { GblViewer } from "../GblViewer";
-// import GblViewer from "../GblViewer";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -57,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   content: {
-    maxWidth: "1400px",
+    maxWidth: "1250px",
     margin: "0 auto",
   },
   card: {
@@ -166,8 +164,8 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: "796px",
     height: "610px",
     padding: 0,
-    [theme.breakpoints.up("md")]: {
-      maxWidth: "80%",
+    [theme.breakpoints.down("sm")]: {
+      height: "310px",
     },
   },
   floatingIcons: {
@@ -267,6 +265,13 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 700,
     textAlign: "left",
   },
+  gridContainer: {
+    display: "flex",
+    flexDirection: "row", // Default flex direction (for larger devices)
+    [theme.breakpoints.down("sm")]: {
+      flexDirection: "column-reverse", // Change flex direction on small devices
+    },
+  },
 }));
 
 export const Hero = () => {
@@ -275,7 +280,12 @@ export const Hero = () => {
   return (
     <div className={classes.root}>
       <Container className={classes.content}>
-        <Grid container spacing={4} alignItems="center">
+        <Grid
+          container
+          spacing={4}
+          alignItems="center"
+          className={classes.gridContainer}
+        >
           <Grid item xs={12} md={6}>
             <h1 className={classes.title}>
               Empowering Innovation <br />
@@ -382,14 +392,7 @@ export const Hero = () => {
             </div>
           </Grid>
           <Grid item xs={12} md={6} className={classes.imageWrapper}>
-            <img
-              src={gif} // Replace with your mockup image
-              alt="Mockup"
-              className={classes.mockupImage}
-            />
-            {/* <div>
-          </div> */}
-            {/* <GblViewer /> */}
+            <img src={gif} alt="Mockup" className={classes.mockupImage} />
           </Grid>
         </Grid>
       </Container>
