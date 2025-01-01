@@ -169,7 +169,7 @@ export const InnovationSection = () => {
                 WebkitTextFillColor: "transparent",
               }}
             >
-              200+
+              05
             </Typography>
             <Typography
               sx={{
@@ -185,7 +185,7 @@ export const InnovationSection = () => {
                 color: "#D3D3D6",
               }}
             >
-              Trading Pairs Available
+              Years of Trust
             </Typography>
           </Box>
           <Box
@@ -212,7 +212,7 @@ export const InnovationSection = () => {
                 WebkitTextFillColor: "transparent",
               }}
             >
-              150K+
+              05
             </Typography>
             <Typography
               sx={{
@@ -228,7 +228,7 @@ export const InnovationSection = () => {
                 // pb: { md: "10%" },
               }}
             >
-              Transactions Tracked Daily
+              Projects
             </Typography>
           </Box>
           <Box
@@ -255,7 +255,7 @@ export const InnovationSection = () => {
                 WebkitTextFillColor: "transparent",
               }}
             >
-              30K+
+              100K
             </Typography>
             <Typography
               sx={{
@@ -270,7 +270,7 @@ export const InnovationSection = () => {
                 color: "#D3D3D6",
               }}
             >
-              Active Users
+              Trusted Investors
             </Typography>
           </Box>
         </Box>

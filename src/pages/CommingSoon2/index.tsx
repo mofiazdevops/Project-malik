@@ -2,7 +2,7 @@ import React from "react";
 import wait from "../../assets/svgs/wait.svg";
 import { Box, Container, Grid, Typography } from "@mui/material";
 
-const CommingSoon = () => {
+const CommingSoon2 = () => {
   return (
     <Box
       sx={{
@@ -12,7 +12,7 @@ const CommingSoon = () => {
         minHeight: "100vh",
         bgcolor: "#f8f9fa",
         textAlign: { xs: "center", md: "left" },
-        p: 2,
+        p: "2px",
       }}
     >
       <Container>
@@ -32,10 +32,12 @@ const CommingSoon = () => {
               color="text.secondary"
               sx={{ lineHeight: 1.6 }}
             >
-              WorkAsPro is gearing up for its launch, and our dedicated team is
-              working tirelessly to bring this exciting platform to life. Stay
-              tuned for the official launch as we fine-tune every detail to
-              ensure a seamless experience for our users.
+              IdeaWallet is on its way! Our passionate team is working
+              diligently to craft an innovative platform designed to empower
+              your ideas. We are focused on perfecting every aspect to deliver a
+              smooth and inspiring experience. Stay connected as we prepare for
+              the big launch your gateway to transforming ideas into reality is
+              coming soon!
             </Typography>
           </Grid>
 
@@ -62,4 +64,4 @@ const CommingSoon = () => {
   );
 };
 
-export default CommingSoon;
+export default CommingSoon2;

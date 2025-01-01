@@ -11,17 +11,20 @@ export const Features = () => {
       style={{
         backgroundColor: "#081015",
         paddingBottom: "20px",
+        maxWidth: "1100px",
+        display: "flex",
+        margin: "auto",
       }}
     >
       {/* Main Section */}
       <Box
         pt={6}
-        mx={{ xs: 2, sm: "auto" }}
+        mx={{ xs: "auto", sm: "auto" }}
         textAlign={{ xs: "center", sm: "center" }}
         sx={{
           width: {
-            xs: "100%", // 100% width on extra-small devices
-            sm: "90%", // 90% width on small devices
+            xs: "86%", // 100% width on extra-small devices
+            sm: "40%", // 90% width on small devices
             md: "95%", // 95% width on medium devices
             lg: "100%", // 100% width on large devices
           },
@@ -31,16 +34,16 @@ export const Features = () => {
         <Grid
           container
           spacing={4}
-          justifyContent="space-between"
-          alignItems="center"
+          justifyContent={{ xs: "left", md: "space-between" }}
+          alignItems={{ xs: "left", md: "center" }}
           direction={{ xs: "column", md: "row" }}
         >
           {/* Decentralized Identity */}
-          <Grid item xs={12} sm={4} textAlign={{ xs: "center", md: "left" }}>
+          <Grid item xs={12} sm={4} textAlign={{ xs: "left", md: "left" }}>
             <Box
               display="flex"
               alignItems={"center"}
-              justifyContent={{ xs: "center", md: "flex-start" }}
+              justifyContent={{ xs: "left", md: "flex-start" }}
               width={"252px"}
             >
               <img
@@ -74,11 +77,11 @@ export const Features = () => {
           </Grid>
 
           {/* Smart Contract Automation */}
-          <Grid item xs={12} sm={4} textAlign={{ xs: "center", md: "left" }}>
+          <Grid item xs={12} sm={4} textAlign={{ xs: "left", md: "left" }}>
             <Box
               display="flex"
               alignItems={"center"}
-              justifyContent={{ xs: "center", md: "flex-start" }}
+              justifyContent={{ xs: "left", md: "flex-start" }}
               width={"252px"}
             >
               <img
@@ -112,11 +115,11 @@ export const Features = () => {
           </Grid>
 
           {/* Asset Tokenization */}
-          <Grid item xs={12} sm={4} textAlign={{ xs: "center", md: "left" }}>
+          <Grid item xs={12} sm={4} textAlign={{ xs: "left", md: "left" }}>
             <Box
               display="flex"
               alignItems={"center"}
-              justifyContent={{ xs: "center", md: "flex-start" }}
+              justifyContent={{ xs: "left", md: "flex-start" }}
               width={"252px"}
             >
               <img src={token} alt="token" style={{ width: 30, height: 30 }} />

@@ -31,7 +31,8 @@ const useStyles = makeStyles((theme) => ({
     border: "2px solid #8ecaf3",
     borderRadius: "16px",
     // background: "transparent",
-    fontSize: "14px",
+    fontFamily: "SF Pro Display",
+    fontSize: "16px",
     fontWeight: 500,
     background: "linear-gradient(90deg, #FFFFFF, #3CADFF)",
     backgroundClip: "text",
@@ -158,17 +159,24 @@ export const IdeaWalletSection2 = () => {
           </Typography>
 
           <Button className={classes.buttoncontainer}>
-            <div className={classes.textcontai}>
-              <img
-                src={starbg}
-                alt="starbg"
-                width={70}
-                height={70}
-                className={classes.dust}
-              />
-              Explore
-              <img src={star} alt="star" className={classes.star} />
-            </div>
+            <a
+              href="https://www.ideascan.io/"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ textDecoration: "none" }}
+            >
+              <div className={classes.textcontai}>
+                <img
+                  src={starbg}
+                  alt="starbg"
+                  width={70}
+                  height={70}
+                  className={classes.dust}
+                />
+                Explore
+                <img src={star} alt="star" className={classes.star} />
+              </div>
+            </a>
           </Button>
         </Box>
 
