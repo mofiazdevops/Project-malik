@@ -11,19 +11,19 @@ const CommingSoon2 = () => {
         justifyContent: "center",
         minHeight: "100vh",
         bgcolor: "#f8f9fa",
-        textAlign: { xs: "center", lg: "left" },
-        p: 2,
+        textAlign: { xs: "center", md: "left" },
+        p: "2px",
       }}
     >
       <Container>
         <Grid container spacing={4} alignItems="center" justifyContent="center">
           {/* Text Section */}
-          <Grid item xs={12} lg={6}>
+          <Grid item xs={12} md={6}>
             <Typography
               variant="h3"
               color="primary"
               fontWeight="bold"
-              sx={{ mb: 2 }}
+              sx={{ mt: 12, mb: 2 }}
             >
               Coming Soon!
             </Typography>
@@ -42,7 +42,7 @@ const CommingSoon2 = () => {
           </Grid>
 
           {/* Image Section */}
-          <Grid item xs={12} lg={6}>
+          <Grid item xs={12} md={6}>
             <Box
               sx={{
                 width: "100%",

@@ -408,12 +408,18 @@ export const Header = (props: IProps) => {
       name: "Swap & Bridge",
     },
     {
+      external: true,
       name: "IDEASCAN 3.0",
       link: "https://www.ideascan.io/",
     },
     {
+      external: true,
+      link: "/CommingSoon",
+      name: "WorkAsPro",
+    },
+    {
       name: "IDEA Wallet",
-      link: "https://play.google.com/store/apps/details?id=com.IdeaologyStudio.RealPoolBallBilliardGames",
+      link: "/CommingSoon2",
     },
     // {
     //   name: "AirDrop",
