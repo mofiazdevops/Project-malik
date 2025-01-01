@@ -19,6 +19,7 @@ const client = new ApolloClient({
 });
 
 import "./App.css";
+import { ScrollProvider } from "contexts/scrollContext";
 
 ReactGA.initialize("UA-155131109-1");
 
@@ -38,9 +39,11 @@ function App() {
           <Web3ReactProvider getLibrary={getLibrary}>
             <ConnectedWeb3>
               <GlobalProvider>
-                <AppProvider>
-                  <BrowserRouter>{renderRoutes(routes as any)}</BrowserRouter>
-                </AppProvider>
+                <ScrollProvider>
+                  <AppProvider>
+                    <BrowserRouter>{renderRoutes(routes as any)}</BrowserRouter>
+                  </AppProvider>
+                </ScrollProvider>
                 <OfferDialog />
               </GlobalProvider>
             </ConnectedWeb3>

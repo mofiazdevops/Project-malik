@@ -214,8 +214,24 @@ const companyItems = [
   //   name: "Apply for IDO",
   // },
   {
+    link: "/CommingSoon",
+    name: "WorkAsPro Talent",
+  },
+  {
+    link: "https://www.ideascan.io/",
+    name: "IDEA Explorer",
+  },
+  {
     link: "/blog",
-    name: "Blogs",
+    name: "IDEA Network",
+  },
+  {
+    link: "/newstaking",
+    name: "Staking",
+  },
+  {
+    link: "/swap",
+    name: "Swap & Bridge",
   },
 ];
 
@@ -232,10 +248,10 @@ const helpItems = [
   //     link: "/privacy",
   //     name: "Privacy",
   // },
-  {
-    link: "/staking-vesting",
-    name: "Staking & Vesting",
-  },
+  // {
+  //   link: "/staking-vesting",
+  //   name: "Staking & Vesting",
+  // },
   {
     link: "/privacy-policy",
     name: "Privacy Policy",
@@ -246,6 +262,14 @@ const developerItems = [
   {
     link: "https://ideaology-2.gitbook.io/what-is-ideaido/",
     name: "Documentation",
+  },
+  {
+    link: "https://docs.google.com/forms/d/e/1FAIpQLSda5q18vhNvPX3dbcUXnXXaDTwbrjJjDCtJxcuGgNSSpAfI3g/viewform",
+    name: "Ambassadors",
+  },
+  {
+    link: "/GrantProgram",
+    name: "Grant Program",
   },
 ];
 
@@ -294,7 +318,7 @@ export const Footer = (props: IProps) => {
               </div>
             </div>
             <div className={classes.half}>
-              <span className={classes.menuTitle}>Company</span>
+              <span className={classes.menuTitle}>Products</span>
               <div className={classes.menuList}>
                 {companyItems.map((element) => (
                   <div className={classes.menuItem} key={element.name}>

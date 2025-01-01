@@ -192,7 +192,7 @@ export const MobileMenu = (props: IProps) => {
   }, [location.pathname, onMenuClose]);
 
   return (
-    <Hidden smUp>
+    <Hidden>
       <div className={classes.root}>
         <div className={classes.container}>
           <div className={classes.closeIcon} onClick={handleMenuClose}>

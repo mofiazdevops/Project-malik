@@ -18,6 +18,7 @@ import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import { useScroll } from "contexts/scrollContext";
 // import { useAppContext } from "contexts";
 // import { Web3Provider } from "@ethersproject/providers";
 // import { useEagerConnect, useInactiveListener } from "hooks/injectedHook";
@@ -51,7 +52,7 @@ const useStyles = makeStyles((theme: any) => ({
     justifyContent: "space-between",
     alignItems: "center",
     padding: `0 ${theme.spacing(4)}px`,
-    [theme.breakpoints.down("xs")]: {
+    [theme.breakpoints.down("sm")]: {
       padding: `0 ${theme.spacing(2)}px`,
       justifyContent: "center",
     },
@@ -60,7 +61,7 @@ const useStyles = makeStyles((theme: any) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
-    [theme.breakpoints.down("xs")]: {
+    [theme.breakpoints.down("sm")]: {
       display: "none",
     },
   },
@@ -121,7 +122,7 @@ const useStyles = makeStyles((theme: any) => ({
   burger: {
     display: "none",
 
-    [theme.breakpoints.down("xs")]: {
+    [theme.breakpoints.down("sm")]: {
       display: "block",
       position: "absolute",
 
@@ -173,6 +174,15 @@ const useStyles = makeStyles((theme: any) => ({
     // marginLeft: "auto",
     // marginRight: "auto",
   },
+  button: {
+    width: "120px",
+    textAlign: "left",
+    display: "block",
+    backgroundColor: "#2b2b2b", // Background color on hover
+    "&:hover": {
+      backgroundColor: "#0c71bc", // Background color on hover
+    },
+  },
 }));
 
 interface IProps {
@@ -184,6 +194,7 @@ interface IProps {
 // });
 
 export const Header = (props: IProps) => {
+  const { scrollToSection } = useScroll();
   // const { dispatch, state } = useAppContext();
 
   // const context = useWeb3React<Web3Provider>();
@@ -277,24 +288,24 @@ export const Header = (props: IProps) => {
       type: "dropdown", // Nested dropdown for games
       items: [
         {
-          name: "IDEASCAN 3.0",
-          link: "https://www.ideascan.io/",
+          name: "Explorer",
+          // link: "https://www.ideascan.io/",
         },
         {
           name: "IDEA Wallet",
-          link: "https://play.google.com/store/apps/details?id=com.IdeaologyStudio.RealPoolBallBilliardGames",
+          // link: "https://play.google.com/store/apps/details?id=com.IdeaologyStudio.RealPoolBallBilliardGames",
         },
         {
           link: "/newstaking",
           name: "Staking",
         },
-        {
-          link: "/voting",
-          name: "Voting",
-        },
+        // {
+        //   link: "/voting",
+        //   name: "Voting",
+        // },
         {
           link: "/swap",
-          name: "Swap IDEA",
+          name: "Swap & Bridge ",
         },
       ], // Adding gameItems inside Products > Games
     },
@@ -302,6 +313,10 @@ export const Header = (props: IProps) => {
       external: true,
       link: "https://ideaology-1.gitbook.io/ideaology-1/",
       name: "Documents",
+    },
+    {
+      link: "/GrantProgram",
+      name: "Grant Program",
     },
     {
       external: true,
@@ -377,24 +392,34 @@ export const Header = (props: IProps) => {
       name: "Staking",
     },
     {
-      link: "/voting",
-      name: "Voting",
+      link: "/GrantProgram",
+      name: "Grant Program",
     },
+    // {
+    //   link: "/voting",
+    //   name: "Voting",
+    // },
     // {
     //   link: "/get-idea",
     //   name: "Get IDEA",
     // },
     {
       link: "/swap",
-      name: "Swap IDEA",
+      name: "Swap & Bridge",
     },
     {
+      external: true,
       name: "IDEASCAN 3.0",
       link: "https://www.ideascan.io/",
     },
     {
+      external: true,
+      link: "/CommingSoon",
+      name: "WorkAsPro",
+    },
+    {
       name: "IDEA Wallet",
-      link: "https://play.google.com/store/apps/details?id=com.IdeaologyStudio.RealPoolBallBilliardGames",
+      link: "/CommingSoon2",
     },
     // {
     //   name: "AirDrop",
@@ -609,8 +634,8 @@ export const Header = (props: IProps) => {
                     className="dropdownContent13"
                     style={{
                       width: "120px",
-                      height: "50px",
-                      textAlign: "center",
+                      height: "200%",
+                      textAlign: "left",
                     }}
                   >
                     {element.items.map((subItem, subKey) => {
@@ -666,23 +691,55 @@ export const Header = (props: IProps) => {
                         );
                       } else {
                         return (
-                          <a
-                            key={subKey}
-                            className={classes.noDecoration}
-                            href={subItem.link}
-                            rel="noreferrer"
-                            target={subItem.external ? "_blank" : "_self"}
-                          >
-                            <Button
-                              classes={{
-                                text: classes.menuButtonText,
-                              }}
-                              color="secondary"
-                              size="large"
-                            >
-                              {subItem.name}
-                            </Button>
-                          </a>
+                          <div key={subKey}>
+                            {subItem.name === "Explorer" ? (
+                              <Button
+                                onClick={() => scrollToSection("section-1")}
+                                classes={{
+                                  text: classes.menuButtonText,
+                                  root: classes.button,
+                                }}
+                                color="secondary"
+                                size="large"
+                                style={{
+                                  width: "120px",
+                                  textAlign: "left",
+                                  display: "block",
+                                }}
+                              >
+                                {subItem.name}
+                              </Button>
+                            ) : subItem.name === "IDEA Wallet" ? (
+                              <Button
+                                onClick={() => scrollToSection("section-2")}
+                                classes={{
+                                  text: classes.menuButtonText,
+                                  root: classes.button,
+                                }}
+                                color="secondary"
+                                size="large"
+                              >
+                                {subItem.name}
+                              </Button>
+                            ) : (
+                              <a
+                                className={classes.noDecoration}
+                                href={subItem.link}
+                                rel="noreferrer"
+                                target={subItem.external ? "_blank" : "_self"}
+                              >
+                                <Button
+                                  classes={{
+                                    text: classes.menuButtonText,
+                                  }}
+                                  color="secondary"
+                                  size="large"
+                                >
+                                  {subItem.name}
+                                </Button>
+                              </a>
+                            )}
+                          </div>
                         );
                       }
                     })}
@@ -734,39 +791,7 @@ export const Header = (props: IProps) => {
           })}
         </div>
         <div className={classes.buttonWrapperRight}>
-          {menuItems.map((element, key) => {
-            if (element.type === "staking") {
-              return (
-                <Button
-                  classes={{
-                    root: classes.menuStakingButton,
-                  }}
-                  color="secondary"
-                  disableElevation
-                  key={element.name}
-                  onClick={gotoStaking}
-                  size="medium"
-                  variant="contained"
-                >
-                  {element.name}
-                </Button>
-              );
-            } else if (element.type === "gotoapp") {
-              return (
-                <Button
-                  classes={{ root: classes.menuButton }}
-                  color="primary"
-                  disableElevation
-                  key={element.name}
-                  onClick={gotoApp}
-                  size="medium"
-                  variant="contained"
-                >
-                  {element.name}
-                </Button>
-              );
-            }
-          })}
+          {/* Connect MetaMask */}
         </div>
       </Container>
     </div>

@@ -68,9 +68,6 @@ const useStyles = makeStyles((theme) => ({
   icon: {
     color: "#fff",
     fontSize: "30px",
-    // "&:hover": {
-    //   color: "#1e88e5",
-    // },
   },
   icon1: {
     borderRadius: "120%",

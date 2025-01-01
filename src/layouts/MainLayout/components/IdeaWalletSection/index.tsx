@@ -4,6 +4,7 @@ import { Box, Button, Grid, Typography } from "@mui/material";
 import star from "../../../../assets/pngs/Star.png";
 import starbg from "../../../../assets/pngs/starbg.png";
 import mobileImage from "../../../../assets/pngs/mobile1.png";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   buttoncontainer: {
@@ -157,7 +158,13 @@ export const IdeaWalletSection = () => {
             your crypto journey and trade with confidence!
           </Typography>
 
-          <Button className={classes.buttoncontainer}>
+          <Link
+            to="/CommingSoon2"
+            className={classes.buttoncontainer}
+            style={{
+              textDecoration: "none",
+            }}
+          >
             <div className={classes.textcontai}>
               <img
                 src={starbg}
@@ -169,7 +176,7 @@ export const IdeaWalletSection = () => {
               Comming Soon
               <img src={star} alt="star" className={classes.star} />
             </div>
-          </Button>
+          </Link>
         </Box>
 
         {/* Right Content - Image */}
