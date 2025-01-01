@@ -20,7 +20,7 @@ export const ScrollProvider: React.FC = ({ children }) => {
     const section = document.getElementById(id);
     if (section) {
       section.scrollIntoView({ behavior: "smooth" });
-      setScrollPosition(window.scrollY); // Update scroll position
+      setScrollPosition(window.scrollY);
     }
   };
 
