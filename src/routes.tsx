@@ -180,6 +180,11 @@ const routes = [
       },
       {
         exact: true,
+        path: "/CommingSoon2",
+        component: lazy(() => import("pages/CommingSoon2")),
+      },
+      {
+        exact: true,
         path: "/GrantProgram",
         component: lazy(() => import("pages/GrantProgram")),
       },

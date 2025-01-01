@@ -405,7 +405,7 @@ export const Header = (props: IProps) => {
     // },
     {
       link: "/swap",
-      name: "Swap IDEA",
+      name: "Swap & Bridge",
     },
     {
       name: "IDEASCAN 3.0",
