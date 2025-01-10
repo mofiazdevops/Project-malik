@@ -258,13 +258,13 @@ export const Header = (props: IProps) => {
         {
           external: true,
           link: "/CommingSoon",
-          name: "WorkAsPro",
+          name: "WorkAsPro Talent",
         },
-        {
-          external: true,
-          link: "https://manialands.com",
-          name: "Manialands",
-        },
+        // {
+        //   external: true,
+        //   link: "https://manialands.com",
+        //   name: "Manialands",
+        // },
         // {
         //   name: "Games", // Games section within Products
         //   type: "dropdown", // Nested dropdown for games
@@ -319,8 +319,7 @@ export const Header = (props: IProps) => {
       name: "Grant Program",
     },
     {
-      external: true,
-      link: "https://docs.google.com/forms/d/e/1FAIpQLSda5q18vhNvPX3dbcUXnXXaDTwbrjJjDCtJxcuGgNSSpAfI3g/viewform",
+      link: "/Ambassador",
       name: "Ambassadors",
     },
     // {
@@ -415,7 +414,7 @@ export const Header = (props: IProps) => {
     {
       external: true,
       link: "/CommingSoon",
-      name: "WorkAsPro",
+      name: "WorkAsPro Talent",
     },
     {
       name: "IDEA Wallet",
@@ -538,7 +537,7 @@ export const Header = (props: IProps) => {
                   <div
                     className="dropdownContent"
                     style={{
-                      width: "120px",
+                      width: "130px",
                       height: "auto",
                     }}
                   >

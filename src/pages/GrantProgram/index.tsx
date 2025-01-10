@@ -220,7 +220,7 @@ const GrantProgram = () => {
                   placeholder="Enter Your Project Description or Upload Documents"
                   className={classes.input1}
                 />
-                <Button
+                {/* <Button
                   variant="contained"
                   startIcon={
                     <CloudUploadIcon sx={{ fontSize: 12, color: "white" }} />
@@ -237,7 +237,36 @@ const GrantProgram = () => {
                     },
                   }}
                 >
+                  <input type="file" style={{ display: "none" }} />
+                </Button> */}
+                <Button
+                  variant="contained"
+                  startIcon={
+                    <CloudUploadIcon sx={{ fontSize: 16, color: "white" }} />
+                  }
+                  className={classes.uploadButton}
+                  sx={{
+                    display: "flex",
+                    alignItems: "center", // Fixed typo: 'aliginItems' to 'alignItems'
+                    justifyContent: "center",
+                    backgroundColor: "#19252E",
+                    paddingLeft: "12px",
+                    paddingRight: "12px",
+                    borderRadius: "8px",
+                    color: "#ffffff",
+                    fontSize: "14px",
+                    "&:hover": {
+                      backgroundColor: "#555",
+                    },
+                  }}
+                  component="label" // Makes the button clickable for the file input
+                >
                   Upload
+                  <input
+                    type="file"
+                    style={{ display: "none" }}
+                    onChange={(event) => console.log(event.target.files[0])}
+                  />
                 </Button>
               </Box>
             </Grid>
