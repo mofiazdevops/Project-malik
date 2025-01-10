@@ -222,8 +222,9 @@ const companyItems = [
     name: "IDEA Explorer",
   },
   {
-    link: "/blog",
-    name: "IDEA Network",
+    // link: "/blog",
+    link: "/CommingSoon2",
+    name: "IDEA Wallet",
   },
   {
     link: "/newstaking",

@@ -173,7 +173,7 @@ export const IdeaWalletSection = () => {
                 height={70}
                 className={classes.dust}
               />
-              Comming Soon
+              Coming Soon
               <img src={star} alt="star" className={classes.star} />
             </div>
           </Link>

@@ -205,7 +205,9 @@ export default function Swap({
       </Content>
 
       <PrimaryButton onClick={submit}>
-        {isloading ? "...Confirming" : `Transfer ${swapAmount} IDEA to Polygon`}
+        {isloading
+          ? "...Confirming"
+          : `Transfer ${swapAmount} Polygon to IDEA `}
       </PrimaryButton>
     </div>
   );
