@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import { makeStyles } from "@material-ui/core";
 import { Box, Button, Grid, TextField, Typography } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/UploadFile";
+import { IconButton } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+import emailjs from "emailjs-com";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -149,6 +152,100 @@ const useStyles = makeStyles((theme) => ({
 
 const GrantProgram = () => {
   const classes = useStyles();
+  const [fileName, setFileName] = useState(""); // State to store the file name
+  const [fileIcon, setFileIcon] = useState(null); // State to store file icon (for PDF, etc.)
+  const [fileBinary, setFileBinary] = useState(null);
+
+  const handleFileRemove = () => {
+    setFileName(""); // Clear the file name
+    setFileIcon(null); // Reset the file icon
+    setFileBinary(null); // Reset binary data
+    setFormData({
+      ...formData,
+      fileData: null, // Remove file data from formData
+    });
+  };
+  const formRef = useRef<HTMLFormElement>(null);
+  const [formData, setFormData] = useState({
+    projectName: "",
+    amount: "",
+    email: "",
+    message: "",
+    img: "",
+    fileData: null,
+  });
+  // Initialize emailjs with public key
+  emailjs.init("xgY7CZ_J1S154HAiD");
+
+  // Handle form changes
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { id, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [id]: value,
+    }));
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setFormData({
+        ...formData,
+        img: URL.createObjectURL(file), // Store the image URL to display it
+      });
+    }
+  };
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setFileName(file.name);
+      setFileIcon(file.type.includes("pdf") ? "pdf" : "file"); // Set icon based on file type
+
+      // Convert file to binary and store it
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFileBinary(reader.result); // Store the binary data
+        setFormData({
+          ...formData,
+          fileData: reader.result, // Store file binary data in formData
+        });
+      };
+      reader.readAsArrayBuffer(file); // Read file as binary
+    }
+  };
+
+  // Handle form submission
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault(); // Prevent page reload
+
+    try {
+      if (formRef.current) {
+        const response = await emailjs.sendForm(
+          "service_mq3enkt",
+          "template_5bfsvqw",
+          formRef.current
+        );
+        console.log("SUCCESS!", response);
+
+        // Log form data for debugging
+        console.log("Form Data:", formData);
+
+        // Optionally reset the form and state
+        formRef.current.reset();
+        setFormData({
+          projectName: "",
+          amount: "",
+          email: "",
+          message: "",
+          img: "",
+          fileData: null,
+        });
+      }
+    } catch (err) {
+      console.log("FAILED...", err);
+    }
+  };
   return (
     <div className={classes.root}>
       <div className={classes.rootContainer}>
@@ -165,7 +262,11 @@ const GrantProgram = () => {
           </p>
         </div>
         {/* <div> */}
-        <Box className={classes.formContainer}>
+        <form
+          className={classes.formContainer}
+          ref={formRef}
+          onSubmit={handleSubmit}
+        >
           <h1 className={classes.title}>Apply For Grant Program</h1>
 
           <Grid container spacing={2}>
@@ -181,6 +282,9 @@ const GrantProgram = () => {
                 type="text"
                 placeholder="Enter Project Name"
                 className={classes.input}
+                id="projectName"
+                value={formData.projectName}
+                onChange={handleChange}
               />
             </Grid>
 
@@ -196,6 +300,9 @@ const GrantProgram = () => {
                 type="number"
                 placeholder="Enter Required Funding Amount"
                 className={classes.input}
+                id="amount"
+                value={formData.amount}
+                onChange={handleChange}
               />
             </Grid>
 
@@ -211,14 +318,20 @@ const GrantProgram = () => {
                 type="email"
                 placeholder="Enter Your Email"
                 className={classes.input}
+                id="email"
+                value={formData.email}
+                onChange={handleChange}
               />
             </Grid>
 
             <Grid item xs={12}>
               <Box className={classes.inputContainer}>
-                <textarea
+                <input
                   placeholder="Enter Your Project Description or Upload Documents"
                   className={classes.input1}
+                  id="message"
+                  value={formData.message}
+                  onChange={handleChange}
                 />
                 {/* <Button
                   variant="contained"
@@ -239,7 +352,7 @@ const GrantProgram = () => {
                 >
                   <input type="file" style={{ display: "none" }} />
                 </Button> */}
-                <Button
+                {/* <Button
                   variant="contained"
                   startIcon={
                     <CloudUploadIcon sx={{ fontSize: 16, color: "white" }} />
@@ -267,7 +380,130 @@ const GrantProgram = () => {
                     style={{ display: "none" }}
                     onChange={(event) => console.log(event.target.files[0])}
                   />
-                </Button>
+                </Button> */}
+                <div
+                  style={{
+                    display: "flex",
+                    // flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "flex-end",
+                  }}
+                >
+                  {/* Upload button */}
+                  {!fileName && (
+                    <Button
+                      variant="contained"
+                      startIcon={
+                        <CloudUploadIcon
+                          sx={{ fontSize: 16, color: "white" }}
+                        />
+                      }
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        backgroundColor: "#19252E",
+                        paddingLeft: "12px",
+                        paddingRight: "12px",
+                        borderRadius: "8px",
+                        color: "#ffffff",
+                        fontSize: "14px",
+                        "&:hover": {
+                          backgroundColor: "#555",
+                        },
+                      }}
+                      component="label"
+                    >
+                      Upload
+                      <input
+                        type="file"
+                        style={{ display: "none" }}
+                        accept="image/*, .pdf"
+                        onChange={handleFileChange}
+                      />
+                    </Button>
+                  )}
+
+                  {/* Display selected file */}
+                  {fileName && (
+                    <Box
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        width: "100%",
+                        maxWidth: "400px", // Limit width for responsiveness
+                        backgroundColor: "#19252E",
+                        color: "#fff",
+                        borderRadius: "8px",
+                        padding: "10px",
+                        marginTop: "10px",
+                      }}
+                    >
+                      <Box
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "8px",
+                        }}
+                      >
+                        {/* File icon */}
+                        <Box
+                          sx={{
+                            width: "20px",
+                            height: "20px",
+                            backgroundColor: "#fff",
+                            borderRadius: "4px",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                          }}
+                        >
+                          {fileIcon === "pdf" ? (
+                            <img
+                              src="pdf-icon.png"
+                              alt="pdf icon"
+                              style={{ width: "16px" }}
+                            />
+                          ) : fileIcon === "png" ? (
+                            <img
+                              src="png-icon.png"
+                              alt="png icon"
+                              style={{ width: "16px" }}
+                            />
+                          ) : fileIcon === "jpg" ? (
+                            <img
+                              src="jpg-icon.png"
+                              alt="jpg icon"
+                              style={{ width: "16px" }}
+                            />
+                          ) : (
+                            <span>{fileIcon === "file" ? "📄" : "📂"}</span>
+                          )}
+                        </Box>
+                        {/* File name */}
+                        <span
+                          style={{
+                            maxWidth: "200px",
+                            whiteSpace: "nowrap",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                          }}
+                        >
+                          {fileName}
+                        </span>
+                      </Box>
+
+                      {/* Remove button */}
+                      <IconButton
+                        onClick={handleFileRemove}
+                        sx={{ color: "#ffffff" }}
+                      >
+                        <CloseIcon />
+                      </IconButton>
+                    </Box>
+                  )}
+                </div>
               </Box>
             </Grid>
 
@@ -282,12 +518,17 @@ const GrantProgram = () => {
             </Grid> */}
 
             <Grid item xs={12}>
-              <Button fullWidth variant="contained" className={classes.button}>
+              <Button
+                fullWidth
+                variant="contained"
+                className={classes.button}
+                type="submit"
+              >
                 Apply
               </Button>
             </Grid>
           </Grid>
-        </Box>
+        </form>
         {/* </div> */}
       </div>
     </div>

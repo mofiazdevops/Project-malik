@@ -1,10 +1,10 @@
 import React from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import one from "../../../../assets/pngs/1.jpg";
-import two from "../../../../assets/pngs/2.jpg";
-import three from "../../../../assets/pngs/3.jpg";
-import four from "../../../../assets/pngs/4.jpg";
+import one from "../../../../assets/pngs/1.png";
+import two from "../../../../assets/pngs/2.png";
+import three from "../../../../assets/pngs/3.png";
+import four from "../../../../assets/pngs/4.png";
 import {
   Box,
   Button,
@@ -77,7 +77,7 @@ export const BlogCarosuel = () => {
           color: "#FFFFFF",
           //   width: "100%",
           maxWidth: "1000px",
-          height: { xs: "auto", sm: "auto", md: "auto", lg: "432px" },
+          height: { xs: "auto", sm: "auto", md: "auto", lg: "360px" },
           ml: { xs: "20px", sm: "20px", md: "20px", lg: "auto" },
           mr: { xs: "20px", sm: "20px", md: "20px", lg: "auto" },
           overflow: "hidden",
@@ -171,8 +171,8 @@ export const BlogCarosuel = () => {
                 image={blog.image}
                 alt="Blog Image"
                 sx={{
-                  width: "480px",
-                  height: "290px",
+                  width: "440px",
+                  height: "auto",
                   objectFit: "cover",
                   borderRadius: "12px",
                 }}

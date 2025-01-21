@@ -21,13 +21,17 @@ const useStyles = makeStyles((theme: any) => {
     stakingWrapper: {
       display: "flex",
       position: "relative",
-      paddingTop: "160px",
-      paddingBottom: "160px",
+      paddingTop: "140px",
+      paddingBottom: "140px",
       // width: "100%",
       // maxWidth: "1200px",
       marginLeft: "auto",
       marginRight: "auto",
       background: "#081015",
+      [theme.breakpoints.down("sm")]: {
+        paddingTop: "70px",
+        paddingBottom: "70px",
+      },
     },
     stakingWrapper2: {
       width: "100%",
@@ -53,17 +57,18 @@ const useStyles = makeStyles((theme: any) => {
       // background: theme.colors.primary,
       color: "#FFFFFF",
       // borderRadius: "100px 0px 0px 100px",
-      padding: "0px 30px 80px 30px",
+      // padding: "0px 30px 80px 30px",
       float: "right",
       [theme.breakpoints.down("md")]: {
         maxWidth: "100%",
         padding: "55px 40px 40px 44px",
+
         float: "none",
       },
       [theme.breakpoints.down("sm")]: {
-        padding: "55px 25px 40px 25px",
+        padding: "45px 25px 20px 25px",
         margin: "auto",
-        width: "80%",
+        width: "90%",
         borderRadius: "50px",
         float: "none",
       },
@@ -88,20 +93,21 @@ const useStyles = makeStyles((theme: any) => {
       "& p": {
         color: "#D3D3D6",
         fontWeight: 400,
-        fontSize: "20px",
+        fontSize: "18px",
         lineHeight: "35px",
         fontFamily: "SF Pro Display",
-        [theme.breakpoints.down("sm")]: {
-          fontSize: "0.6rem",
-          lineHeight: "15px",
-        },
         [theme.breakpoints.down("md")]: {
           fontSize: "0.9rem",
           lineHeight: "19px",
+          marginRight: "25px",
+        },
+        [theme.breakpoints.down("sm")]: {
+          fontSize: "14px",
+          lineHeight: "18px",
         },
       },
-      "& p:nth-child(2)": { marginTop: "4.06rem" },
-      "& p:nth-child(3)": { marginTop: "2.81rem" },
+      "& p:nth-child(2)": { marginTop: "3rem" },
+      "& p:nth-child(3)": { marginTop: "2rem" },
     },
     note: {
       marginTop: "4.06rem",
@@ -505,27 +511,9 @@ export default function Staking() {
                   and interest rates can be very generous. Its potentially a
                   very profitable way to invest your money.
                 </p>
-                {/* <div className={classes.note}>
-                  <Button
-                    className={classes.noteItem}
-                    onClick={() =>
-                      history.push({
-                        pathname: "/staking-vesting",
-                        state: { from: "staking" },
-                      })
-                    }
-                  >
-                    Read More on Benefits & Rules{" "}
-                    <img
-                      alt="icon"
-                      src={"imgs/landing/moredetails.svg"}
-                      style={{ marginLeft: "10px" }}
-                    />
-                  </Button>
-                </div> */}
               </div>
             </Grid>
-            <Grid item lg={7} md={7} xs={12}>
+            <Grid item lg={7} md={6} xs={11}>
               <div className="container">
                 <div className="row pt-lg-5 pt-md-4 pt-3">
                   <div className="col-lg-6 col-md-6 col-12 g-0">
@@ -613,7 +601,7 @@ export default function Staking() {
                               disabled={stakeAmount == 0}
                               onClick={createStake}
                             >
-                              Start Staking move to staking page
+                              Start Staking
                             </button>
                           </div>
                         </div>
