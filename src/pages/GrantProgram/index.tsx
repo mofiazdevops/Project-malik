@@ -5,8 +5,19 @@ import CloudUploadIcon from "@mui/icons-material/UploadFile";
 import { IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import emailjs from "emailjs-com";
+import pdf from "../../assets/pngs/pdf-icon.png";
+import png from "../../assets/pngs/png-icon.png";
+import jpg from "../../assets/pngs/jpg-icon.png";
 
 const useStyles = makeStyles((theme) => ({
+  "@global": {
+    "input:-webkit-autofill": {
+      backgroundColor: "transparent !important",
+      "-webkit-box-shadow": "0 0 0px 1000px transparent inset !important", // Ensure the autofill background is transparent
+      "-webkit-text-fill-color": "#ffffff !important", // Text color for autofill
+      transition: "background-color 5000s ease-in-out 0s", // Prevent autofill styles from flashing
+    },
+  },
   root: {
     background: "#081015",
   },
@@ -22,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       display: "flex",
       flexDirection: "column",
-      paddingTop: "15%",
+      paddingTop: "17%",
     },
   },
   container1: {
@@ -34,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
     height: "730px",
     [theme.breakpoints.down("sm")]: {
       maxWidth: 350,
-      height: "430px",
+      height: "350px",
       paddingTop: "3%",
     },
   },
@@ -60,6 +71,9 @@ const useStyles = makeStyles((theme) => ({
     color: "transparent",
     WebkitBackgroundClip: "text",
     WebkitTextFillColor: "transparent",
+    [theme.breakpoints.down("sm")]: {
+      fontSize: 20,
+    },
   },
   para: {
     fontFamily: "SF Pro Display",
@@ -68,6 +82,9 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "normal",
     [theme.breakpoints.down("sm")]: {
       fontSize: 16,
+    },
+    [theme.breakpoints.down("xs")]: {
+      fontSize: 14,
     },
   },
   title1: {
@@ -82,6 +99,9 @@ const useStyles = makeStyles((theme) => ({
     WebkitBackgroundClip: "text",
     WebkitTextFillColor: "transparent",
     [theme.breakpoints.down("sm")]: {
+      fontSize: 28,
+    },
+    [theme.breakpoints.down("xs")]: {
       fontSize: 24,
     },
   },
@@ -126,9 +146,8 @@ const useStyles = makeStyles((theme) => ({
     marginRight: 8,
     width: "326px",
     height: "108px",
-    // padding: "8px", // Adds padding for better spacing
-    resize: "none", // Prevents resizing of the textarea
-    overflow: "hidden", // Hides the scrollbar
+    resize: "none",
+    overflow: "hidden",
     display: "block",
     textAlign: "left", // Ensures text aligns to the left
     verticalAlign: "top", // Aligns text vertically to the top
@@ -154,17 +173,22 @@ const GrantProgram = () => {
   const classes = useStyles();
   const [fileName, setFileName] = useState(""); // State to store the file name
   const [fileIcon, setFileIcon] = useState(null); // State to store file icon (for PDF, etc.)
+  const [isActive, setIsActive] = useState(false);
   const [fileBinary, setFileBinary] = useState(null);
+
+  const [base64Image, setBase64Image] = useState(""); // State for image Base64
 
   const handleFileRemove = () => {
     setFileName(""); // Clear the file name
     setFileIcon(null); // Reset the file icon
     setFileBinary(null); // Reset binary data
+    setBase64Image(""); // Reset image Base64
     setFormData({
       ...formData,
       fileData: null, // Remove file data from formData
     });
   };
+
   const formRef = useRef<HTMLFormElement>(null);
   const [formData, setFormData] = useState({
     projectName: "",
@@ -174,11 +198,12 @@ const GrantProgram = () => {
     img: "",
     fileData: null,
   });
-  // Initialize emailjs with public key
+
   emailjs.init("xgY7CZ_J1S154HAiD");
 
-  // Handle form changes
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { id, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
@@ -186,13 +211,20 @@ const GrantProgram = () => {
     }));
   };
 
+  // Convert image to Base64
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setFormData({
-        ...formData,
-        img: URL.createObjectURL(file), // Store the image URL to display it
-      });
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64 = reader.result as string;
+        setBase64Image(base64);
+        setFormData((prevData) => ({
+          ...prevData,
+          img: base64, // Store Base64 image in formData
+        }));
+      };
+      reader.readAsDataURL(file); // Convert image to Base64
     }
   };
 
@@ -200,25 +232,33 @@ const GrantProgram = () => {
     const file = event.target.files[0];
     if (file) {
       setFileName(file.name);
-      setFileIcon(file.type.includes("pdf") ? "pdf" : "file"); // Set icon based on file type
 
-      // Convert file to binary and store it
+      // Set the appropriate icon based on file type
+      if (file.type.includes("pdf")) {
+        setFileIcon("pdf");
+      } else if (file.type.includes("png")) {
+        setFileIcon("png");
+      } else if (file.type.includes("jpg") || file.type.includes("jpeg")) {
+        setFileIcon("jpg");
+      } else {
+        setFileIcon("file"); // For other file types
+      }
       const reader = new FileReader();
       reader.onloadend = () => {
-        setFileBinary(reader.result); // Store the binary data
+        const base64 = reader.result as string;
+        setFileBinary(base64); // Store Base64 binary data
         setFormData({
           ...formData,
-          fileData: reader.result, // Store file binary data in formData
+          fileData: base64, // Store file data as Base64 in formData
         });
       };
-      reader.readAsArrayBuffer(file); // Read file as binary
+      reader.readAsDataURL(file); // Read file as Base64
     }
   };
 
-  // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault(); // Prevent page reload
-
+    setIsActive(true);
     try {
       if (formRef.current) {
         const response = await emailjs.sendForm(
@@ -227,11 +267,8 @@ const GrantProgram = () => {
           formRef.current
         );
         console.log("SUCCESS!", response);
-
-        // Log form data for debugging
         console.log("Form Data:", formData);
 
-        // Optionally reset the form and state
         formRef.current.reset();
         setFormData({
           projectName: "",
@@ -239,13 +276,20 @@ const GrantProgram = () => {
           email: "",
           message: "",
           img: "",
-          fileData: null,
+          fileData: "",
         });
+        setFileName(""); // Reset file name state
+        setFileIcon(null); // Reset file icon state
+        setFileBinary(null); // Reset file binary data state
+        setBase64Image("");
       }
+      setIsActive(false);
     } catch (err) {
+      setIsActive(false);
       console.log("FAILED...", err);
     }
   };
+
   return (
     <div className={classes.root}>
       <div className={classes.rootContainer}>
@@ -326,61 +370,14 @@ const GrantProgram = () => {
 
             <Grid item xs={12}>
               <Box className={classes.inputContainer}>
-                <input
+                <textarea
                   placeholder="Enter Your Project Description or Upload Documents"
                   className={classes.input1}
                   id="message"
                   value={formData.message}
                   onChange={handleChange}
+                  rows={4}
                 />
-                {/* <Button
-                  variant="contained"
-                  startIcon={
-                    <CloudUploadIcon sx={{ fontSize: 12, color: "white" }} />
-                  }
-                  className={classes.uploadButton}
-                  sx={{
-                    display: "flex",
-                    aliginItems: "center",
-                    backgroundColor: "#19252E",
-                    paddingLeft: "3px",
-                    paddingRight: "3px",
-                    "&:hover": {
-                      backgroundColor: "#555", // Apply hover background color directly
-                    },
-                  }}
-                >
-                  <input type="file" style={{ display: "none" }} />
-                </Button> */}
-                {/* <Button
-                  variant="contained"
-                  startIcon={
-                    <CloudUploadIcon sx={{ fontSize: 16, color: "white" }} />
-                  }
-                  className={classes.uploadButton}
-                  sx={{
-                    display: "flex",
-                    alignItems: "center", // Fixed typo: 'aliginItems' to 'alignItems'
-                    justifyContent: "center",
-                    backgroundColor: "#19252E",
-                    paddingLeft: "12px",
-                    paddingRight: "12px",
-                    borderRadius: "8px",
-                    color: "#ffffff",
-                    fontSize: "14px",
-                    "&:hover": {
-                      backgroundColor: "#555",
-                    },
-                  }}
-                  component="label" // Makes the button clickable for the file input
-                >
-                  Upload
-                  <input
-                    type="file"
-                    style={{ display: "none" }}
-                    onChange={(event) => console.log(event.target.files[0])}
-                  />
-                </Button> */}
                 <div
                   style={{
                     display: "flex",
@@ -452,7 +449,7 @@ const GrantProgram = () => {
                           sx={{
                             width: "20px",
                             height: "20px",
-                            backgroundColor: "#fff",
+                            // backgroundColor: "#000000",
                             borderRadius: "4px",
                             display: "flex",
                             justifyContent: "center",
@@ -461,19 +458,19 @@ const GrantProgram = () => {
                         >
                           {fileIcon === "pdf" ? (
                             <img
-                              src="pdf-icon.png"
+                              src={pdf}
                               alt="pdf icon"
                               style={{ width: "16px" }}
                             />
                           ) : fileIcon === "png" ? (
                             <img
-                              src="png-icon.png"
+                              src={png}
                               alt="png icon"
                               style={{ width: "16px" }}
                             />
                           ) : fileIcon === "jpg" ? (
                             <img
-                              src="jpg-icon.png"
+                              src={jpg}
                               alt="jpg icon"
                               style={{ width: "16px" }}
                             />
@@ -507,16 +504,6 @@ const GrantProgram = () => {
               </Box>
             </Grid>
 
-            {/* <Grid
-              item
-              xs={12}
-              sx={{ display: "flex", justifyContent: "space-between" }}
-            >
-              <Button variant="contained" className={classes.button}>
-                Upload
-              </Button>
-            </Grid> */}
-
             <Grid item xs={12}>
               <Button
                 fullWidth
@@ -524,7 +511,7 @@ const GrantProgram = () => {
                 className={classes.button}
                 type="submit"
               >
-                Apply
+                {isActive ? "Submiting..." : "Submit "}
               </Button>
             </Grid>
           </Grid>

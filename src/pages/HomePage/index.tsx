@@ -1,11 +1,11 @@
 import { makeStyles } from "@material-ui/core";
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useEffect } from "react";
 import {
   // Community,
   Featured,
   Features,
   Hero,
-  //   IDEA,
+  // IDEA,
   IdeaWalletSection,
   IdeaWalletSection2,
   InnovationSection,
@@ -25,31 +25,7 @@ import {
 // import { Airdropcomingsoon } from "layouts/MainLayout/components/AirdropComingSoon/Airdropcomingsoon";
 import { Helmet } from "react-helmet";
 import { BlogCarosuel } from "layouts/MainLayout/components/BlogCarosuel";
-// import { Ambassador } from "layouts/MainLayout/components/Ambassador";
 
-// const Hero = lazy(() =>
-//   import("layouts").then((mod) => ({ default: mod.Hero }))
-// );
-// const BlogCarosuel = lazy(() =>
-//   import("layouts/MainLayout/components/BlogCarosuel").then((mod) => ({
-//     default: mod.BlogCarosuel,
-//   }))
-// );
-// const InnovationSection = lazy(() =>
-//   import("layouts").then((mod) => ({ default: mod.InnovationSection }))
-// );
-// const Features = lazy(() =>
-//   import("layouts").then((mod) => ({ default: mod.Features }))
-// );
-// const IdeaWalletSection2 = lazy(() =>
-//   import("layouts").then((mod) => ({ default: mod.IdeaWalletSection2 }))
-// );
-// const IdeaWalletSection = lazy(() =>
-//   import("layouts").then((mod) => ({ default: mod.IdeaWalletSection }))
-// );
-// const Subscribe = lazy(() =>
-//   import("layouts").then((mod) => ({ default: mod.Subscribe }))
-// );
 const Community = lazy(() =>
   import("layouts").then((mod) => ({ default: mod.Community }))
 );
@@ -62,7 +38,7 @@ const Ambassador = lazy(() =>
 const useStyles = makeStyles(() => ({
   root: {
     backgroundColor: "#081015",
-    minHeight: "4600px",
+    minHeight: "4350px",
   },
 }));
 
