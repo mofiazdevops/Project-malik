@@ -182,11 +182,12 @@ export const IdeaWalletSection2 = () => {
 
         <Box
           component="img"
+          loading="lazy"
           src={lap}
           alt="Floating Image"
           sx={{
             width: { xs: "250px", sm: "352px", md: "392px" },
-            height: { xs: "180px", sm: "300px", md: "310px" },
+            height: "auto",
             animation: "float 3s ease-in-out infinite", // Animation property
             "@keyframes float": {
               "0%": {

@@ -3,20 +3,21 @@ import clsx from "clsx";
 import React, { Suspense, lazy } from "react";
 import useCommonStyles from "styles/common";
 
-// import { Footer, Header } from "./components";
-const Header = lazy(() =>
-  import("./components").then((module) => ({ default: module.Header }))
-);
-const Footer = lazy(() =>
-  import("./components").then((module) => ({ default: module.Footer }))
-);
+import { Footer, Header } from "./components";
+
 export * from "./components";
 
 const useStyles = makeStyles(() => ({
   root: {
-    overflowX: "hidden",
+    // overflowX: "hidden",
+    display: "flex",
+    flexDirection: "column", // Ensures header, main, and footer stack vertically
+    minHeight: "100vh",
   },
-  content: {},
+  content: {
+    flex: 1,
+    backgroundColor: "#081015",
+  },
   loader: {
     display: "flex",
     justifyContent: "center",
@@ -36,15 +37,13 @@ export const MainLayout = (props: IProps) => {
   const classes = useStyles();
   const commonClasses = useCommonStyles();
   return (
-    <Suspense fallback={<div className={classes.loader}>Loading...</div>}>
-      <div className={classes.root}>
-        <Header />
-        {/* <main className={clsx(classes.content)}> */}
-        <main className={clsx(classes.content, commonClasses.scroll)}>
-          {props.children}
-        </main>
-        <Footer />
-      </div>
-    </Suspense>
+    <div className={classes.root}>
+      <Header />
+      {/* <main className={clsx(classes.content)}> */}
+      <main className={clsx(classes.content, commonClasses.scroll)}>
+        {props.children}
+      </main>
+      <Footer />
+    </div>
   );
 };

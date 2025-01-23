@@ -19,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
     padding: "30px 25px",
     margin: "30px 0px",
     borderRadius: "20px",
+    border: "1px solid white",
     [theme.breakpoints.down("md")]: {
       margin: "0px 20px",
     },
@@ -157,7 +158,7 @@ const useStyles = makeStyles((theme) => ({
 export const AmbassadorForm = () => {
   const classes = useStyles();
   const formRef = useRef<HTMLFormElement>(null); // Create a ref for the form, typed as HTMLFormElement
-  const [one, setOne] = useState<boolean>(false);
+  const [isActive, setIsActive] = useState(false);
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -194,7 +195,7 @@ export const AmbassadorForm = () => {
   // Handle form submissionk
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault(); // Prevent page reload
-
+    setIsActive(true);
     try {
       if (formRef.current) {
         const response = await emailjs.sendForm(
@@ -221,8 +222,10 @@ export const AmbassadorForm = () => {
           subject: "",
         });
       }
+      setIsActive(false);
     } catch (err) {
       console.log("FAILED...", err);
+      setIsActive(false);
     }
   };
   return (
@@ -369,7 +372,7 @@ export const AmbassadorForm = () => {
       </div>
       <div className={classes.buttonContainer}>
         <button className={classes.button} type="submit">
-          Submit
+          {isActive ? "Submiting..." : "Submit"}
         </button>
       </div>
     </form>
