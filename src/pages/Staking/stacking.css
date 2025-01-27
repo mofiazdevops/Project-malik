@@ -135,12 +135,12 @@
 }
 .table_heading_th {
   font-size: 0.8em;
-  color: black;
+  color: white;
   font-weight: 500;
 }
 .table_data_td {
   font-size: 0.75em;
-  color: black;
+  color: white;
   font-weight: 400;
 }
 .table_overflow {
