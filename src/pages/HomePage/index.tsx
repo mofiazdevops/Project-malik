@@ -1,34 +1,44 @@
 import { makeStyles } from "@material-ui/core";
+import { Suspense, lazy, useEffect } from "react";
 import {
-  Community,
+  // Community,
   Featured,
   Features,
   Hero,
-  IDEA,
+  // IDEA,
   IdeaWalletSection,
   IdeaWalletSection2,
   InnovationSection,
-  PoolCard,
+  //   PoolCard,
   Subscribe,
 } from "layouts";
-import React, { useEffect, useState } from "react";
-import { usePools } from "hooks";
-import { GET_FEATURED_POOLS, GET_UPCOMING_POOLS } from "services/pool";
-import { Link } from "react-router-dom";
-import axios from "axios";
-import { getPools } from "services/api";
-import useScript from "hooks/useScriptHook";
-import Staking from "pages/Staking";
-import Vesting from "pages/Vesting";
-import { StakingList } from "layouts/MainLayout/components/StakingList";
-import { Airdropcomingsoon } from "layouts/MainLayout/components/AirdropComingSoon/Airdropcomingsoon";
+// import React, { useEffect, useState } from "react";
+// import { usePools } from "hooks";
+// import { GET_FEATURED_POOLS, GET_UPCOMING_POOLS } from "services/pool";
+// import { Link } from "react-router-dom";
+// import axios from "axios";
+// import { getPools } from "services/api";
+// import useScript from "hooks/useScriptHook";
+// import Staking from "pages/Staking";
+// import Vesting from "pages/Vesting";
+// import { StakingList } from "layouts/MainLayout/components/StakingList";
+// import { Airdropcomingsoon } from "layouts/MainLayout/components/AirdropComingSoon/Airdropcomingsoon";
 import { Helmet } from "react-helmet";
 import { BlogCarosuel } from "layouts/MainLayout/components/BlogCarosuel";
-import { Ambassador } from "layouts/MainLayout/components/Ambassador";
+
+const Community = lazy(() =>
+  import("layouts").then((mod) => ({ default: mod.Community }))
+);
+const Ambassador = lazy(() =>
+  import("layouts/MainLayout/components/Ambassador").then((mod) => ({
+    default: mod.Ambassador,
+  }))
+);
 
 const useStyles = makeStyles(() => ({
   root: {
     backgroundColor: "#081015",
+    minHeight: "4350px",
   },
 }));
 
@@ -80,8 +90,10 @@ const HomePage = () => {
         {/* <PoolCard loading={upcomingLoading} name="Funded" pools={upcomingPools} /> */}
         {/* <Featured loading={featuredLoading} pools={featuredPools} /> */}
         <Subscribe />
-        <Community />
-        <Ambassador />
+        <Suspense fallback={<div>Loading...</div>}>
+          <Community />
+          <Ambassador />
+        </Suspense>
       </div>
     </div>
   );

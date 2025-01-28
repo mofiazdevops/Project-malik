@@ -3,6 +3,7 @@ import { Button, makeStyles } from "@material-ui/core";
 import { Box, Container, Grid, Typography } from "@mui/material";
 import star from "../../../../assets/pngs/Star.png";
 import starbg from "../../../../assets/pngs/starbg.png";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   rootContainer: {
@@ -170,12 +171,7 @@ export const Ambassador: React.FC = () => {
         </div>
 
         <div className={classes.buttoncontainerfull}>
-          <a
-            href="https://docs.google.com/forms/d/e/1FAIpQLSda5q18vhNvPX3dbcUXnXXaDTwbrjJjDCtJxcuGgNSSpAfI3g/viewform"
-            target="_blank"
-            rel="noreferrer"
-            className={classes.buttoncontainer}
-          >
+          <Link to={"/Ambassador"} className={classes.buttoncontainer}>
             <div className={classes.textcontai}>
               <img
                 src={starbg}
@@ -187,7 +183,7 @@ export const Ambassador: React.FC = () => {
               Join Now
               <img src={star} alt="star" className={classes.star} />
             </div>
-          </a>
+          </Link>
         </div>
       </Container>
     </div>

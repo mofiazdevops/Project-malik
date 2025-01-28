@@ -392,7 +392,12 @@ export const Hero = () => {
             </div>
           </Grid>
           <Grid item xs={12} md={6} className={classes.imageWrapper}>
-            <img src={gif} alt="Mockup" className={classes.mockupImage} />
+            <img
+              loading="lazy"
+              src={gif}
+              alt="Mockup"
+              className={classes.mockupImage}
+            />
           </Grid>
         </Grid>
       </Container>

@@ -257,14 +257,14 @@ export const Header = (props: IProps) => {
       items: [
         {
           external: true,
-          link: "/CommingSoon",
-          name: "WorkAsPro",
+          link: "http://Workaspro.com",
+          name: "WorkAsPro Talent",
         },
-        {
-          external: true,
-          link: "https://manialands.com",
-          name: "Manialands",
-        },
+        // {
+        //   external: true,
+        //   link: "https://manialands.com",
+        //   name: "Manialands",
+        // },
         // {
         //   name: "Games", // Games section within Products
         //   type: "dropdown", // Nested dropdown for games
@@ -319,8 +319,7 @@ export const Header = (props: IProps) => {
       name: "Grant Program",
     },
     {
-      external: true,
-      link: "https://docs.google.com/forms/d/e/1FAIpQLSda5q18vhNvPX3dbcUXnXXaDTwbrjJjDCtJxcuGgNSSpAfI3g/viewform",
+      link: "/Ambassador",
       name: "Ambassadors",
     },
     // {
@@ -383,8 +382,7 @@ export const Header = (props: IProps) => {
     //   name: "Privacy Policy",
     // },
     {
-      external: true,
-      link: "https://docs.google.com/forms/d/e/1FAIpQLSda5q18vhNvPX3dbcUXnXXaDTwbrjJjDCtJxcuGgNSSpAfI3g/viewform",
+      link: "/Ambassador",
       name: "Ambassadors",
     },
     {
@@ -413,9 +411,9 @@ export const Header = (props: IProps) => {
       link: "https://www.ideascan.io/",
     },
     {
-      external: true,
+      external: false,
+      name: "WorkAsPro Talent",
       link: "/CommingSoon",
-      name: "WorkAsPro",
     },
     {
       name: "IDEA Wallet",
@@ -538,7 +536,7 @@ export const Header = (props: IProps) => {
                   <div
                     className="dropdownContent"
                     style={{
-                      width: "120px",
+                      width: "130px",
                       height: "auto",
                     }}
                   >
@@ -548,8 +546,9 @@ export const Header = (props: IProps) => {
                         subItem.name === "Games"
                       ) {
                         return (
-                          <div
+                          <Link
                             key={subKey}
+                            to={subItem.link}
                             className="dropdown11 gamesDropdown"
                           >
                             <Button
@@ -560,36 +559,7 @@ export const Header = (props: IProps) => {
                             >
                               {subItem.name}
                             </Button>
-                            {/* <div className="dropdownContent2">
-                              {subItem.items.map((game, gameKey) => (
-                                <a
-                                  key={gameKey}
-                                  className={classes.noDecoration}
-                                  href={game.link}
-                                  rel="noreferrer"
-                                  target="_blank"
-                                >
-                                  <Button
-                                    classes={{
-                                      text: classes.menuButtonText,
-                                    }}
-                                    color="secondary"
-                                    size="large"
-                                  >
-                                    <img
-                                      src={game.img}
-                                      alt={game.name}
-                                      style={{
-                                        width: "30px",
-                                        marginRight: "10px",
-                                      }}
-                                    />
-                                    {game.name}
-                                  </Button>
-                                </a>
-                              ))}
-                            </div> */}
-                          </div>
+                          </Link>
                         );
                       } else {
                         return (
@@ -660,10 +630,10 @@ export const Header = (props: IProps) => {
                             </Button>
                             <div className="dropdownContent2">
                               {subItem.items.map((game, gameKey) => (
-                                <a
+                                <Link
                                   key={gameKey}
                                   className={classes.noDecoration}
-                                  href={game.link}
+                                  to={game.link}
                                   rel="noreferrer"
                                   target="_blank"
                                 >
@@ -684,7 +654,7 @@ export const Header = (props: IProps) => {
                                     />
                                     {game.name}
                                   </Button>
-                                </a>
+                                </Link>
                               ))}
                             </div>
                           </div>
@@ -722,9 +692,9 @@ export const Header = (props: IProps) => {
                                 {subItem.name}
                               </Button>
                             ) : (
-                              <a
+                              <Link
                                 className={classes.noDecoration}
-                                href={subItem.link}
+                                to={subItem.link}
                                 rel="noreferrer"
                                 target={subItem.external ? "_blank" : "_self"}
                               >
@@ -737,7 +707,7 @@ export const Header = (props: IProps) => {
                                 >
                                   {subItem.name}
                                 </Button>
-                              </a>
+                              </Link>
                             )}
                           </div>
                         );
@@ -750,7 +720,7 @@ export const Header = (props: IProps) => {
 
             // Handle other menu items like Staking, Voting, etc.
             else if (element.link) {
-              return (
+              return element.external ? (
                 <a
                   className={classes.noDecoration}
                   href={element.link}
@@ -768,13 +738,12 @@ export const Header = (props: IProps) => {
                     {element.name}
                   </Button>
                 </a>
-              );
-            } else {
-              return (
+              ) : (
                 <Link
                   className={classes.noDecoration}
                   key={element.name}
                   to={element.link}
+                  target={element.external ? "_blank" : "_self"}
                 >
                   <Button
                     classes={{

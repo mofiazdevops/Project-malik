@@ -2,7 +2,7 @@
   box-shadow: 4.46667px 4.46667px 29.7778px #8d90a133;
   border-radius: 5px;
   padding: 25px 25px;
-  min-width: 310px;
+  min-width: 320px;
   background-color: #001727;
   opacity: 50;
   border: 2px solid #666e74;
@@ -135,12 +135,12 @@
 }
 .table_heading_th {
   font-size: 0.8em;
-  color: black;
+  color: white;
   font-weight: 500;
 }
 .table_data_td {
   font-size: 0.75em;
-  color: black;
+  color: white;
   font-weight: 400;
 }
 .table_overflow {

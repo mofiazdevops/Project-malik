@@ -41,6 +41,7 @@ const useStyles = makeStyles((theme) => ({
     WebkitBackgroundClip: "text",
     WebkitTextFillColor: "transparent",
     transition: "background-color 0.3s ease",
+    marginTop: "6px",
     textTransform: "none",
 
     "&:hover": {
@@ -173,7 +174,7 @@ export const IdeaWalletSection = () => {
                 height={70}
                 className={classes.dust}
               />
-              Comming Soon
+              Coming Soon
               <img src={star} alt="star" className={classes.star} />
             </div>
           </Link>
@@ -205,7 +206,7 @@ export const IdeaWalletSection = () => {
           alt="Floating Image"
           sx={{
             width: { xs: "167px", sm: "292px", md: "312px" },
-            height: { xs: "200px", sm: "330px", md: "410px" },
+            height: "auto",
             animation: "float 3s ease-in-out infinite", // Animation property
             "@keyframes float": {
               "0%": {

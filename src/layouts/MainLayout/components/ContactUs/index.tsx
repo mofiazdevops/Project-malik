@@ -91,28 +91,6 @@ export const ContactUs = (/*props: IProps*/) => {
   // Initialize emailjs with public key
   emailjs.init("xgY7CZ_J1S154HAiD");
 
-  // Handle form submission
-  // const handleSubmit = async (e: React.FormEvent) => {
-  //   e.preventDefault(); // Prevent page reload
-
-  //   try {
-  //     // Send the form data via EmailJS
-  //     if (formRef.current) {
-  //       const response = await emailjs.sendForm(
-  //         "service_mq3enkt",
-  //         "template_5bfsvqw",
-  //         formRef.current
-  //       );
-  //       console.log("SUCCESS!", response);
-
-  //       // Optionally reset the form after successful submission
-  //       formRef.current.reset();
-  //     }
-  //   } catch (err) {
-  //     console.log("FAILED...", err);
-  //   }
-  // };
-
   // Handle form changes
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;

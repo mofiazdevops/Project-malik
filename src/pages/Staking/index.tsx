@@ -11,23 +11,28 @@ import Box from "@mui/material/Box";
 import Web3Modal from "web3modal";
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import { ethers } from "ethers";
-import { abi } from "./ABI/StakingABI.json";
-import { tokenAbi } from "./ABI/TokenABI.json";
+import abi from "./ABI/StakingABI.json";
+import tokenAbi from "./ABI/TokenABI.json";
 import { JsonRPCResponse } from "web3/providers";
 import { LoadingScreen } from "components";
+import { toInteger } from "lodash";
 
 const useStyles = makeStyles((theme: any) => {
   return {
     stakingWrapper: {
       display: "flex",
       position: "relative",
-      paddingTop: "160px",
-      paddingBottom: "160px",
+      paddingTop: "140px",
+      paddingBottom: "140px",
       // width: "100%",
       // maxWidth: "1200px",
       marginLeft: "auto",
       marginRight: "auto",
       background: "#081015",
+      [theme.breakpoints.down("sm")]: {
+        paddingTop: "70px",
+        paddingBottom: "70px",
+      },
     },
     stakingWrapper2: {
       width: "100%",
@@ -53,17 +58,18 @@ const useStyles = makeStyles((theme: any) => {
       // background: theme.colors.primary,
       color: "#FFFFFF",
       // borderRadius: "100px 0px 0px 100px",
-      padding: "0px 30px 80px 30px",
+      // padding: "0px 30px 80px 30px",
       float: "right",
       [theme.breakpoints.down("md")]: {
         maxWidth: "100%",
         padding: "55px 40px 40px 44px",
+
         float: "none",
       },
       [theme.breakpoints.down("sm")]: {
-        padding: "55px 25px 40px 25px",
+        padding: "45px 25px 20px 25px",
         margin: "auto",
-        width: "80%",
+        width: "90%",
         borderRadius: "50px",
         float: "none",
       },
@@ -88,20 +94,21 @@ const useStyles = makeStyles((theme: any) => {
       "& p": {
         color: "#D3D3D6",
         fontWeight: 400,
-        fontSize: "20px",
+        fontSize: "18px",
         lineHeight: "35px",
         fontFamily: "SF Pro Display",
-        [theme.breakpoints.down("sm")]: {
-          fontSize: "0.6rem",
-          lineHeight: "15px",
-        },
         [theme.breakpoints.down("md")]: {
           fontSize: "0.9rem",
           lineHeight: "19px",
+          marginRight: "25px",
+        },
+        [theme.breakpoints.down("sm")]: {
+          fontSize: "14px",
+          lineHeight: "18px",
         },
       },
-      "& p:nth-child(2)": { marginTop: "4.06rem" },
-      "& p:nth-child(3)": { marginTop: "2.81rem" },
+      "& p:nth-child(2)": { marginTop: "3rem" },
+      "& p:nth-child(3)": { marginTop: "2rem" },
     },
     note: {
       marginTop: "4.06rem",
@@ -152,7 +159,7 @@ export default function Staking() {
   };
 
   const web3Modal = new Web3Modal({
-    network: "mumbai", // This will switch the default network to Polygon Mumbai
+    network: "amoy", // This will switch the default network to Polygon Mumbai
     cacheProvider: true,
     providerOptions,
   });
@@ -177,7 +184,7 @@ export default function Staking() {
   const [rewardLoader, setRewardLoader] = useState<boolean>(false);
   const [unStakeLoader, setUnStakeLoader] = useState<boolean>(false);
   const [activeStakes, setActiveStakes] = useState<Stake[]>([]);
-  const [signer, setSigner] = useState<JsonRPCResponse>();
+  const [Staking, setStaking] = useState<boolean>(false);
 
   const resetConnectionState = () => {
     setIsWalletConnected(false);
@@ -246,7 +253,9 @@ export default function Staking() {
           const provider = await web3Modal.connect();
           const web3Provider = new ethers.providers.Web3Provider(provider);
           const signer = web3Provider.getSigner();
-          getData(signer);
+          const address = await signer.getAddress();
+          setUserAddress(address);
+          getData(signer, address);
         } catch (error) {
           console.error("Error connecting to wallet or fetching data:", error);
         }
@@ -280,10 +289,10 @@ export default function Staking() {
           setSelectedDays(180);
           setRewardPercentage(24);
           break;
-        case "365days":
-          setSelectedDays(365);
-          setRewardPercentage(60);
-          break;
+        // case "365days":
+        //   setSelectedDays(365);
+        //   setRewardPercentage(60);
+        //   break;
         default:
           setSelectedDays(0);
       }
@@ -301,16 +310,16 @@ export default function Staking() {
       setUserAddress(address);
       setIsWalletConnected(true);
       localStorage.setItem("isWalletConnected", "true");
-      getData(signer);
+      getData(signer, address);
 
       const { chainId } = await web3Provider.getNetwork();
 
-      if (chainId !== 80001) {
-        // 80001 is the chain ID for Polygon Mumbai
+      if (chainId !== 80002) {
+        // 80002 is the chain ID for Polygon amoy
         try {
           await provider.request({
             method: "wallet_switchEthereumChain",
-            params: [{ chainId: "0x13881" }], // Hexadecimal version of the chainId
+            params: [{ chainId: "0x13882" }], // Hexadecimal version of the chainId
           });
         } catch (switchError: any) {
           // This error code indicates that the chain has not been added to MetaMask
@@ -320,13 +329,13 @@ export default function Staking() {
                 method: "wallet_addEthereumChain",
                 params: [
                   {
-                    chainId: 0x13881,
-                    chainName: "Polygon Mumbai",
+                    chainId: "0x13882",
+                    chainName: "Polygon Amoy",
                     rpcUrls: [process.env.REACT_APP_RPC_URL],
                     blockExplorerUrls: [process.env.REACT_APP_EXPLORER_URL],
                     nativeCurrency: {
-                      name: "MATIC",
-                      symbol: "MATIC",
+                      name: "AMOY",
+                      symbol: "POL",
                       decimals: 18,
                     },
                   },
@@ -347,17 +356,19 @@ export default function Staking() {
 
   const createStake = async () => {
     try {
+      setStaking(true);
       const provider = await web3Modal.connect();
       const web3Provider = new ethers.providers.Web3Provider(provider);
       const signer = web3Provider.getSigner();
+      const address = await signer.getAddress();
 
-      const stakingContract = new ethers.Contract(
+      const stakingContract = await new ethers.Contract(
         String(process.env.REACT_APP_STAKING_CONTRACT),
         abi,
         signer
       );
 
-      const tokenContract = new ethers.Contract(
+      const tokenContract = await new ethers.Contract(
         String(process.env.REACT_APP_TOKEN_CONTRACT),
         tokenAbi,
         signer
@@ -372,17 +383,22 @@ export default function Staking() {
       await approvalTx.wait();
       setStakingLoader(false);
 
-      const stakingTx = await stakingContract.stakeToken(
-        ethers.utils.parseUnits(String(stakeAmount), "ether"),
-        selectedDays
+      console.log(selectedDays * 86400, "these are selected days");
+      const depositTx = await stakingContract.deposit(stakeAmount);
+      console.log(depositTx, "This is deposit");
+      const stakingTx = await stakingContract.stake(
+        // ethers.utils.parseUnits(String(stakeAmount), "ether"),
+        toInteger(stakeAmount),
+        selectedDays * 86400
       );
 
       setStakingLoader(true);
       await stakingTx.wait();
       setStakingLoader(false);
+      setStaking(false);
 
       setStakeAmount(0);
-      getData(signer);
+      getData(signer, address);
     } catch (error) {
       console.error("Failed to get stake tokens:", error);
     }
@@ -393,7 +409,7 @@ export default function Staking() {
       const provider = await web3Modal.connect();
       const web3Provider = new ethers.providers.Web3Provider(provider);
       const signer = web3Provider.getSigner();
-
+      const address = await signer.getAddress();
       const stakingContract = new ethers.Contract(
         String(process.env.REACT_APP_STAKING_CONTRACT),
         abi,
@@ -405,7 +421,7 @@ export default function Staking() {
       await claimRewardTx.wait();
       setRewardLoader(false);
 
-      getData(signer);
+      getData(signer, address);
     } catch (error) {
       console.error("Failed to claim reward tokens:", error);
     }
@@ -416,7 +432,7 @@ export default function Staking() {
       const provider = await web3Modal.connect();
       const web3Provider = new ethers.providers.Web3Provider(provider);
       const signer = web3Provider.getSigner();
-
+      const address = await signer.getAddress();
       const stakingContract = new ethers.Contract(
         String(process.env.REACT_APP_STAKING_CONTRACT),
         abi,
@@ -428,14 +444,15 @@ export default function Staking() {
       await claimRewardTx.wait();
       setUnStakeLoader(false);
 
-      getData(signer);
+      getData(signer, address);
     } catch (error) {
       console.error("Failed to unstake tokens:", error);
     }
   };
 
   const getData = async (
-    signer: ethers.providers.Provider | ethers.Signer | undefined
+    signer: ethers.providers.Provider | ethers.Signer | undefined,
+    address: string
   ) => {
     try {
       const stakingContract = new ethers.Contract(
@@ -445,18 +462,18 @@ export default function Staking() {
       );
 
       // Call the contract function
-      const details = await stakingContract.getDetailsOfUpcomingStake();
-
-      const stakedToken = ethers.utils.formatEther(details.amount.toString());
+      // const details = await stakingContract.getDetailsOfUpcomingStake();
+      const details = await stakingContract.stakes(address, 0);
+      const stakedToken = ethers.utils.formatEther(details.amount);
       setLockedToken(Number(stakedToken));
 
-      const days = Math.floor(details.stakingDuration.toString() / (3600 * 24));
+      const days = Math.floor(details.ONE_MONTH / (3600 * 24));
       setLockedDuration(days);
 
-      const daysLeft = Math.floor(details.timeLeft.toString() / (3600 * 24));
+      const daysLeft = Math.floor(details.timeLeft / (3600 * 24));
       setDaysLeft(Number(daysLeft));
 
-      const rewardTokens = ethers.utils.formatEther(details.reward.toString());
+      const rewardTokens = ethers.utils.formatEther(details.reward);
       setTotalReward(Number(stakedToken) + Number(rewardTokens));
 
       const progress = ((days - daysLeft) / days) * 100;
@@ -464,19 +481,33 @@ export default function Staking() {
       setProgress(intValue);
 
       // Get active stakes
-
-      const activeStakesData = await stakingContract.getActiveStakes();
+      const activeStakesData = await stakingContract.getStakes(address);
       setActiveStakes(
         activeStakesData.map(
           (stake: {
             amount: { toString: () => ethers.BigNumberish };
-            stakingDuration: number;
+            endTime: number;
             reward: { toString: () => ethers.BigNumberish };
-          }) => ({
-            totalAmount: ethers.utils.formatEther(stake.amount.toString()),
-            days: stake.stakingDuration / (3600 * 24),
-            totalRewards: ethers.utils.formatEther(stake.reward.toString()),
-          })
+          }) => {
+            const currentTime = Math.floor(Date.now() / 1000);
+            const timeDifferenceInSeconds = stake.endTime - currentTime;
+            const daysRemaining = timeDifferenceInSeconds / (3600 * 24);
+
+            // Convert days to months (assuming 30 days in a month)
+            const monthsRemaining = daysRemaining / 30;
+
+            // Decide whether to display days or months based on the value
+            const readableTime =
+              monthsRemaining >= 1
+                ? `${Math.floor(monthsRemaining)} months` // Use Math.floor() to avoid decimals
+                : `${Math.floor(daysRemaining)} days`; // Use Math.floor() to avoid decimals
+
+            return {
+              totalAmount: ethers.utils.formatEther(stake.amount.toString()),
+              days: readableTime,
+              totalRewards: stake.reward.toString(),
+            };
+          }
         )
       );
     } catch (error) {
@@ -505,27 +536,9 @@ export default function Staking() {
                   and interest rates can be very generous. Its potentially a
                   very profitable way to invest your money.
                 </p>
-                {/* <div className={classes.note}>
-                  <Button
-                    className={classes.noteItem}
-                    onClick={() =>
-                      history.push({
-                        pathname: "/staking-vesting",
-                        state: { from: "staking" },
-                      })
-                    }
-                  >
-                    Read More on Benefits & Rules{" "}
-                    <img
-                      alt="icon"
-                      src={"imgs/landing/moredetails.svg"}
-                      style={{ marginLeft: "10px" }}
-                    />
-                  </Button>
-                </div> */}
               </div>
             </Grid>
-            <Grid item lg={7} md={7} xs={12}>
+            <Grid item lg={7} md={6} xs={11}>
               <div className="container">
                 <div className="row pt-lg-5 pt-md-4 pt-3">
                   <div className="col-lg-6 col-md-6 col-12 g-0">
@@ -613,7 +626,7 @@ export default function Staking() {
                               disabled={stakeAmount == 0}
                               onClick={createStake}
                             >
-                              Start Staking move to staking page
+                              {Staking ? "Staking...." : "Start Staking"}
                             </button>
                           </div>
                         </div>
@@ -678,7 +691,7 @@ export default function Staking() {
                             ) : (
                               <button
                                 className="w-100 claim_staking_btn"
-                                onClick={connectWallet}
+                                onClick={() => connectWallet()}
                               >
                                 Connect
                               </button>

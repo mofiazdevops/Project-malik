@@ -189,6 +189,11 @@ const routes = [
         component: lazy(() => import("pages/GrantProgram")),
       },
       {
+        exact: true,
+        path: "/Ambassador",
+        component: lazy(() => import("pages/Ambassador")),
+      },
+      {
         path: "*",
         // eslint-disable-next-line
         component: () => <Redirect to="/" />,
