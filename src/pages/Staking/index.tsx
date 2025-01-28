@@ -319,7 +319,7 @@ export default function Staking() {
         try {
           await provider.request({
             method: "wallet_switchEthereumChain",
-            params: [{ chainId: "0x13882" }], // Hexadecimal version of the chainId
+            params: [{ chainId: "0x13882" }],
           });
         } catch (switchError: any) {
           // This error code indicates that the chain has not been added to MetaMask
