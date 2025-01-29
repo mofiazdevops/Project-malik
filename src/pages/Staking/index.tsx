@@ -159,7 +159,7 @@ export default function Staking() {
   };
 
   const web3Modal = new Web3Modal({
-    network: "amoy", // This will switch the default network to Polygon Mumbai
+    network: "MAINNET", // This will switch the default network to Polygon Mumbai
     cacheProvider: true,
     providerOptions,
   });
@@ -185,6 +185,7 @@ export default function Staking() {
   const [unStakeLoader, setUnStakeLoader] = useState<boolean>(false);
   const [activeStakes, setActiveStakes] = useState<Stake[]>([]);
   const [Staking, setStaking] = useState<boolean>(false);
+  const [isStakeDisabled, setIsStakeDisabled] = useState(true);
 
   const resetConnectionState = () => {
     setIsWalletConnected(false);
@@ -235,6 +236,7 @@ export default function Staking() {
   ) => {
     const value = event.target.value;
     if (!value || value.match(/^\d*\.?\d*$/)) {
+      setIsStakeDisabled(Number(value) < 100);
       setStakeAmount(Number(value));
       calculateReward();
     }
@@ -319,7 +321,7 @@ export default function Staking() {
         try {
           await provider.request({
             method: "wallet_switchEthereumChain",
-            params: [{ chainId: "0x13882" }],
+            params: [{ chainId: "0x89" }],
           });
         } catch (switchError: any) {
           // This error code indicates that the chain has not been added to MetaMask
@@ -329,12 +331,12 @@ export default function Staking() {
                 method: "wallet_addEthereumChain",
                 params: [
                   {
-                    chainId: "0x13882",
-                    chainName: "Polygon Amoy",
+                    chainId: "0x89",
+                    chainName: "Polygon",
                     rpcUrls: [process.env.REACT_APP_RPC_URL],
                     blockExplorerUrls: [process.env.REACT_APP_EXPLORER_URL],
                     nativeCurrency: {
-                      name: "AMOY",
+                      name: "MAINNET",
                       symbol: "POL",
                       decimals: 18,
                     },
@@ -462,7 +464,6 @@ export default function Staking() {
       );
 
       // Call the contract function
-      // const details = await stakingContract.getDetailsOfUpcomingStake();
       const details = await stakingContract.stakes(address, 0);
       const stakedToken = ethers.utils.formatEther(details.amount);
       setLockedToken(Number(stakedToken));
@@ -498,9 +499,13 @@ export default function Staking() {
 
             // Decide whether to display days or months based on the value
             const readableTime =
-              monthsRemaining >= 1
-                ? `${Math.floor(monthsRemaining)} months` // Use Math.floor() to avoid decimals
-                : `${Math.floor(daysRemaining)} days`; // Use Math.floor() to avoid decimals
+              monthsRemaining > 1
+                ? `${Math.ceil(monthsRemaining)} months`
+                : daysRemaining > 0
+                ? `${Math.ceil(daysRemaining)} day${
+                    Math.ceil(daysRemaining) > 1 ? "s" : ""
+                  }`
+                : "Expired";
 
             return {
               totalAmount: ethers.utils.formatEther(stake.amount.toString()),
@@ -580,7 +585,7 @@ export default function Staking() {
                               type="text"
                               id="stakeInput"
                               name="stakeInput"
-                              placeholder="Enter amount of $IDEA to stake"
+                              placeholder="Enter amount of 100 $IDEA to stake"
                               className="w-100 staking_input_fields"
                               value={stakeAmount}
                               onChange={handleStakeInputChange}
@@ -600,7 +605,7 @@ export default function Staking() {
                               <Tab eventKey="30days" title="30 Days"></Tab>
                               <Tab eventKey="90days" title="90 Days"></Tab>
                               <Tab eventKey="180days" title="180 Days"></Tab>
-                              <Tab eventKey="365days" title="365 Days"></Tab>
+                              {/* <Tab eventKey="365days" title="365 Days"></Tab> */}
                             </Tabs>
                           </div>
                           <div>
@@ -623,7 +628,13 @@ export default function Staking() {
                           <div className="pt-3">
                             <button
                               className="w-100 start_staking_btn"
-                              disabled={stakeAmount == 0}
+                              // disabled={stakeAmount == 0}
+                              disabled={isStakeDisabled || Staking}
+                              style={{
+                                backgroundColor: isStakeDisabled
+                                  ? "gray"
+                                  : "#0c71bc",
+                              }}
                               onClick={createStake}
                             >
                               {Staking ? "Staking...." : "Start Staking"}
