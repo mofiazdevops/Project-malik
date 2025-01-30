@@ -287,10 +287,10 @@ export const Header = (props: IProps) => {
       name: "Ecosystem", // Games section within Products
       type: "dropdown", // Nested dropdown for games
       items: [
-        {
-          name: "IdeaNetwork",
-          link: "/IdeaNetwork",
-        },
+        // {
+        //   name: "IdeaNetwork",
+        //   link: "/IdeaNetwork",
+        // },
         {
           name: "Explorer",
           // link: "https://www.ideascan.io/",
