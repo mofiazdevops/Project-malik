@@ -75,12 +75,15 @@
 }
 .nav-tabs {
   /* border-bottom: none !important; */
+  display: flex;
+  justify-content: space-between;
   border: 1px solid white;
   border-radius: 3px !important;
+  max-width: 300px;
 }
 .nav-tabs .nav-link {
   background-color: transparent !important;
-  padding: 10px 23px !important;
+  padding: 10px 20px !important;
   font-size: 0.7em !important;
   color: #ffffff !important;
   border-top-left-radius: 0 !important;
