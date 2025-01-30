@@ -16,6 +16,8 @@ import tokenAbi from "./ABI/TokenABI.json";
 import { JsonRPCResponse } from "web3/providers";
 import { LoadingScreen } from "components";
 import { toInteger } from "lodash";
+import { useAppContext } from "contexts";
+import { AppActions, AppTypes } from "store/types";
 
 const useStyles = makeStyles((theme: any) => {
   return {
@@ -144,6 +146,7 @@ function LinearProgressWithLabel(props: { value: number }) {
 
 export default function Staking() {
   const classes: any = useStyles();
+  const { dispatch, state } = useAppContext();
   const history = useHistory();
   const [key, setKey] = useState<string>("30days");
   const [progress, setProgress] = React.useState(0);
@@ -257,6 +260,14 @@ export default function Staking() {
           const signer = web3Provider.getSigner();
           const address = await signer.getAddress();
           setUserAddress(address);
+          // Check the current network
+          const currentNetwork = await web3Provider.getNetwork();
+          const targetNetworkId = 0x89; // Replace with the desired network ID (e.g., 1 for Ethereum Mainnet)
+
+          if (currentNetwork.chainId !== targetNetworkId) {
+            // Request to switch network in MetaMask
+            connectWallet();
+          }
           getData(signer, address);
         } catch (error) {
           console.error("Error connecting to wallet or fetching data:", error);
@@ -316,7 +327,7 @@ export default function Staking() {
 
       const { chainId } = await web3Provider.getNetwork();
 
-      if (chainId !== 80002) {
+      if (chainId !== 0x89) {
         // 80002 is the chain ID for Polygon amoy
         try {
           await provider.request({
@@ -389,7 +400,7 @@ export default function Staking() {
 
       console.log(selectedDays * 86400, "these are selected days");
       const depositTx = await stakingContract.deposit(stakeAmount);
-      console.log(depositTx, "This is deposit");
+
       const stakingTx = await stakingContract.stake(
         // ethers.utils.parseUnits(String(stakeAmount), "ether"),
         toInteger(stakeAmount),
@@ -401,10 +412,30 @@ export default function Staking() {
       setStakingLoader(false);
       setStaking(false);
 
+      // Dispatch success alert with transaction hash
+      dispatch({
+        type: AppTypes.AlertModal,
+        payload: {
+          show: true,
+          title: "Successful",
+          body: `Staking added successfully! 🎉`,
+        },
+      });
+
       setStakeAmount(0);
       getData(signer, address);
     } catch (error) {
+      setStaking(false);
       console.error("Failed to get stake tokens:", error);
+      // Dispatch error alert
+      dispatch({
+        type: AppTypes.AlertModal,
+        payload: {
+          show: true,
+          title: "Error",
+          body: "An error occurred during the Staking. Please try again",
+        },
+      });
     }
   };
 
@@ -421,7 +452,6 @@ export default function Staking() {
       );
 
       const claimRewardTx = await stakingContract.claimReward();
-      console.log(claimRewardTx, "This is claim reward");
       setRewardLoader(true);
       await claimRewardTx.wait();
       setRewardLoader(false);
@@ -471,23 +501,25 @@ export default function Staking() {
       const stakedToken = ethers.utils.formatEther(details.amount);
       setLockedToken(Number(stakedToken));
 
-      const days = Math.floor(details.ONE_MONTH / (3600 * 24));
+      const days = details?.timeLeft
+        ? Math.floor(details.ONE_MONTH / (3600 * 24))
+        : 0;
       setLockedDuration(days);
 
-      const daysLeft = Math.floor(details.timeLeft / (3600 * 24));
+      const daysLeft = details?.timeLeft
+        ? Math.floor(details.timeLeft / (3600 * 24))
+        : 0;
       setDaysLeft(Number(daysLeft));
 
       const rewardTokens = ethers.utils.formatEther(details.reward);
-      console.log(reward, "THis is reward..........");
       setTotalReward(Number(stakedToken) + Number(rewardTokens));
 
-      const progress = ((days - daysLeft) / days) * 100;
+      const progress = days > 0 ? ((days - daysLeft) / days) * 100 : 0;
       const intValue = Math.round(progress);
       setProgress(intValue);
 
       // Get active stakes
       const activeStakesData = await stakingContract.getStakes(address);
-      console.log(activeStakesData, "these are active stakes");
       setActiveStakes(
         activeStakesData.map(
           (stake: {
@@ -513,7 +545,8 @@ export default function Staking() {
                 : "Expired";
 
             return {
-              totalAmount: ethers.utils.formatEther(stake.amount.toString()),
+              // totalAmount: ethers.utils.formatEther(stake.amount.toString()),
+              totalAmount: stake.amount.toString(),
               days: readableTime,
               totalRewards: stake.reward.toString(),
             };
@@ -610,7 +643,6 @@ export default function Staking() {
                               <Tab eventKey="30days" title="30 Days"></Tab>
                               <Tab eventKey="90days" title="90 Days"></Tab>
                               <Tab eventKey="180days" title="180 Days"></Tab>
-                              {/* <Tab eventKey="365days" title="365 Days"></Tab> */}
                             </Tabs>
                           </div>
                           <div>
