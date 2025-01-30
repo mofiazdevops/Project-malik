@@ -288,6 +288,10 @@ export const Header = (props: IProps) => {
       type: "dropdown", // Nested dropdown for games
       items: [
         {
+          name: "IdeaNetwork",
+          link: "/IdeaNetwork",
+        },
+        {
           name: "Explorer",
           // link: "https://www.ideascan.io/",
         },
