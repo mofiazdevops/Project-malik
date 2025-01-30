@@ -194,6 +194,11 @@ const routes = [
         component: lazy(() => import("pages/Ambassador")),
       },
       {
+        exact: true,
+        path: "/IdeaNetwork",
+        component: lazy(() => import("pages/IdeaNetwork")),
+      },
+      {
         path: "*",
         // eslint-disable-next-line
         component: () => <Redirect to="/" />,

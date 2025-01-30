@@ -5,3 +5,8 @@ declare module "react" {
     name?: string;
   }
 }
+
+declare module "*.mp4" {
+  const src: string;
+  export default src;
+}

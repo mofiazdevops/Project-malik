@@ -172,7 +172,7 @@ export default function Staking() {
 
   const [userAddress, setUserAddress] = useState<string>("");
   const [isWalletConnected, setIsWalletConnected] = useState<boolean>(false);
-  const [rewardPercentage, setRewardPercentage] = useState<number>(2);
+  const [rewardPercentage, setRewardPercentage] = useState<number>(1.5);
   const [reward, setReward] = useState<number>(0);
   const [selectedDays, setSelectedDays] = useState<number>(30);
   const [stakeAmount, setStakeAmount] = useState<number>(0);
@@ -281,15 +281,15 @@ export default function Staking() {
       switch (k) {
         case "30days":
           setSelectedDays(30);
-          setRewardPercentage(2);
+          setRewardPercentage(1.5);
           break;
         case "90days":
           setSelectedDays(90);
-          setRewardPercentage(9);
+          setRewardPercentage(2);
           break;
         case "180days":
           setSelectedDays(180);
-          setRewardPercentage(24);
+          setRewardPercentage(2.5);
           break;
         // case "365days":
         //   setSelectedDays(365);
@@ -370,6 +370,8 @@ export default function Staking() {
         signer
       );
 
+      console.log(stakingContract, "this is staking contract");
+
       const tokenContract = await new ethers.Contract(
         String(process.env.REACT_APP_TOKEN_CONTRACT),
         tokenAbi,
@@ -419,6 +421,7 @@ export default function Staking() {
       );
 
       const claimRewardTx = await stakingContract.claimReward();
+      console.log(claimRewardTx, "This is claim reward");
       setRewardLoader(true);
       await claimRewardTx.wait();
       setRewardLoader(false);
@@ -475,6 +478,7 @@ export default function Staking() {
       setDaysLeft(Number(daysLeft));
 
       const rewardTokens = ethers.utils.formatEther(details.reward);
+      console.log(reward, "THis is reward..........");
       setTotalReward(Number(stakedToken) + Number(rewardTokens));
 
       const progress = ((days - daysLeft) / days) * 100;
@@ -483,6 +487,7 @@ export default function Staking() {
 
       // Get active stakes
       const activeStakesData = await stakingContract.getStakes(address);
+      console.log(activeStakesData, "these are active stakes");
       setActiveStakes(
         activeStakesData.map(
           (stake: {
