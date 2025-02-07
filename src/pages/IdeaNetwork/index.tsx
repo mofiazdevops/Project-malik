@@ -4,7 +4,7 @@ import Built from "./Built";
 
 const useStyles = makeStyles({
   root: {
-    width: "1440px",
+    // width: "1440px",
     height: "5086px",
   },
   container: {
