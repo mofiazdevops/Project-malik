@@ -214,7 +214,6 @@ const getErrorMessage = (error: Error, dispatch: Dispatch<AppActions>) => {
     });
     // return "Please authorize this website to access your Ethereum account.";
   } else {
-    // console.error("Hello", error);
     dispatch({
       type: AppTypes.AlertModal,
       payload: {
