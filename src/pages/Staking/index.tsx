@@ -16,6 +16,8 @@ import tokenAbi from "./ABI/TokenABI.json";
 import { JsonRPCResponse } from "web3/providers";
 import { LoadingScreen } from "components";
 import { toInteger } from "lodash";
+import { useAppContext } from "contexts";
+import { AppActions, AppTypes } from "store/types";
 
 const useStyles = makeStyles((theme: any) => {
   return {
@@ -144,6 +146,7 @@ function LinearProgressWithLabel(props: { value: number }) {
 
 export default function Staking() {
   const classes: any = useStyles();
+  const { dispatch, state } = useAppContext();
   const history = useHistory();
   const [key, setKey] = useState<string>("30days");
   const [progress, setProgress] = React.useState(0);
@@ -159,7 +162,7 @@ export default function Staking() {
   };
 
   const web3Modal = new Web3Modal({
-    network: "amoy", // This will switch the default network to Polygon Mumbai
+    network: "MAINNET", // This will switch the default network to Polygon Mumbai
     cacheProvider: true,
     providerOptions,
   });
@@ -172,7 +175,7 @@ export default function Staking() {
 
   const [userAddress, setUserAddress] = useState<string>("");
   const [isWalletConnected, setIsWalletConnected] = useState<boolean>(false);
-  const [rewardPercentage, setRewardPercentage] = useState<number>(2);
+  const [rewardPercentage, setRewardPercentage] = useState<number>(1.5);
   const [reward, setReward] = useState<number>(0);
   const [selectedDays, setSelectedDays] = useState<number>(30);
   const [stakeAmount, setStakeAmount] = useState<number>(0);
@@ -185,6 +188,7 @@ export default function Staking() {
   const [unStakeLoader, setUnStakeLoader] = useState<boolean>(false);
   const [activeStakes, setActiveStakes] = useState<Stake[]>([]);
   const [Staking, setStaking] = useState<boolean>(false);
+  const [isStakeDisabled, setIsStakeDisabled] = useState(true);
 
   const resetConnectionState = () => {
     setIsWalletConnected(false);
@@ -235,6 +239,7 @@ export default function Staking() {
   ) => {
     const value = event.target.value;
     if (!value || value.match(/^\d*\.?\d*$/)) {
+      setIsStakeDisabled(Number(value) < 100);
       setStakeAmount(Number(value));
       calculateReward();
     }
@@ -255,6 +260,14 @@ export default function Staking() {
           const signer = web3Provider.getSigner();
           const address = await signer.getAddress();
           setUserAddress(address);
+          // Check the current network
+          const currentNetwork = await web3Provider.getNetwork();
+          const targetNetworkId = 0x89; // Replace with the desired network ID (e.g., 1 for Ethereum Mainnet)
+
+          if (currentNetwork.chainId !== targetNetworkId) {
+            // Request to switch network in MetaMask
+            connectWallet();
+          }
           getData(signer, address);
         } catch (error) {
           console.error("Error connecting to wallet or fetching data:", error);
@@ -279,15 +292,15 @@ export default function Staking() {
       switch (k) {
         case "30days":
           setSelectedDays(30);
-          setRewardPercentage(2);
+          setRewardPercentage(1.5);
           break;
         case "90days":
           setSelectedDays(90);
-          setRewardPercentage(9);
+          setRewardPercentage(2);
           break;
         case "180days":
           setSelectedDays(180);
-          setRewardPercentage(24);
+          setRewardPercentage(2.5);
           break;
         // case "365days":
         //   setSelectedDays(365);
@@ -314,12 +327,12 @@ export default function Staking() {
 
       const { chainId } = await web3Provider.getNetwork();
 
-      if (chainId !== 80002) {
+      if (chainId !== 0x89) {
         // 80002 is the chain ID for Polygon amoy
         try {
           await provider.request({
             method: "wallet_switchEthereumChain",
-            params: [{ chainId: "0x13882" }], // Hexadecimal version of the chainId
+            params: [{ chainId: "0x89" }],
           });
         } catch (switchError: any) {
           // This error code indicates that the chain has not been added to MetaMask
@@ -329,12 +342,12 @@ export default function Staking() {
                 method: "wallet_addEthereumChain",
                 params: [
                   {
-                    chainId: "0x13882",
-                    chainName: "Polygon Amoy",
+                    chainId: "0x89",
+                    chainName: "Polygon",
                     rpcUrls: [process.env.REACT_APP_RPC_URL],
                     blockExplorerUrls: [process.env.REACT_APP_EXPLORER_URL],
                     nativeCurrency: {
-                      name: "AMOY",
+                      name: "MAINNET",
                       symbol: "POL",
                       decimals: 18,
                     },
@@ -368,6 +381,8 @@ export default function Staking() {
         signer
       );
 
+      console.log(stakingContract, "this is staking contract");
+
       const tokenContract = await new ethers.Contract(
         String(process.env.REACT_APP_TOKEN_CONTRACT),
         tokenAbi,
@@ -385,7 +400,7 @@ export default function Staking() {
 
       console.log(selectedDays * 86400, "these are selected days");
       const depositTx = await stakingContract.deposit(stakeAmount);
-      console.log(depositTx, "This is deposit");
+
       const stakingTx = await stakingContract.stake(
         // ethers.utils.parseUnits(String(stakeAmount), "ether"),
         toInteger(stakeAmount),
@@ -397,10 +412,30 @@ export default function Staking() {
       setStakingLoader(false);
       setStaking(false);
 
+      // Dispatch success alert with transaction hash
+      dispatch({
+        type: AppTypes.AlertModal,
+        payload: {
+          show: true,
+          title: "Successful",
+          body: `Staking added successfully! 🎉`,
+        },
+      });
+
       setStakeAmount(0);
       getData(signer, address);
     } catch (error) {
+      setStaking(false);
       console.error("Failed to get stake tokens:", error);
+      // Dispatch error alert
+      dispatch({
+        type: AppTypes.AlertModal,
+        payload: {
+          show: true,
+          title: "Error",
+          body: "An error occurred during the Staking. Please try again",
+        },
+      });
     }
   };
 
@@ -462,21 +497,24 @@ export default function Staking() {
       );
 
       // Call the contract function
-      // const details = await stakingContract.getDetailsOfUpcomingStake();
       const details = await stakingContract.stakes(address, 0);
       const stakedToken = ethers.utils.formatEther(details.amount);
       setLockedToken(Number(stakedToken));
 
-      const days = Math.floor(details.ONE_MONTH / (3600 * 24));
+      const days = details?.timeLeft
+        ? Math.floor(details.ONE_MONTH / (3600 * 24))
+        : 0;
       setLockedDuration(days);
 
-      const daysLeft = Math.floor(details.timeLeft / (3600 * 24));
+      const daysLeft = details?.timeLeft
+        ? Math.floor(details.timeLeft / (3600 * 24))
+        : 0;
       setDaysLeft(Number(daysLeft));
 
       const rewardTokens = ethers.utils.formatEther(details.reward);
       setTotalReward(Number(stakedToken) + Number(rewardTokens));
 
-      const progress = ((days - daysLeft) / days) * 100;
+      const progress = days > 0 ? ((days - daysLeft) / days) * 100 : 0;
       const intValue = Math.round(progress);
       setProgress(intValue);
 
@@ -498,12 +536,17 @@ export default function Staking() {
 
             // Decide whether to display days or months based on the value
             const readableTime =
-              monthsRemaining >= 1
-                ? `${Math.floor(monthsRemaining)} months` // Use Math.floor() to avoid decimals
-                : `${Math.floor(daysRemaining)} days`; // Use Math.floor() to avoid decimals
+              monthsRemaining > 1
+                ? `${Math.ceil(monthsRemaining)} months`
+                : daysRemaining > 0
+                ? `${Math.ceil(daysRemaining)} day${
+                    Math.ceil(daysRemaining) > 1 ? "s" : ""
+                  }`
+                : "Expired";
 
             return {
-              totalAmount: ethers.utils.formatEther(stake.amount.toString()),
+              // totalAmount: ethers.utils.formatEther(stake.amount.toString()),
+              totalAmount: stake.amount.toString(),
               days: readableTime,
               totalRewards: stake.reward.toString(),
             };
@@ -580,7 +623,7 @@ export default function Staking() {
                               type="text"
                               id="stakeInput"
                               name="stakeInput"
-                              placeholder="Enter amount of $IDEA to stake"
+                              placeholder="Enter amount of 100 $IDEA to stake"
                               className="w-100 staking_input_fields"
                               value={stakeAmount}
                               onChange={handleStakeInputChange}
@@ -600,7 +643,6 @@ export default function Staking() {
                               <Tab eventKey="30days" title="30 Days"></Tab>
                               <Tab eventKey="90days" title="90 Days"></Tab>
                               <Tab eventKey="180days" title="180 Days"></Tab>
-                              <Tab eventKey="365days" title="365 Days"></Tab>
                             </Tabs>
                           </div>
                           <div>
@@ -623,7 +665,13 @@ export default function Staking() {
                           <div className="pt-3">
                             <button
                               className="w-100 start_staking_btn"
-                              disabled={stakeAmount == 0}
+                              // disabled={stakeAmount == 0}
+                              disabled={isStakeDisabled || Staking}
+                              style={{
+                                backgroundColor: isStakeDisabled
+                                  ? "gray"
+                                  : "#0c71bc",
+                              }}
                               onClick={createStake}
                             >
                               {Staking ? "Staking...." : "Start Staking"}
