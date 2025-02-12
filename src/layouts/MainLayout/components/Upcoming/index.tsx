@@ -212,7 +212,6 @@ const getErrorMessage = (error: Error, dispatch: Dispatch<AppActions>) => {
         body: "Please authorize this website to access your Polygon account.",
       },
     });
-    // return "Please authorize this website to access your Ethereum account.";
   } else {
     dispatch({
       type: AppTypes.AlertModal,
