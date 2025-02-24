@@ -399,7 +399,7 @@ export default function Staking() {
       setStakingLoader(false);
 
       console.log(selectedDays * 86400, "these are selected days");
-      const depositTx = await stakingContract.deposit(stakeAmount);
+      // const depositTx = await stakingContract.deposit(stakeAmount);
 
       const stakingTx = await stakingContract.stake(
         // ethers.utils.parseUnits(String(stakeAmount), "ether"),
