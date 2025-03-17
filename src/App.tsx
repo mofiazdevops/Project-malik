@@ -2,7 +2,6 @@ import { Web3Provider } from "@ethersproject/providers";
 import { ThemeProvider } from "@material-ui/styles";
 import { Web3ReactProvider } from "@web3-react/core";
 import { AppProvider, ConnectedWeb3, GlobalProvider } from "contexts";
-import React from "react";
 import { BrowserRouter } from "react-router-dom";
 import routes, { renderRoutes } from "routes";
 import { createTheme } from "theme";
@@ -20,6 +19,7 @@ const client = new ApolloClient({
 
 import "./App.css";
 import { ScrollProvider } from "contexts/scrollContext";
+import { BlogProvider } from "contexts/blogContext";
 
 ReactGA.initialize("UA-155131109-1");
 
@@ -41,7 +41,11 @@ function App() {
               <GlobalProvider>
                 <ScrollProvider>
                   <AppProvider>
-                    <BrowserRouter>{renderRoutes(routes as any)}</BrowserRouter>
+                    <BlogProvider>
+                      <BrowserRouter>
+                        {renderRoutes(routes as any)}
+                      </BrowserRouter>
+                    </BlogProvider>
                   </AppProvider>
                 </ScrollProvider>
                 <OfferDialog />

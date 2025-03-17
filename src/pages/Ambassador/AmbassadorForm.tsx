@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import { makeStyles } from "@material-ui/core";
 import emailjs from "emailjs-com";
+import { useSnackbar } from "notistack";
 
 const useStyles = makeStyles((theme) => ({
   "@global": {
@@ -156,6 +157,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const AmbassadorForm = () => {
+  const { enqueueSnackbar } = useSnackbar();
   const classes = useStyles();
   const formRef = useRef<HTMLFormElement>(null); // Create a ref for the form, typed as HTMLFormElement
   const [isActive, setIsActive] = useState(false);
@@ -204,9 +206,7 @@ export const AmbassadorForm = () => {
           formRef.current
         );
         console.log("SUCCESS!", response);
-
-        // Log form data for debugging
-        console.log("Form Data:", formData);
+        enqueueSnackbar("Successfully submitted!", { variant: "success" });
 
         // Optionally reset the form and state
         formRef.current.reset();
@@ -225,6 +225,7 @@ export const AmbassadorForm = () => {
       setIsActive(false);
     } catch (err) {
       console.log("FAILED...", err);
+      enqueueSnackbar("Error! Please try again later.", { variant: "error" });
       setIsActive(false);
     }
   };

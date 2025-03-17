@@ -478,40 +478,7 @@ export const UpcomingPool = (props: IUpcomingProps) => {
           {props.status || "Upcoming"}
         </span> */}
           <div className={classes.poolBody}>
-            {/* {loading ? (
-                            <>
-                                <Skeleton
-                                    className={classes.poolTitle}
-                                    height={10}
-                                    variant="rect"
-                                    width={"60%"}
-                                />
-                                <Skeleton
-                                    className={classes.poolTitle}
-                                    height={10}
-                                    variant="rect"
-                                    width={"80%"}
-                                />
-                                <Skeleton
-                                    className={classes.poolTitle}
-                                    height={10}
-                                    variant="rect"
-                                    width={"100%"}
-                                />
-                                <Skeleton
-                                    className={classes.poolTitle}
-                                    height={10}
-                                    variant="rect"
-                                    width={"90%"}
-                                />
-                                <Skeleton
-                                    className={classes.poolTitle}
-                                    height={10}
-                                    variant="rect"
-                                    width={"80%"}
-                                />
-                            </>
-                        ) : ( */}
+          
             <>
               <div className={classes.cardbodyitem}>
                 <span>Total Supply</span>
@@ -573,35 +540,6 @@ export const UpcomingPool = (props: IUpcomingProps) => {
                 </span>
               </div>
             </>
-            {/* )} */}
-            {/* <div className={classes.body1}>
-            <Ticker
-            caption="total raise"
-            color="error"
-            symbol={""}
-            value={props.total || "TBA"}
-            />
-            <Ticker
-            caption="min allocation"
-            color="info"
-            symbol=""
-            value={props.minAlloc || "TBA"}
-            />
-            </div>
-            <div className={classes.body2}>
-            <Ticker
-              caption="max allocation"
-              color="success"
-              symbol={""}
-              value={props.maxAlloc || "TBA"}
-              />
-            <Ticker
-            caption="access"
-            color="warning"
-            symbol=""
-            value={props.access === "private" ? "Private" : "Public"}
-            />
-          </div> */}
           </div>
         </div>
       </div>

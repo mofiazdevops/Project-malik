@@ -19,20 +19,6 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { useScroll } from "contexts/scrollContext";
-// import { useAppContext } from "contexts";
-// import { Web3Provider } from "@ethersproject/providers";
-// import { useEagerConnect, useInactiveListener } from "hooks/injectedHook";
-// import { AppActions, AppTypes } from "store/types";
-// import {
-//     InjectedConnector,
-//     NoEthereumProviderError,
-//     UserRejectedRequestError as UserRejectedRequestErrorInjected,
-// } from "@web3-react/injected-connector";
-// import { BigNumber, ethers } from "ethers";
-
-// import { UnsupportedChainIdError, useWeb3React } from "@web3-react/core";
-// import { ERC20NewService } from "services/erc20New";
-// import { ERC20Service } from "services/erc20";
 
 const useStyles = makeStyles((theme: any) => ({
   root: {
@@ -189,67 +175,11 @@ interface IProps {
   className?: string;
 }
 
-// export const injected = new InjectedConnector({
-//     supportedChainIds: [1, 4],
-// });
-
 export const Header = (props: IProps) => {
   const { scrollToSection } = useScroll();
-  // const { dispatch, state } = useAppContext();
-
-  // const context = useWeb3React<Web3Provider>();
-  // const {
-  //     account,
-  //     activate,
-  //     active,
-  //     chainId,
-  //     connector,
-  //     deactivate,
-  //     error,
-  //     library: provider,
-  // } = context;
-
-  // error && getErrorMessage(error, dispatch);
-
-  // // handle logic to recognize the connector currently being activated
-  // const [activatingConnector, setActivatingConnector] = React.useState<any>();
-  // React.useEffect(() => {
-  //     if (activatingConnector && activatingConnector === connector) {
-  //         setActivatingConnector(undefined);
-  //     }
-  // }, [activatingConnector, connector]);
-
-  // // handle logic to eagerly connect to the injected ethereum provider, if it exists and has granted access already
-  // const triedEager = useEagerConnect();
-
-  // // handle logic to connect in reaction to certain events on the injected ethereum provider, if it exists
-  // useInactiveListener(!triedEager || !!activatingConnector);
-  // // useEffect
-  // const currentConnector = injected;
-  // const activating = currentConnector === activatingConnector;
-  // const connected = currentConnector === connector;
-  // const disabled =
-  //     !triedEager || !!activatingConnector || connected || !!error;
 
   const classes = useStyles();
-  // const { account, rawWeb3Context } = useConnectedWeb3Context();
-  // const { toggleWalletConnectModal } = useGlobal();
-  // const connector = localStorage.getItem(STORAGE_KEY_CONNECTOR);
-
-  // const onDisconnect = () => {
-  //   rawWeb3Context.deactivate();
-  //   localStorage.removeItem(STORAGE_KEY_CONNECTOR);
-  // };
   const menuItems = [
-    // {
-    //   link: "/staking-vesting",
-    //   name: "Staking & Vesting",
-    // },
-    // {
-    //   external: true,
-    //   link: "https://manialands.com/",
-    //   name: "Games",
-    // },
     { link: "/", name: "Home" },
     {
       name: "Products",
@@ -260,37 +190,16 @@ export const Header = (props: IProps) => {
           link: "http://Workaspro.com",
           name: "WorkAsPro Talent",
         },
-        // {
-        //   external: true,
-        //   link: "https://manialands.com",
-        //   name: "Manialands",
-        // },
-        // {
-        //   name: "Games", // Games section within Products
-        //   type: "dropdown", // Nested dropdown for games
-        //   items: [
-        //     {
-        //       name: "Save the Doge",
-        //       img: "games/dog.png",
-        //       link: "https://play.google.com/store/apps/details?id=com.mms.savethepuppies.rescuedog.puppygames",
-        //     },
-        //     {
-        //       name: "Pool Master Billiard",
-        //       img: "games/pool.png",
-        //       link: "https://play.google.com/store/apps/details?id=com.IdeaologyStudio.RealPoolBallBilliardGames",
-        //     },
-        //   ], // Adding gameItems inside Products > Games
-        // },
       ],
     },
     {
       name: "Ecosystem", // Games section within Products
       type: "dropdown", // Nested dropdown for games
       items: [
-        // {
-        //   name: "IdeaNetwork",
-        //   link: "/IdeaNetwork",
-        // },
+        {
+          name: "IdeaNetwork",
+          link: "/IdeaNetwork",
+        },
         {
           name: "Explorer",
           // link: "https://www.ideascan.io/",
@@ -303,15 +212,11 @@ export const Header = (props: IProps) => {
           link: "/newstaking",
           name: "Staking",
         },
-        // {
-        //   link: "/voting",
-        //   name: "Voting",
-        // },
         {
           link: "/swap",
           name: "Swap & Bridge ",
         },
-      ], // Adding gameItems inside Products > Games
+      ],
     },
     {
       external: true,
@@ -326,88 +231,21 @@ export const Header = (props: IProps) => {
       link: "/Ambassador",
       name: "Ambassadors",
     },
-    // {
-    //   external: true,
-    //   link: "https://ideaologyio.medium.com/",
-    //   name: "News",
-    // },
-    // {
-    //   link: "/contact",
-    //   name: "Contact",
-    // },
-
-    // {
-    //   link: "/privacy-policy",
-    //   name: "Privacy Policy",
-    // },
     // {
     //   link: "/blog",
     //   name: "Blogs",
     // },
-
-    // {
-    //   link: "/get-idea",
-    //   name: "Get IDEA",
-    // },
-
-    // {
-    //   name: "AirDrop",
-    //   type: "gotoapp",
-    // },
   ];
   const menuItems12 = [
-    // {
-    //   link: "/staking-vesting",
-    //   name: "Staking & Vesting",
-    // },
-    // {
-    //   external: true,
-    //   link: "https://manialands.com/",
-    //   name: "Games",
-    // },
     { link: "/", name: "Home" },
     {
       external: true,
-      link: "https://ideaology-1.gitbook.io/ideaology-1/",
-      name: "Documents",
-    },
-    // {
-    //   external: true,
-    //   link: "https://ideaologyio.medium.com/",
-    //   name: "News",
-    // },
-    // {
-    //   link: "/contact",
-    //   name: "Contact",
-    // },
-
-    // {
-    //   link: "/privacy-policy",
-    //   name: "Privacy Policy",
-    // },
-    {
-      link: "/Ambassador",
-      name: "Ambassadors",
+      name: "WorkAsPro Talent",
+      link: "http://Workaspro.com",
     },
     {
-      link: "/newstaking",
-      name: "Staking",
-    },
-    {
-      link: "/GrantProgram",
-      name: "Grant Program",
-    },
-    // {
-    //   link: "/voting",
-    //   name: "Voting",
-    // },
-    // {
-    //   link: "/get-idea",
-    //   name: "Get IDEA",
-    // },
-    {
-      link: "/swap",
-      name: "Swap & Bridge",
+      name: "IdeaNetwork",
+      link: "/IdeaNetwork",
     },
     {
       external: true,
@@ -415,18 +253,30 @@ export const Header = (props: IProps) => {
       link: "https://www.ideascan.io/",
     },
     {
-      external: false,
-      name: "WorkAsPro Talent",
-      link: "/CommingSoon",
-    },
-    {
       name: "IDEA Wallet",
       link: "/CommingSoon2",
     },
-    // {
-    //   name: "AirDrop",
-    //   type: "gotoapp",
-    // },
+    {
+      link: "/newstaking",
+      name: "Staking",
+    },
+    {
+      link: "/swap",
+      name: "Swap & Bridge",
+    },
+    {
+      link: "/Ambassador",
+      name: "Ambassadors",
+    },
+    {
+      link: "/GrantProgram",
+      name: "Grant Program",
+    },
+    {
+      external: true,
+      link: "https://ideaology-1.gitbook.io/ideaology-1/",
+      name: "Documents",
+    },
   ];
 
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
@@ -514,15 +364,6 @@ export const Header = (props: IProps) => {
           />
         </a>
 
-        {/* {!account ? (
-        <ConnectWalletButton onClick={toggleWalletConnectModal} />
-      ) : (
-        <AccountInfo
-          address={account}
-          icon={connector || ""}
-          onDisconnect={onDisconnect}
-        />
-      )} */}
         <div className={classes.buttonWrapperMiddle}>
           {/* <SimpleMenu /> */}
           {menuItems.map((element, key) => {
@@ -626,9 +467,6 @@ export const Header = (props: IProps) => {
                               className={classes.menuButtonText}
                               color="secondary"
                               size="large"
-                              // endIcon={
-                              //   <ArrowDropDownIcon  />
-                              // }
                             >
                               {subItem.name}
                             </Button>
@@ -802,10 +640,6 @@ export function SimpleMenu(props: any) {
 
   const [value, setValue] = React.useState(0);
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
-  };
-
   return (
     <div>
       <div
@@ -832,16 +666,6 @@ export function SimpleMenu(props: any) {
         onClose={handleClose}
         MenuListProps={{ onMouseLeave: handleClose }}
       >
-        <Box sx={{}}>
-          {/* <Tabs
-            value={value}
-            onChange={handleChange}
-            aria-label="basic tabs example"
-          >
-            <Tab label="Games & Apps" {...a11yProps(0)} />
-            <Tab label="Metaverse" {...a11yProps(1)} />
-          </Tabs> */}
-        </Box>
         <TabPanel value={value} index={0}>
           <div
             style={{
@@ -915,11 +739,4 @@ function TabPanel(props: any) {
       )}
     </div>
   );
-}
-
-function a11yProps(index: number) {
-  return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-  };
 }

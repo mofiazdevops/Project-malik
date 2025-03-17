@@ -81,7 +81,7 @@ const useStyles = makeStyles((theme: any) => ({
     },
   },
   para1: {
-    fontSize: "20px",
+    fontSize: "18px",
     fontFamily: "SF Pro Display",
     fontWeight: "normal",
     lineHeight: "24px",
@@ -90,7 +90,7 @@ const useStyles = makeStyles((theme: any) => ({
     padding: "10px 7%",
     maxWidth: "100%",
     [theme.breakpoints.down("md")]: {
-      fontSize: "16px",
+      fontSize: "14px",
       padding: "10px 5%",
     },
   },

@@ -7,7 +7,7 @@ import {
   makeStyles,
 } from "@material-ui/core";
 import clsx from "clsx";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { BootstrapInput } from "components/Input";
 import "./index.css";
 import axios from "axios";
@@ -28,6 +28,7 @@ import nodemailer from "nodemailer";
 // import { Email } from './email';
 import SMTPTransport from "nodemailer/lib/smtp-transport";
 import { Link } from "react-router-dom";
+import emailjs from "emailjs-com";
 
 import {
   Dialog,
@@ -280,6 +281,8 @@ export const Subscribe = (props: IProps) => {
     userFrom: "",
   });
   const [inProgress, setInProgress] = useState<boolean>(false);
+  const [isActive, setIsActive] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
 
   const handleChangeEmail = (evt: React.ChangeEvent<HTMLInputElement>) => {
     setEmail({ ...email, email: evt.target.value });
@@ -289,69 +292,63 @@ export const Subscribe = (props: IProps) => {
     setEmail({ ...email, name: evt.target.value });
   };
 
-  const transporter = nodemailer.createTransport({
-    host: "smtp.ethereal.email",
-    port: SMTP_PORT,
-    secure: false,
-    auth: {
-      user: SMTP_USERNAME,
-      pass: SMTP_PASSWORD,
-    },
-  } as SMTPTransport.Options);
+  emailjs.init("xgY7CZ_J1S154HAiD");
+  const handleSubscribe = async (e) => {
+    e.preventDefault();
+    setIsActive(true);
 
-  const handleSubscribe = () => {
-    // evt.preventDefault();
+    if (!email.email || !email.name) {
+      console.log("Missing required fields!");
+      return;
+    }
 
-    setInProgress(true);
+    try {
+      if (formRef.current) {
+        const response = await emailjs.sendForm(
+          "service_mq3enkt",
+          "template_5bfsvqw",
+          formRef.current
+        );
 
-    // TODO: update subscriber saving flow, now just saving email
-    axios
-      .post(`${API_URL}/sendMail/subscribe`, {
-        email: email.email,
-        name: email.name,
-        userFrom: email.userFrom,
-      })
-      .then((response) => {
-        // console.log(response);
+        console.log("SUCCESS!", response);
         enqueueSnackbar("Successfully subscribed!", { variant: "success" });
-        setEmail({ name: "", email: "" });
-      })
-      .catch((err) => {
-        // console.log(err.msg);
-        enqueueSnackbar("Error! Please Try again later.", {
-          variant: "error",
-        });
-      })
-      .finally(() => {
-        setInProgress(false);
-      });
+
+        formRef.current.reset();
+        setEmail({ name: "", email: "", userFrom: "" });
+      }
+    } catch (err) {
+      console.log("FAILED...", err);
+      enqueueSnackbar("Error! Please try again later.", { variant: "error" });
+    } finally {
+      setIsActive(false);
+    }
   };
 
-  const handleSubscribe1 = async (evt: React.FormEvent<HTMLFormElement>) => {
-    evt.preventDefault();
-    setInProgress(true);
+  // const handleSubscribe1 = async (evt: React.FormEvent<HTMLFormElement>) => {
+  //   evt.preventDefault();
+  //   setInProgress(true);
 
-    const options = {
-      from: "you@example.com",
-      to: "mjc8808@gmail.com",
-      subject: "hello world",
-      html: `<p>${email.name}</p><br /><p>${email.email}</p>`,
-    };
+  //   const options = {
+  //     from: "you@example.com",
+  //     to: "mjc8808@gmail.com",
+  //     subject: "hello world",
+  //     html: `<p>${email.name}</p><br /><p>${email.email}</p>`,
+  //   };
 
-    transporter.sendMail(options, (err, info) => {
-      if (err) console.log(err);
-      else console.log(info);
-    });
+  //   transporter.sendMail(options, (err, info) => {
+  //     if (err) console.log(err);
+  //     else console.log(info);
+  //   });
 
-    setInProgress(false);
-  };
+  //   setInProgress(false);
+  // };
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
     setOpen(true);
   };
 
-  console.log(email);
+  // console.log(email);
 
   return (
     <div className={clsx(classes.root, props.className)}>
@@ -372,6 +369,7 @@ export const Subscribe = (props: IProps) => {
             From Where You here about us?
           </div> */}
           <form
+            ref={formRef}
             className={classes.form}
             onSubmit={handleSubmit}
             style={{ display: "flex", flexDirection: "column" }}
@@ -641,13 +639,13 @@ export const Subscribe = (props: IProps) => {
               className={classes.btnAccept}
               color="primary"
               fullWidth
-              onClick={() => handleSubscribe()}
+              onClick={handleSubscribe}
               disableElevation
               disabled={inProgress}
               type="submit"
               variant="contained"
             >
-              Accept All
+              {isActive ? "Please wait..." : "Accept All"}
             </Button>
           </Stack>
         </div>
