@@ -110,7 +110,6 @@ export const IdeaWalletSection2 = () => {
           //   mt: 7,
         }}
       >
-        {/* Left Content */}
         <Box
           sx={{
             width: { xs: "335px", sm: "530px" },
