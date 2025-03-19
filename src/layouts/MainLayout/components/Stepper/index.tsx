@@ -1,5 +1,12 @@
+import {
+  Box,
+  Button,
+  Link,
+  List,
+  ListItem,
+  makeStyles,
+} from "@material-ui/core";
 import React, { useEffect, useState } from "react";
-// import Truncate from "react-truncate";
 
 export const table = [
   {
@@ -380,11 +387,94 @@ export const table = [
   },
 ];
 
+const useStyles = makeStyles((theme: any) => ({
+  root: {
+    position: "fixed",
+    width: "16%",
+    left: 0,
+    top: "8%",
+    display: "none", // hidden by default
+    [theme.breakpoints.up("sm")]: {
+      display: "block", // shows for medium screens and up
+    },
+  },
+  sidebar: {
+    backgroundColor: "#040507",
+    width: 200,
+    [theme.breakpoints.up("lg")]: {
+      width: 300,
+    },
+    height: "100vh",
+    overflowY: "auto",
+    scrollbarWidth: "none", // Hides scrollbar in Firefox
+    "-ms-overflow-style": "none", // Hides scrollbar in Internet Explorer/Edge
+    "&::-webkit-scrollbar": {
+      display: "none", // Hides scrollbar in Chrome, Safari, and Edge
+    },
+  },
+  list: {
+    paddingTop: theme.spacing(6),
+    paddingBottom: theme.spacing(12),
+  },
+  listItem: {
+    paddingLeft: theme.spacing(1.5),
+    paddingBottom: theme.spacing(0.8),
+  },
+  listItemContent: {
+    display: "flex",
+    alignItems: "center",
+  },
+  toggleButton: {
+    marginRight: theme.spacing(0.5),
+    color: "#cbd5e0",
+    fontSize: "0.75rem",
+    minWidth: "auto",
+    textTransform: "none",
+    "&:hover": {
+      color: "#2563eb",
+    },
+  },
+  sectionLink: {
+    fontSize: 10,
+    [theme.breakpoints.up("lg")]: {
+      fontSize: 12,
+    },
+    fontWeight: 500,
+    fontFamily: "sans-serif",
+    color: "#ffffff",
+    textDecoration: "none",
+    "&:hover": {
+      color: "#2563eb",
+    },
+  },
+  activeSectionLink: {
+    color: "#2563eb",
+  },
+  nestedList: {
+    marginLeft: theme.spacing(2.5),
+    marginTop: theme.spacing(0.5),
+    borderLeft: "2px solid #d1d5db",
+    paddingLeft: theme.spacing(1),
+  },
+  subLink: {
+    fontSize: 10,
+    [theme.breakpoints.up("lg")]: {
+      fontSize: 12,
+    },
+    color: "#cbd5e0",
+    textDecoration: "none",
+    "&:hover": {
+      color: "#2563eb",
+    },
+  },
+}));
+
 const Stepper = () => {
+  const classes = useStyles();
   const [activeSection, setActiveSection] = useState("");
   const [openSections, setOpenSections] = useState({});
 
-  const toggleDropdown = (id) => {
+  const toggleDropdown = (id: string) => {
     setOpenSections((prev) => ({
       ...prev,
       [id]: !prev[id],
@@ -392,8 +482,9 @@ const Stepper = () => {
   };
 
   // Handle smooth scrolling on click
-  const handleScroll = (e, id) => {
+  const handleScroll = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
     e.preventDefault();
+    console.log(id, "this is id");
     const element = document.getElementById(id);
     if (element) {
       element.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -402,22 +493,20 @@ const Stepper = () => {
 
   // Detect active section based on scroll position
   useEffect(() => {
-    const handleScroll = () => {
+    const handleScrollEvent = () => {
       const sections = document.querySelectorAll("div[id]");
       let currentSection = "";
-
       sections.forEach((section) => {
         const rect = section.getBoundingClientRect();
         if (rect.top <= 100 && rect.bottom >= 100) {
           currentSection = section.id;
         }
       });
-
       setActiveSection(currentSection);
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScrollEvent);
+    return () => window.removeEventListener("scroll", handleScrollEvent);
   }, []);
 
   // Auto-scroll sidebar when active section changes
@@ -429,51 +518,57 @@ const Stepper = () => {
   }, [activeSection]);
 
   return (
-    <div className="fixed left-0 top-[8%] hidden md:block z-20">
-      <div className="bg-[#040507] w-[200px] lg:w-[300px] h-screen overflow-y-auto">
-        <ul className="space-y-3 pt-6 pb-8">
+    <Box className={classes.root}>
+      <Box className={classes.sidebar}>
+        <List className={classes.list}>
           {table.map((section) => (
-            <li key={section.id}>
-              <div className="flex items-center pl-3">
+            <div key={section.id} className={classes.listItem}>
+              <Box className={classes.listItemContent}>
                 {section.subSections && (
-                  <button
-                    className="mr-2 text-gray-300 hover:text-blue-600 text-xs"
+                  <Button
+                    className={classes.toggleButton}
                     onClick={() => toggleDropdown(section.id)}
                   >
                     {openSections[section.id] ? "▲" : "▼"}
-                  </button>
+                  </Button>
                 )}
-                <a
+                <Link
                   href={section.path}
-                  className={` md:text-[10px] lg:text-[12px] font-medium font-sans ${
+                  onClick={(e) => {
+                    setActiveSection(section.id);
+                    handleScroll(e, section.path.replace("#", ""));
+                  }}
+                  className={`${classes.sectionLink} ${
                     activeSection === section.id
-                      ? "text-blue-600"
-                      : "text-[#ffffff]"
+                      ? classes.activeSectionLink
+                      : ""
                   }`}
-                  onClick={() => setActiveSection(section.id)}
                 >
                   {section.name}
-                </a>
-              </div>
+                </Link>
+              </Box>
               {section.subSections && openSections[section.id] && (
-                <ul className="ml-10 mt-2 space-y-1 border-l-2 border-gray-300 pl-2">
-                  {section.subSections.map((sub) => (
-                    <li key={sub.id}>
-                      <a
+                <List className={classes.nestedList}>
+                  {section.subSections.map((sub: any) => (
+                    <ListItem key={sub.id} className={classes.listItem}>
+                      <Link
                         href={sub.path}
-                        className="text-gray-300 hover:text-blue-600 md:text-[10px] lg:text-[12px]"
+                        onClick={(e) =>
+                          handleScroll(e, section.path.replace("#", ""))
+                        }
+                        className={classes.subLink}
                       >
                         {sub.name}
-                      </a>
-                    </li>
+                      </Link>
+                    </ListItem>
                   ))}
-                </ul>
+                </List>
               )}
-            </li>
+            </div>
           ))}
-        </ul>
-      </div>
-    </div>
+        </List>
+      </Box>
+    </Box>
   );
 };
 

@@ -1,8 +1,8 @@
 import React from "react";
 import { Box, Grid, Typography } from "@mui/material";
-import identity from "../../../../assets/pngs/identity.png";
-import contract from "../../../../assets/pngs/contract.png";
-import token from "../../../../assets/pngs/token.png";
+import identity from "../../../../assets/pngs/identity.webp";
+import contract from "../../../../assets/pngs/contract.webp";
+import token from "../../../../assets/pngs/token.webp";
 import star from "../../../../assets/pngs/staricon.png";
 
 export const Features = () => {

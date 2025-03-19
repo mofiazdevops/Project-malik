@@ -48,11 +48,11 @@ const routes = [
         path: "/blog",
         component: lazy(() => import("pages/blogs")),
       },
-      // {
-      //   exact: true,
-      //   path: "/docs",
-      //   component: lazy(() => import("pages/Documentation")),
-      // },
+      {
+        exact: true,
+        path: "/docs",
+        component: lazy(() => import("pages/Documentation")),
+      },
       // {
       //   exact: true,
       //   path: "/staking-vesting",

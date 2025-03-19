@@ -1,8 +1,9 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core";
-import { Button, Typography } from "@material-ui/core";
+import { Button, Typography, makeStyles } from "@material-ui/core";
+
 import star from "../../assets/pngs/Star.png";
 import starbg from "../../assets/pngs/starbg.png";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme: any) => ({
   heroSection: {
@@ -168,12 +169,7 @@ const Hero = () => {
         succeed.
       </Typography>
       <Button className={classes.buttoncontainer}>
-        <a
-          href="https://www.ideascan.io/"
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{ textDecoration: "none" }}
-        >
+        <Link to="/docs" style={{ textDecoration: "none" }}>
           <div className={classes.textcontai}>
             <img
               src={starbg}
@@ -185,7 +181,7 @@ const Hero = () => {
             Explore
             <img src={star} alt="star" className={classes.star} />
           </div>
-        </a>
+        </Link>
       </Button>
     </div>
   );
