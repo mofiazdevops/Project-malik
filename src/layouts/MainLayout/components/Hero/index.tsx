@@ -5,7 +5,7 @@ import star from "../../../../assets/pngs/Star.png";
 import starbg from "../../../../assets/pngs/starbg.png";
 import idea from "../../../../assets/pngs/Idea.png";
 import gline from "../../../../assets/pngs/gline.png";
-import kuCoin from "../../../../assets/pngs/KuCoin Green 1.png";
+import kuCoin from "../../../../assets/pngs/KuCoin.png";
 import coinGecko from "../../../../assets/pngs/CoinGecko.png";
 import gif from "../../../../assets/svgs/ideagif.gif";
 
@@ -186,6 +186,7 @@ const useStyles = makeStyles((theme) => ({
   buttoncontainer: {
     display: "flex",
     justifyContent: "flex-start", // Default alignment for larger screens
+    textDecoration: "none",
 
     [theme.breakpoints.down("sm")]: {
       justifyContent: "center", // Keep centered for small screens (mobile)
@@ -295,7 +296,13 @@ export const Hero = () => {
               Join the decentralized ecosystem bridging talent, ideas &
               technology for a better future.
             </p>
-            <div className={classes.buttoncontainer}>
+            {/* <div className={classes.buttoncontainer}> */}
+            <a
+              href="https://www.ideascan.io/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={classes.buttoncontainer}
+            >
               <span className={classes.textcontai}>
                 <img
                   src={starbg}
@@ -307,7 +314,8 @@ export const Hero = () => {
                 Explore
                 <img src={star} alt="star" className={classes.star} />
               </span>
-            </div>
+            </a>
+            {/* </div> */}
             <div className={classes.card}>
               <div className={classes.cardcontainer}>
                 <div>
@@ -315,43 +323,61 @@ export const Hero = () => {
                 </div>
                 <div className={classes.cardimage}>
                   <div>
-                    <img
-                      src={coin}
-                      alt="coin"
-                      style={{
-                        width: "100%",
-                        maxWidth: "155px", // Set a maximum width to prevent it from becoming too large
-                        height: "auto",
-                      }}
-                      // width={155}
-                      // height={24}
-                    />
+                    <a
+                      href="https://coinmarketcap.com/currencies/ideaology/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <img
+                        src={coin}
+                        alt="coin"
+                        style={{
+                          width: "100%",
+                          maxWidth: "155px", // Set a maximum width to prevent it from becoming too large
+                          height: "auto",
+                        }}
+                        // width={155}
+                        // height={24}
+                      />
+                    </a>
                   </div>
                   <div>
-                    <img
-                      src={kuCoin}
-                      alt="kuCoin"
-                      style={{
-                        width: "100%",
-                        maxWidth: "99px", // Set a maximum width to prevent it from becoming too large
-                        height: "auto",
-                      }}
-                      // width={99}
-                      // height={26}
-                    />
+                    <a
+                      href="https://www.kucoin.com/trade/IDEA-USDT"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <img
+                        src={kuCoin}
+                        alt="kuCoin"
+                        style={{
+                          width: "100%",
+                          maxWidth: "99px", // Set a maximum width to prevent it from becoming too large
+                          height: "auto",
+                        }}
+                        // width={99}
+                        // height={26}
+                      />
+                    </a>
                   </div>
                   <div>
-                    <img
-                      src={coinGecko}
-                      alt="coinGecko"
-                      style={{
-                        width: "100%",
-                        maxWidth: "131px", // Set a maximum width to prevent it from becoming too large
-                        height: "auto",
-                      }}
-                      // width={131}
-                      // height={34}
-                    />
+                    <a
+                      href="https://www.coingecko.com/en/coins/ideaology/usd#:~:text=Ideaology%20(IDEA)%20is%20worth%20%240.0002709,of%20Ideaology%20traded%20was%20%2470%2C322.92"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <img
+                        src={coinGecko}
+                        alt="coinGecko"
+                        style={{
+                          width: "100%",
+                          maxWidth: "131px", // Set a maximum width to prevent it from becoming too large
+                          height: "auto",
+                        }}
+                        // width={131}
+                        // height={34}
+                      />
+                    </a>
                   </div>
                 </div>
                 <div className={classes.cardimage2}>

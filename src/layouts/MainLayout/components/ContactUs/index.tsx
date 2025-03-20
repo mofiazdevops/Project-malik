@@ -75,13 +75,11 @@ const useStyles = makeStyles((theme: any) => ({
   },
 }));
 
-// interface IProps {
-//   className?: string;
-// }
+
 
 export const ContactUs = (/*props: IProps*/) => {
   const classes = useStyles();
-  const formRef = useRef<HTMLFormElement>(null); // Create a ref for the form, typed as HTMLFormElement
+  const formRef = useRef<HTMLFormElement>(null);
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",

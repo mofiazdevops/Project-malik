@@ -237,7 +237,7 @@ export const MobileMenu = (props: IProps) => {
           {/* <div>
             <p style={{ color: "white" }}>MetaVerse</p>
           </div> */}
-          <a href="https://www.manialands.com">
+          {/* <a href="https://www.manialands.com">
             <Button
               classes={{ text: classes1.menuButtonText }}
               color="secondary"
@@ -245,7 +245,7 @@ export const MobileMenu = (props: IProps) => {
             >
               Manialands
             </Button>
-          </a>
+          </a> */}
         </div>
       </div>
     </Hidden>

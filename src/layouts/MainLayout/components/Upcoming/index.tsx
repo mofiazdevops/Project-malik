@@ -197,8 +197,6 @@ const getErrorMessage = (error: Error, dispatch: Dispatch<AppActions>) => {
       type: AppTypes.SwitchNetworkModal,
       payload: {
         show: true,
-        // title: "MetaMask",
-        // body: "You're connected to an unsupported network.",
         network: "56",
       },
     });
@@ -221,47 +219,11 @@ const getErrorMessage = (error: Error, dispatch: Dispatch<AppActions>) => {
         body: "Request already in progress. Check the console for more details.",
       },
     });
-    // return "An unknown error occurred. Check the console for more details.";
   }
 };
 
 export const PoolCard = (props: IProps) => {
-  // const context = useWeb3React<Web3Provider>();
-  // const {
-  //   account,
-  //   activate,
-  //   active,
-  //   chainId,
-  //   connector,
-  //   deactivate,
-  //   error,
-  //   library: provider,
-  // } = context;
   const { dispatch, state } = useAppContext();
-
-  // error && getErrorMessage(error, dispatch);
-
-  // handle logic to recognize the connector currently being activated
-  // const [activatingConnector, setActivatingConnector] = React.useState<any>();
-  // React.useEffect(() => {
-  //   if (activatingConnector && activatingConnector === connector) {
-  //     setActivatingConnector(undefined);
-  //   }
-  // }, [activatingConnector, connector, chainId]);
-
-  // handle logic to eagerly connect to the injected ethereum provider, if it exists and has granted access already
-  // const triedEager = useEagerConnect();
-
-  // // handle logic to connect in reaction to certain events on the injected ethereum provider, if it exists
-  // useInactiveListener(!triedEager || !!activatingConnector);
-
-  // // useEffect
-  // const currentConnector = injected;
-  // const activating = currentConnector === activatingConnector;
-  // const connected = currentConnector === connector;
-  // const disabled =
-  //     !triedEager || !!activatingConnector || connected || !!error;
-  // // console.log("Connected", disabled);
 
   const classes = useStyles();
   const commonClasses = useCommonStyles();
@@ -282,14 +244,6 @@ export const PoolCard = (props: IProps) => {
         // console.log("Error", err);
       });
   }, []);
-
-  // useEffect(() => {
-  //     if (!account || !provider) {
-  //         const currentConnector = injected;
-  //         setActivatingConnector(currentConnector);
-  //         activate(injected);
-  //     }
-  // }, [account, provider, activate]);
 
   useEffect(() => {
     const __window: any = window;
@@ -343,10 +297,7 @@ export const PoolCard = (props: IProps) => {
                         contractAddress={pool.contractAddress}
                         icon={pool.meta?.logo}
                         id={pool._id}
-                        // className={idx % 2 === 1 ? classes.down : ""}
-                        // background={background}
                         name={pool.applicationId?.projectName || "N/A"}
-                        // symbol="$CAC"
                         provider={
                           new ethers.providers.Web3Provider(
                             (window as any).ethereum
@@ -354,11 +305,6 @@ export const PoolCard = (props: IProps) => {
                         }
                         tokenPrice={pool.tokenPrice}
                         totalRaise={pool.totalRaise}
-
-                        // maxAlloc={formatBigNumber(pool.maxWei)}
-                        // minAlloc={formatBigNumber(pool.minWei)}
-                        // status={`In ${calculateTimeLeft(pool.startTime).days} days`}
-                        // total={formatBigNumber(pool.tokenTarget)}
                       />
                     </Grid>
                   );
@@ -366,70 +312,6 @@ export const PoolCard = (props: IProps) => {
             ) : (
               <h3>No pools found</h3>
             )}
-            {/* {props.loading ? (
-              <div className={classes.noPools}>Loading pools ...</div>
-            ) : props.pools.length === 0 ? (
-              <div className={classes.noPools}>No pools</div>
-            ) : (
-              <>
-                {props.pools.map((pool: IPool, idx: number) => (
-                  <>
-                    <Grid item key={pool.id} lg={4} md={6} xs={12}>
-                      <a
-                        className={clsx(
-                          commonClasses.noDecoration,
-                          classes.poolLink
-                        )}
-                        href={`${IDO_URL}/pools/${pool.id}`}
-                        key={pool.id}
-                        rel="noreferrer"
-                        target="_blank"
-                      >
-                        <UpcomingPool
-                          access={pool.poolType == 0 ? "private" : "public"}
-                          className={idx % 2 === 1 ? classes.down : ""}
-                          coin={pool.id}
-                          icon={pool.metaData?.icon}
-                          maxAlloc={formatBigNumber(pool.maxWei)}
-                          minAlloc={formatBigNumber(pool.minWei)}
-                          name={pool.metaData?.projectName}
-                          status={`In ${
-                            calculateTimeLeft(pool.startTime).days
-                          } days`}
-                          total={formatBigNumber(pool.tokenTarget)}
-                        />
-                      </a>
-                    </Grid>
-                    <Grid item key={pool.id} lg={4} md={6} xs={12}>
-                      <a
-                        className={clsx(
-                          commonClasses.noDecoration,
-                          classes.poolLink
-                        )}
-                        href={`${IDO_URL}/pools/${pool.id}`}
-                        key={pool.id}
-                        rel="noreferrer"
-                        target="_blank"
-                      >
-                        <UpcomingPool
-                          access={pool.poolType == 0 ? "private" : "public"}
-                          className={idx % 2 === 1 ? classes.down : ""}
-                          coin={pool.id}
-                          icon={pool.metaData?.icon}
-                          maxAlloc={formatBigNumber(pool.maxWei)}
-                          minAlloc={formatBigNumber(pool.minWei)}
-                          name={pool.metaData?.projectName}
-                          status={`In ${
-                            calculateTimeLeft(pool.startTime).days
-                          } days`}
-                          total={formatBigNumber(pool.tokenTarget)}
-                        />
-                      </a>
-                    </Grid>
-                  </>
-                ))}
-              </>
-            )} */}
           </Grid>
         </Grid>
       </Container>

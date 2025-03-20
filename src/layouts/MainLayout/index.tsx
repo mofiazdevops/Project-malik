@@ -43,7 +43,8 @@ export const MainLayout = (props: IProps) => {
       <main className={clsx(classes.content, commonClasses.scroll)}>
         {props.children}
       </main>
-      <Footer />
+      {/* <Footer /> */}
+      {location.pathname !== "/docs" && <Footer />}
     </div>
   );
 };

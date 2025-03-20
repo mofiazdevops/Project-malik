@@ -6,7 +6,12 @@ import twitter from "../../../../assets/pngs/SocialTwitter.png";
 import instagram from "../../../../assets/pngs/SocialInstagram.png";
 import facebook from "../../../../assets/pngs/SocialFacebook.png";
 import color from "theme/colors";
-import { FaLinkedinIn } from "react-icons/fa";
+import {
+  FaFacebook,
+  FaInstagram,
+  FaLinkedinIn,
+  FaTwitter,
+} from "react-icons/fa";
 
 const useStyles = makeStyles((theme) => ({
   rootContainer: {
@@ -106,7 +111,7 @@ export const Community: React.FC = () => {
             target="_blank"
             rel="noreferrer"
           >
-            <img src={twitter} alt="twitter" width={25} height={25} />
+            <FaTwitter className={classes.icon} />
           </a>
           <a
             className={classes.icon}
@@ -114,7 +119,7 @@ export const Community: React.FC = () => {
             target="_blank"
             rel="noreferrer"
           >
-            <img src={instagram} alt="instagram" width={25} height={25} />
+            <FaInstagram className={classes.icon} />
           </a>
           <a
             className={classes.icon}
@@ -122,7 +127,7 @@ export const Community: React.FC = () => {
             target="_blank"
             rel="noreferrer"
           >
-            <img src={facebook} alt="facebook" width={25} height={25} />
+            <FaFacebook className={classes.icon} />
           </a>
         </div>
       </Container>

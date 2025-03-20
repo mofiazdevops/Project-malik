@@ -8,6 +8,7 @@ import emailjs from "emailjs-com";
 import pdf from "../../assets/pngs/pdf-icon.png";
 import png from "../../assets/pngs/png-icon.png";
 import jpg from "../../assets/pngs/jpg-icon.png";
+import { useSnackbar } from "notistack";
 
 const useStyles = makeStyles((theme) => ({
   "@global": {
@@ -170,6 +171,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const GrantProgram = () => {
+  const { enqueueSnackbar } = useSnackbar();
   const classes = useStyles();
   const [fileName, setFileName] = useState(""); // State to store the file name
   const [fileIcon, setFileIcon] = useState(null); // State to store file icon (for PDF, etc.)
@@ -267,7 +269,7 @@ const GrantProgram = () => {
           formRef.current
         );
         console.log("SUCCESS!", response);
-        console.log("Form Data:", formData);
+        enqueueSnackbar("Successfully submitted!", { variant: "success" });
 
         formRef.current.reset();
         setFormData({
@@ -286,6 +288,7 @@ const GrantProgram = () => {
       setIsActive(false);
     } catch (err) {
       setIsActive(false);
+      enqueueSnackbar("Error! Please try again later.", { variant: "error" });
       console.log("FAILED...", err);
     }
   };

@@ -1,5 +1,6 @@
-import { Box, LinearProgress, makeStyles } from "@material-ui/core";
 import React from "react";
+import { Box, LinearProgress, makeStyles } from "@material-ui/core";
+import { CircularProgress } from "@mui/material";
 
 const useStyles = makeStyles((theme: any) => ({
   root: {
@@ -19,8 +20,15 @@ export const LoadingScreen = () => {
 
   return (
     <div className={classes.root}>
-      <Box width={400}>
-        <LinearProgress />
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh", // Full screen height
+        }}
+      >
+        <CircularProgress sx={{ color: "white" }} />
       </Box>
     </div>
   );

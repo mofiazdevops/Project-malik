@@ -1,10 +1,12 @@
 import { Container, makeStyles } from "@material-ui/core";
-import React from "react";
+import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import clsx from "clsx";
 import certikSVG from "assets/svgs/certik.svg";
 import useCommonStyles from "styles/common";
 import { IDO_URL } from "config/constants";
+import emailjs from "emailjs-com";
+import { useSnackbar } from "notistack";
 
 const useStyles = makeStyles((theme: any) => ({
   root: {
@@ -209,12 +211,13 @@ const useStyles = makeStyles((theme: any) => ({
 }));
 
 const companyItems = [
-  // {
-  //   link: `${IDO_URL}/apply`,
-  //   name: "Apply for IDO",
-  // },
   {
-    link: "/CommingSoon",
+    name: "IdeaNetwork",
+    link: "/IdeaNetwork",
+  },
+  {
+    external: true,
+    link: "http://Workaspro.com",
     name: "WorkAsPro Talent",
   },
   {
@@ -297,6 +300,48 @@ interface IProps {
 }
 
 export const Footer = (props: IProps) => {
+  const { enqueueSnackbar } = useSnackbar();
+  const [email, setEmail] = useState<any>({
+    email: "",
+  });
+  const [isActive, setIsActive] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
+  const handleChangeEmail = (evt: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail({ ...email, email: evt.target.value });
+  };
+
+  emailjs.init("xgY7CZ_J1S154HAiD");
+  const handleSubscribe = async (e) => {
+    e.preventDefault();
+    setIsActive(true);
+
+    if (!email.email) {
+      console.log("Missing required fields!");
+      return;
+    }
+
+    try {
+      if (formRef.current) {
+        const response = await emailjs.sendForm(
+          "service_mq3enkt",
+          "template_5bfsvqw",
+          formRef.current
+        );
+
+        console.log("SUCCESS!", response);
+        enqueueSnackbar("Successfully subscribed!", { variant: "success" });
+
+        formRef.current.reset();
+        setEmail({ email: "" });
+      }
+    } catch (err) {
+      console.log("FAILED...", err);
+      enqueueSnackbar("Error! Please try again later.", { variant: "error" });
+    } finally {
+      setIsActive(false);
+    }
+  };
+
   const classes = useStyles();
   const commonClasses = useCommonStyles();
   const currentYear = new Date().getFullYear();
@@ -323,9 +368,20 @@ export const Footer = (props: IProps) => {
               <div className={classes.menuList}>
                 {companyItems.map((element) => (
                   <div className={classes.menuItem} key={element.name}>
-                    <a className={classes.menuItemLink} href={element.link}>
-                      {element.name}
-                    </a>
+                    {element.external || element.link.startsWith("http") ? (
+                      <a
+                        className={classes.menuItemLink}
+                        href={element.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {element.name}
+                      </a>
+                    ) : (
+                      <Link className={classes.menuItemLink} to={element.link}>
+                        {element.name}
+                      </Link>
+                    )}
                   </div>
                 ))}
               </div>
@@ -381,14 +437,21 @@ export const Footer = (props: IProps) => {
                 </p>
                 {/* <br />
                 <img alt="certik" src={certikSVG} /> */}
-                <div className={classes.containerStyle}>
-                  <input
-                    type="email"
-                    placeholder="Email"
-                    className={classes.inputStyle}
-                  />
-                  <button className={classes.buttonStyle}>Sign Up</button>
-                </div>
+                <form ref={formRef} onSubmit={handleSubscribe}>
+                  <div className={classes.containerStyle}>
+                    <input
+                      type="email"
+                      value={email.email}
+                      placeholder="Email"
+                      onChange={handleChangeEmail}
+                      required
+                      className={classes.inputStyle}
+                    />
+                    <button className={classes.buttonStyle}>
+                      {isActive ? "Sending..." : "Sign up"}
+                    </button>
+                  </div>
+                </form>
               </div>
             </div>
           </div>
