@@ -244,10 +244,10 @@ const helpItems = [
     link: "/contact",
     name: "Contact us",
   },
-  {
-    link: "/terms",
-    name: "Terms",
-  },
+  // {
+  //   link: "/terms",
+  //   name: "Terms",
+  // },
   // {
   //     link: "/privacy",
   //     name: "Privacy",
