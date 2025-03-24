@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import useScript from "hooks/useScript";
 import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme: any) => ({
   root: {
     marginTop: theme.custom.appHeaderHeight,
+    color: "white",
   },
 }));
 

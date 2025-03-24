@@ -38,11 +38,11 @@ const routes = [
       //   path: "/apply",
       //   component: lazy(() => import("pages/Apply")),
       // },
-      // {
-      //   exact: true,
-      //   path: "/contact",
-      //   component: lazy(() => import("pages/Contact")),
-      // },
+      {
+        exact: true,
+        path: "/contact",
+        component: lazy(() => import("pages/Contact")),
+      },
       {
         exact: true,
         path: "/blog",
@@ -68,11 +68,11 @@ const routes = [
       //   path: "/games",
       //   component: lazy(() => import("pages/Games")),
       // },
-      // {
-      //   exact: true,
-      //   path: "/privacy-policy",
-      //   component: lazy(() => import("pages/Privacy")),
-      // },
+      {
+        exact: true,
+        path: "/privacy-policy",
+        component: lazy(() => import("pages/Privacy")),
+      },
       {
         exact: true,
         path: "/newstaking",

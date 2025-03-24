@@ -3,6 +3,7 @@ import clsx from "clsx";
 import React, { useRef, useState } from "react";
 import { BootstrapInput, BootstrapLabel } from "components/Input";
 import emailjs from "emailjs-com";
+import { useSnackbar } from "notistack";
 
 const useStyles = makeStyles((theme: any) => ({
   root: {
@@ -18,7 +19,7 @@ const useStyles = makeStyles((theme: any) => ({
   },
   boxWrapper: {
     padding: "56px 94px 54px 96px",
-    backgroundColor: "white",
+    backgroundColor: "rgba(0, 0, 0, 0.8)",
 
     maxWidth: "742px",
 
@@ -43,7 +44,7 @@ const useStyles = makeStyles((theme: any) => ({
     fontWeight: 500,
     fontSize: "32px",
     lineHeight: "40px",
-    color: "#1C2535",
+    color: "#ffffff",
 
     position: "relative",
   },
@@ -68,17 +69,30 @@ const useStyles = makeStyles((theme: any) => ({
     width: "100%",
     marginTop: "24px",
   },
+  label: {
+    color: "#ffffff",
+  },
   btnSubmit: {
     height: "40px",
     marginTop: "40px",
     borderRadius: "3px",
   },
+  inputField: {
+    backgroundColor: "black",
+    color: "white",
+    borderRadius: "4px",
+    padding: "10px",
+    "&::placeholder": {
+      color: "white",
+      opacity: 1, // Ensures placeholder is fully visible
+    },
+  },
 }));
 
-
-
 export const ContactUs = (/*props: IProps*/) => {
+  const { enqueueSnackbar } = useSnackbar();
   const classes = useStyles();
+  const [isActive, setIsActive] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
   const [formData, setFormData] = useState({
     fullName: "",
@@ -101,7 +115,7 @@ export const ContactUs = (/*props: IProps*/) => {
   // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault(); // Prevent page reload
-
+    setIsActive(true);
     try {
       if (formRef.current) {
         const response = await emailjs.sendForm(
@@ -110,6 +124,7 @@ export const ContactUs = (/*props: IProps*/) => {
           formRef.current
         );
         console.log("SUCCESS!", response);
+        enqueueSnackbar("Successfully submitted!", { variant: "success" });
 
         // Log form data for debugging
         console.log("Form Data:", formData);
@@ -123,8 +138,11 @@ export const ContactUs = (/*props: IProps*/) => {
           message: "",
         });
       }
+      setIsActive(false);
     } catch (err) {
+      setIsActive(false);
       console.log("FAILED...", err);
+      enqueueSnackbar("Error! Please try again later.", { variant: "error" });
     }
   };
 
@@ -146,7 +164,9 @@ export const ContactUs = (/*props: IProps*/) => {
           <div className={classes.subTitle}></div>
           <form ref={formRef} onSubmit={handleSubmit}>
             <div className={classes.field}>
-              <BootstrapLabel htmlFor="fullName">Full Name</BootstrapLabel>
+              <BootstrapLabel htmlFor="fullName" className={classes.label}>
+                Full Name
+              </BootstrapLabel>
               <BootstrapInput
                 fullWidth={true}
                 id="fullName"
@@ -158,7 +178,9 @@ export const ContactUs = (/*props: IProps*/) => {
             </div>
 
             <div className={classes.field}>
-              <BootstrapLabel htmlFor="email">Email</BootstrapLabel>
+              <BootstrapLabel htmlFor="email" className={classes.label}>
+                Email
+              </BootstrapLabel>
               <BootstrapInput
                 fullWidth={true}
                 id="email"
@@ -170,7 +192,9 @@ export const ContactUs = (/*props: IProps*/) => {
             </div>
 
             <div className={classes.field}>
-              <BootstrapLabel htmlFor="subject">Subject</BootstrapLabel>
+              <BootstrapLabel htmlFor="subject" className={classes.label}>
+                Subject
+              </BootstrapLabel>
               <BootstrapInput
                 fullWidth={true}
                 id="subject"
@@ -182,7 +206,9 @@ export const ContactUs = (/*props: IProps*/) => {
             </div>
 
             <div className={classes.field}>
-              <BootstrapLabel htmlFor="message">Message</BootstrapLabel>
+              <BootstrapLabel htmlFor="message" className={classes.label}>
+                Message
+              </BootstrapLabel>
               <BootstrapInput
                 fullWidth={true}
                 id="message"
@@ -203,7 +229,7 @@ export const ContactUs = (/*props: IProps*/) => {
                 type="submit"
                 variant="contained"
               >
-                Submit
+                {isActive ? "Submiting..." : "Submit"}
               </Button>
             </div>
           </form>

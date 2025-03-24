@@ -6,7 +6,8 @@ const useStyles = makeStyles((theme: any) => ({
   root: {
     marginTop: theme.custom.appHeaderHeight,
     borderRadius: " 0px 100px 100px 0px",
-    padding: "110px 80px 80px 89px",
+    padding: "80px 80px 80px 89px",
+    color: "#ffffff",
   },
 }));
 
